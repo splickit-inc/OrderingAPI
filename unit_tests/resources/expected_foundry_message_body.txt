@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<POSREQUEST>
+   <CHECKREQUESTS>
+      <ADDCHECK READYTIME="ORDER READY: %%pickup_time_ampm%%" READYDATETIME="%%ready_date_time%%" ORDERMODEFEE="0.00" EXTCHECKID="FirstLast%%order_id%%" ORDERMODE="3" COMMANDTYPE="ORDER" CARDAUTH="Card Ending XXXX-1111" ORDERID="%%order_id%%" >
+         <CONTACT FIRSTNAME="First" PHONE1="%%user_phone_no%%" EMAIL="%%user_email%%" LASTNAME="Last" />
+         <ITEMREQUESTS>
+            <ADDITEM ITEMID="%%item_external_id%%" QTY="1" FOR="">
+               <MODITEM MODGROUPID="%%modifier_group_external_id%%" ITEMID="%%modifier_external_id%%" MODCODE="1"/>
+            </ADDITEM>
+         </ITEMREQUESTS>
+         <PAYMENTREQUESTS>
+             <ADDTENDER TENDERID="215" />
+         </PAYMENTREQUESTS>
+      </ADDCHECK>
+   </CHECKREQUESTS>
+</POSREQUEST>

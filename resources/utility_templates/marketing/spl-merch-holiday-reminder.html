@@ -1,0 +1,73 @@
+class: SmartyResource
+mimetype: text
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Holiday Reminder</title>
+</head>
+<body style="background:#c1d82f; ">
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10">
+         <tr>
+               <td width="200px">
+               <img src="http://s3.amazonaws.com/assets.splickit.com/SPL-Logo-200px.png" width="200" height="50" alt="splickit"/>
+               </td>
+               <td align="right">
+               </td>
+        </tr>
+</table>
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10" style="font-family:Arial, Helvetica, sans-serif;">
+<tr style="background:#111;">
+<td>
+<h2 style="color:#fff;margin:0px;">Holiday Reminder</h2>
+</td>
+<td align="right" width="160">
+<h2 style="color:#fff;margin:0px;font-weight:normal;">{$resource->today}</h2>
+</td>
+</tr> 
+<tr style="background:#fff;" >
+<td colspan="2">
+               <!-- Location -->
+               <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;">
+               <tr style="background:#e5e5e5;color:#666;font-weight:bold;">
+               <td align="left" colspan="2">
+               <h4 style="margin: 5px;color:#111;">Location:</h4>
+               </td>
+               </tr>
+               <tr style="background:#fff;color:#444;">
+               <td style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+               <h4 style="margin: 3px 5px;">{$resource->name}</h4>
+               <h4 style="margin: 3px 5px;">{$resource->address1}<br/>{$resource->city}, {$resource->state} {$resource->zip}</h4>
+               <p style="margin: 3px 5px;"><a href="#">{$resource->table_data.destination_email}</a></p>
+               </td>
+               </tr>
+               </table>
+       </td>
+       </tr>
+<tr style="background:#fff;" >
+       <td colspan="2">
+<p>Greetings!</p>
+
+<p>If your operating hours are going to be affected by this upcoming holiday please make sure to update your holiday hours table on the Splick.it Merchant Portal. You can turn your location on or off and set any special operating hours for that day by using the steps below.</p>
+<br>
+<p>Go to <a href="http://portal.splickit.com" target="_blank">http://portal.splickit.com</a> and log into your account. Click the "Profile" tab located in the upper left hand corner. Select "Edit" above the Holiday Date section of your Store Hours table. You can then edit any existing holiday records or add new ones by clicking the "Add" button. Once finished please remember to Save your changes.</p>
+<br>
+<p>Thanks for your assistance!</p>
+
+<strong>Splick-it Support</strong><br/>
+1.888.SPLICKIT (775.4254)<br>
+support@dummy.com<br>
+<p style="color:#fff;">{$resource->merchant_id}</p>
+       </td>
+</tr>
+<tr>
+<td colspan="2">
+       <p>Please email questions or requests to <a href="mailto:support@dummy.com" >support@dummy.com</a></p>
+       <p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:11px;">&copy; 2015 Splick&#45;It&#44; Inc&#46; 1881 19th St&#46; Suite 303&#44; Boulder&#44; CO 80302</p>
+
+</td>
+</tr>
+</table>
+</body>
+</html>
+

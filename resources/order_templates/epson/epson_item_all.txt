@@ -1,0 +1,52 @@
+class: SmartyResource
+mimetype: text
+
+            <text align="center" />
+            <text>------- DETAILS --------</text>
+
+{foreach from=$resource->order_details key=index item=menu_item}
+    {assign var=item_string value=$menu_item.epson_item_string}
+    {assign var=item_price value=$menu_item.item_total_w_mods}
+    {assign var=price_absolute_position value=$menu_item.epson_absolute_position}
+<feed unit="35" />
+<text align="left" />
+<text font="font_a" />
+<text width="1" height="1" />
+<text reverse="false" ul="false" em="false" color="color_1" />
+    <text >{$item_string}</text>
+    <text x="{$price_absolute_position}" />
+    <text>${$item_price}</text>
+
+    {if $menu_item.order_detail_modifiers|@count > 0}
+        {foreach from=$menu_item.order_detail_complete_modifier_list_no_holds key=index2 item=modifier_record name=modifier}
+            {assign var=mod_item_name value=$modifier_record.mod_print_name}
+            <feed unit="12" />
+            <text x="24" />
+            <text>{$mod_item_name|truncate:24:""}</text>
+            {if $modifier_record.mod_quantity > 1}
+                <text>(x{$modifier_record.mod_quantity})</text>
+            {/if}
+            {if $modifier_record.mod_total_price neq '0.00'}
+                <text>  ${$modifier_record.mod_total_price}</text>
+            {/if}
+        {/foreach}
+    {/if}
+    {if $menu_item.show_holds eq 'yes'}
+        <feed unit="35" />
+        {foreach from=$menu_item.order_detail_hold_it_modifiers key=index3 item=modifier_record2 name=heldmodifier}
+            {assign var=mod_item_name value=$modifier_record2.mod_print_name}
+            <feed unit="12" />
+            <text x="24" />
+            <text>NO {$mod_item_name|truncate:30:""}</text>
+        {/foreach}
+    {/if}
+
+    {if $menu_item.note neq ''}
+        <feed unit="35" />
+        <text x="100" />
+        <text>Note: {$menu_item.note}</text>
+    {/if}
+    <feed unit="35" />
+    <text align="center" />
+    <text>------</text>
+{/foreach}

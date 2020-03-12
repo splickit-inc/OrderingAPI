@@ -1,0 +1,120 @@
+class: SmartyResource
+mimetype: text
+
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version = "2.1" >
+
+  <meta name="maintainer" content="YOUREMAILADDRESS@HERE.com"/>
+
+<link next="#MainMenu">
+  <grammar type="text/gsl">[dtmf-5]</grammar>
+</link>
+
+  <form id="MainMenu">
+    <block>
+      <prompt bargein="false">
+        Hello this is Splick it <break time=".7s"/> with an order for Quiznos
+      </prompt>
+    </block>
+
+    <field name="MainOrder">
+    <prompt>
+      press 1 to hear the first item.
+    </prompt>
+
+      <grammar type="text/gsl"> 
+        <![CDATA[[
+              [dtmf-1] {literal}{<MainOrder "playorder">}{/literal}
+            ]]]>
+        </grammar>
+
+        <noinput>
+        <prompt>
+            I did not receive and input. Please try again.
+          </prompt>
+        <reprompt/>
+        </noinput>
+
+        <nomatch>
+        <prompt>
+            I did not recognize that lifestyle choice.  Please try again.
+        </prompt>
+          <reprompt/>
+        </nomatch>    
+        
+    </field>
+<filled>
+      <if cond="MainOrder == 'playorder'">
+      	<goto next="#item1"/>
+      </if> 
+</filled>
+  </form>
+
+  <form id="item1">
+    <field name="BackToMain">
+    <prompt>
+      1 large turkey and swiss on rye with mustard.  
+      Press 1 to continue.
+      Press 2 to hear this item again.
+      Press 5 to start over.
+    </prompt>
+     <grammar type="text/gsl"> 
+        <![CDATA[[
+              [dtmf-1] {literal}{<BackToMain "continue">}{/literal}
+              [dtmf-2] {literal}{<BackToMain "repeat">}{/literal}
+            ]]]>
+        </grammar> 
+    </field>
+    <filled>
+      <if cond="BackToMain == 'continue'">  
+      	<goto next="#item2"/>
+      <elseif cond="BackToMain == 'repeat'"/>
+      	<goto next="#item1"/>
+ 	  <elseif cond="BackToMain == 'main'"/>
+ 	    <goto next="#MainMenu"/>
+      </if> 
+    </filled> 
+  </form>
+
+  <form id="item2">
+    <field name="BackToMain">
+    <prompt>
+     	1 medium meatball sub with onions, with peppers, with garlic ranch dressing.  
+      Press 1 to continue.
+      Press 2 to hear this item again.
+      Press 5 to start over.
+    </prompt>
+     <grammar type="text/gsl"> 
+        <![CDATA[[
+              [dtmf-1] {literal}{<BackToMain "continue">}{/literal}
+              [dtmf-2] {literal}{<BackToMain "repeat">}{/literal}
+            ]]]>
+        </grammar> 
+    </field>
+     <filled>
+      <if cond="BackToMain == 'continue'">  
+      	<goto next="#item3"/>
+      <elseif cond="BackToMain == 'repeat'"/>
+      	<goto next="#item2"/>
+ 	  <elseif cond="BackToMain == 'main'"/>
+ 	    <goto next="#MainMenu"/>
+      </if> 
+     </filled>
+  </form>
+  
+  <form id="item3">
+    <field name="BackToMain">
+    <prompt>
+Order for adam <break time=".7s"/>
+  Pick up time of 5:35 <break time=".7s"/>
+  please put it all on a separate plate and plenty of napkins.<break time="1.5s"/>    
+  Press 5 to start over.</prompt>
+    </field>
+     <filled>
+      <if cond="BackToMain == 'main'">  
+      <goto next="#MainMenu"/>        
+      </if> 
+     </filled>
+  </form>
+
+</vxml>

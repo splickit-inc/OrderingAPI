@@ -1,0 +1,141 @@
+class: SmartyResource
+mimetype: text
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body style="background:#c1d82f; ">
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10">
+         <tr>
+               <td width="200px">
+               <img src="http://your.amazon.s3.amazonaws.com/email/images/SPL-Logo-200px.png" width="200" height="50" alt="Splickit" style=""/>
+               </td>
+               <td align="right">
+               <h2 style="color:#111;font-family:Arial, Helvetica, sans-serif;margin:0px;">Welcome to Splickit</h2>
+               </td>
+        </tr>
+</table>
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10" style="font-family:Arial, Helvetica, sans-serif;">
+
+<tr style="background:#111;">
+<td>
+<h2 style="color:#fff;margin:0px;">{$resource->name}</h2>
+</td>
+<td align="right" width="160">
+<h2 style="color:#fff;margin:0px;font-weight:normal;">{$resource->today}</h2>
+</td>
+</tr>
+
+<tr style="background:#fff;" >
+<td colspan="2">
+
+               <!-- Location -->
+
+               <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;">
+
+               <tr style="background:#e5e5e5;color:#666;font-weight:bold;">
+               <td align="left" colspan="2">
+               <h4 style="margin: 5px;color:#111;">Location:</h4>
+               </td>
+               </tr>
+
+               <tr style="background:#fff;color:#444;">
+               <td style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+               <h4 style="margin: 3px 5px;">{$resource->name}</h4>
+
+               <h4 style="margin: 3px 5px;">{$resource->address1}<br/>{$resource->city}, {$resource->state} {$resource->zip}</h4>
+               <p style="margin: 3px 5px;"><a href="#">{$resource->table_data.destination_email}</a></p>
+               </td>
+               </tr>
+               </table>
+
+       </td>
+       </tr>
+
+<tr style="background:#fff;" >
+<td colspan="2">
+
+Dear Franchisee, <br><br>
+
+We wanted to share with you some news about a recent option we've added to the Splick-it Merchant Portal. We heard from some of you that you would prefer to receive payments on a monthly basis rather than via our standard weekly payment transfer. This will help spread the $1.00 ACH fee over a month's time rather than weekly.<br><br>
+
+Per this feedback, we've added a new option to the Splick-it Merchant Portal, so you can now choose to receive your payment transfers on a Weekly (default) or Monthly basis. <br><br>
+
+<b>How to Change Your Payment Cycle<br><br></b>
+
+Login to your Splick-it Merchant Account at http://portal.splickit.com<br>
+On the Info tab, select the "Monthly" option from the Payment Cycle drop-down<br>
+Click Save<br>
+</td>
+</tr>
+
+<tr style="background:#fff;" >
+<td colspan="2">
+
+<!-- Portal Credentials -->
+
+               <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;">
+               <tr style="background:#e5e5e5;color:#666;font-weight:bold;">
+               <td align="left" colspan="2">
+               <h4 style="margin: 5px;color:#111;">Your Splick-it Portal Credentials</h4>
+
+               </td>
+               </tr>
+
+               <tr style="background:#fff;color:#444;">
+               <td style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+               <p style="margin: 5px;">Portal URL:</p>
+               </td>
+       <td align="right" width="50%"style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+               <p style="margin: 5px;font-weight:bold;"><a href="http://portal.splickit.com" target="_blank">http://portal.splickit.com</a></p>
+
+               </td>
+               </tr>
+               <tr style="background:#fff;color:#444;">
+               <td style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+               <p style="margin: 5px;">User Name:</p>
+               </td>
+       <td align="right" width="50%"style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+               <p style="margin: 5px;font-weight:bold;">{$resource->table_data.sus_login_name}</p>
+
+               </td>
+               </tr>
+               <tr style="background:#fff;color:#444;">
+               <td style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+               <p style="margin: 5px;">Password:</p>
+               </td>
+       <td align="right" width="50%"style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+               <p style="margin: 5px;font-weight:bold;">{$resource->table_data.sus_login_password}</p>
+
+               </td>
+               </tr>
+               </table>
+
+<br/>
+</td>
+</tr>
+<tr style="background:#fff;" >
+<td colspan="2">
+Please note that if you take no action, you will continue to receive payments on a weekly basis. You may change this preference at any time.<br><br>
+We greatly appreciate the feedback we receive from all of you, and we will continue to use it to help us make Splick-it the best experience possible.<br><br>
+If you have questions or concerns please contact us at 1.888.775.4254 or <a href="mailto:support@dummy.com"> support@dummy.com </a><br><br>
+Thanks,<br><br>
+The Splickit Team
+</td>
+</tr>
+<tr>
+<td colspan="2">
+       <p>Please email questions or requests to <a href="mailto:support@dummy.com" >support@dummy.com</a></p>
+       <p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:11px;">&copy; 2015 Splick&#45;It&#44; Inc&#46; 1881 19th St&#46; Suite 303&#44; Boulder&#44; CO 80302</p>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

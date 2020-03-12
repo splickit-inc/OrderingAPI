@@ -1,0 +1,41 @@
+class: SmartyResource
+mimetype: text
+
+::------- DETAILS --------
+{foreach from=$resource->order_details key=index item=menu_item}
+{assign var=item_name value=$menu_item.item_print_name}
+{assign var=item_size value=$menu_item.size_print_name}
+{assign var=item_quant value=$menu_item.quantity}
+{assign var=item_price value=$menu_item.item_total_w_mods}
+:: 
+::{if $item_quant neq '1'}{$item_quant} {/if}{if $item_size|lower neq 'one size'} {$item_size}{/if} {$item_name}  {$resource->order_identifier}
+{if $menu_item.note neq ''}:: 
+::Note: {$menu_item.note}
+::{/if}
+::{if $menu_item.order_detail_modifiers|@count > 0}
+
+::WITH: 
+{foreach from=$menu_item.order_detail_modifiers key=index2 item=modifier_record name=no_mod}
+{assign var=mod_item_name value=$modifier_record.mod_print_name}
+::--{$mod_item_name}{if $modifier_record.mod_quantity > 1}(x{$modifier_record.mod_quantity}){/if}{if $modifier_record.mod_total_price neq '0.00'} ${$modifier_record.mod_total_price}{/if}
+
+{/foreach}
+::{/if}
+{if $menu_item.order_detail_mealdeal|@count > 0}
+
+::MEAL: 
+{foreach from=$menu_item.order_detail_mealdeal key=index2 item=modifier_record name=no_mod}
+{assign var=mod_item_name value=$modifier_record.mod_print_name}
+::-- {$mod_item_name}{if $modifier_record.mod_total_price neq '0.00'} ${$modifier_record.mod_total_price}{/if}
+{/foreach}
+::{/if}
+{if $menu_item.order_detail_sides|@count > 0}
+
+::SIDE OF: 
+{foreach from=$menu_item.order_detail_sides key=index2 item=modifier_record name=side}
+{assign var=mod_item_name value=$modifier_record.mod_print_name}
+::--{$mod_item_name}{if $modifier_record.mod_quantity > 1}(x{$modifier_record.mod_quantity}){/if}{if $modifier_record.mod_total_price neq '0.00'} ${$modifier_record.mod_total_price}{/if}
+{/foreach}::{/if}
+::
+::    ------
+{/foreach}

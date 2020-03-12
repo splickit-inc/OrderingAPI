@@ -1,0 +1,407 @@
+class: SmartyResource
+mimetype: text
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body style="background:#c1d82f; ">
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10">
+	  <tr>
+  		<td width="200px">
+  		<img src="http://your.amazon.s3.amazonaws.com/email/images/SPL-Logo-200px.png" alt="splickit" style=""/>
+  		</td>
+  		<td align="right">
+  		<h2 style="color:#111;font-family:Arial, Helvetica, sans-serif;margin:0px;">Merchant Status</h2>
+  		</td>
+ 	 </tr>
+</table>
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10" style="font-family:Arial, Helvetica, sans-serif;">
+
+<tr style="background:#111;">
+<td>
+<h2 style="color:#fff;margin:0px;">{$resource->name}</h2>
+</td>
+<td align="right" width="160">
+<h2 style="color:#fff;margin:0px;font-weight:normal;">{$resource->statement_date}</h2>
+</td>
+</tr>
+<tr>	 
+<td style="background:#fff;" colspan="2">
+		
+		<!-- Welcome Message-->
+ 	 	
+ 	 	<table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;margin-top:15px;">
+ 	 	<tr>
+ 	 	<td colspan="4">
+ 	 	<p style="margin: 5px;">
+ 	 	Hello,<br/>
+		Please find below the current status of your store setup for the Splickit Mobile and Online Ordering platform. If any of this information is incorrect please login on to the <a href="http://portal.splickit.com" target="_blank">Splickit Merchant Portal</a> to make any changes.
+		</p>
+ 	 	</td>
+ 	 	</tr>
+ 	 	</table>
+	
+		<!-- Merchant Information-->
+ 	 	
+ 	 	<table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;margin-top:15px;">
+ 	 	<tr>
+ 	 	<td colspan="4">
+ 	 	<h3 style="margin: 5px;">Merchant Information</h3>
+ 	 	</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Merchant:</p>
+  		</td>
+    	<td width="75%" style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">{$resource->name}</p>
+  		</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Splickit ID:</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">{$resource->merchant_id}</p>
+  		</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Store ID:</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">{$resource->merchant_external_id}</p>
+  		</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Shop Email:</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">{$resource->shop_email}</p>
+  		</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td valign="top" style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Address:</p>
+  		</td>
+    	<td valign="top" style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">{$resource->address1}<br/>{$resource->city}, {$resource->state} {$resource->zip}</p>
+  		</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Phone No:</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">{$resource->phone_no}</p>
+  		</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Fax No:</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">{$resource->fax_no}</p>
+  		</td>
+ 	 	</tr>
+ 	 	
+ 	 	</table>
+ 
+ {foreach from=$resource->merchant_status_data key=index item=thedata}
+ 
+ 	{if $index eq '2'} 		 	
+ 	 	<!-- Remote Ordering Hours -->
+ 	 	
+		<table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;margin-top:15px;">
+ 	 	<tr>
+ 	 	<td colspan="4">
+ 	 	<h3 style="margin: 5px;">Remote Ordering Hours</h3>
+ 	 	</td>
+ 	 	</tr>
+ 	 	<tr style="background:#e5e5e5;color:#666;font-weight:bold;font-size:12px;">
+  		<td align="left" width="25%" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Day of Week</h4>
+  		</td>
+    	<td align="left" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Hour Type</h4>
+  		</td>
+  		<td align="left" width="20%" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Open Time</h4>
+  		</td>
+    	<td align="right" width="25%" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Close Time</h4>
+  		</td>
+ 	 	</tr>
+ 	 	{foreach from=$thedata key=index2 item=thedata2}
+ 	 	<tr style="background:#fff;color:#444;font-size:12px;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field1}</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field2}</p>
+  		</td>
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field3}</p>
+  		</td>
+    	<td align="right" style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field4}</p>
+  		</td>
+ 	 	</tr>
+ 	 	{/foreach}
+ 	 	</table>
+ 	{/if}	 	
+ 	 {if $index eq '3'} 		 
+ 	 	<!-- Delivery Hours-->
+ 	 	
+ 	 	<table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;margin-top:15px;">
+ 	 	<tr>
+ 	 	<td colspan="4">
+ 	 	<h3 style="margin: 5px;">Delivery Hours</h3>
+ 	 	</td>
+ 	 	</tr>
+ 	 	<tr style="background:#e5e5e5;color:#666;font-weight:bold;font-size:12px;">
+  		<td align="left" width="25%" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Day of Week</h4>
+  		</td>
+    	<td align="left" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Hour Type</h4>
+  		</td>
+  		<td align="left" width="20%" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Open Time</h4>
+  		</td>
+    	<td align="right" width="25%" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Close Time</h4>
+  		</td>
+ 	 	</tr>
+  	 	{foreach from=$thedata key=index2 item=thedata2}
+ 	 	<tr style="background:#fff;color:#444;font-size:12px;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field1}</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field2}</p>
+  		</td>
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field3}</p>
+  		</td>
+    	<td align="right" style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field4}</p>
+  		</td>
+ 	 	</tr>
+ 	 	{/foreach}
+
+ 	 	</table>
+ 	 {/if}
+ 	 {if $index eq '4'} 		
+ 	 	<!-- Taxes-->
+ 	 	
+ 	 	<table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;margin-top:15px;">
+ 	 	<tr>
+ 	 	<td colspan="4">
+ 	 	<h3 style="margin: 5px;">Taxes</h3>
+ 	 	</td>
+ 	 	</tr>
+ 	 	<tr style="background:#e5e5e5;color:#666;font-weight:bold;font-size:12px;">
+  		<td align="left" width="20%" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Tax Group</h4>
+  		</td>
+    	<td align="left" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Locale</h4>
+  		</td>
+  		<td align="left" width="35%" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Description</h4>
+  		</td>
+    	<td align="right" width="20%" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Rate</h4>
+  		</td>
+ 	 	</tr>
+  	 	{foreach from=$thedata key=index2 item=thedata2}
+ 	 	<tr style="background:#fff;color:#444;font-size:12px;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field1}</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field2}</p>
+  		</td>
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field3}</p>
+  		</td>
+    	<td align="right" style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field4}</p>
+  		</td>
+ 	 	</tr>
+ 	 	{/foreach}
+ 	 	</table>
+ 	 {/if}
+ 	 {if $index eq '5'} 		
+ 	 	
+ 	 	<!-- Holiday Schedule-->
+ 	 	
+ 	 	<table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;margin-top:15px;">
+ 	 	<tr>
+ 	 	<td colspan="4">
+ 	 	<h3 style="margin: 5px;">Holiday Schedule</h3>
+ 	 	</td>
+ 	 	</tr>
+ 	 	<tr style="background:#e5e5e5;color:#666;font-weight:bold;font-size:12px;">
+  		<td align="left" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Holiday</h4>
+  		</td>
+    	<td align="left" width="75%" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Status</h4>
+  		</td>
+ 	 	</tr>
+ 	 	{foreach from=$thedata key=index2 item=thedata2}
+ 	 	<tr style="background:#fff;color:#444;font-size:12px;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field1}</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field2}</p>
+  		</td>
+ 	 	</tr>
+ 	 	{/foreach}
+ 	 	</table>
+ 	 {/if}
+ 	 {if index eq '6'} 		
+ 	 	<!-- Delivery Details-->
+ 	 	
+ 	 	<table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;margin-top:15px;">
+ 	 	<tr>
+ 	 	<td colspan="4">
+ 	 	<h3 style="margin: 5px;">Delivery Details</h3>
+ 	 	</td>
+ 	 	</tr>
+ 	 	<tr style="background:#e5e5e5;color:#666;font-weight:bold;font-size:12px;">
+  		<td align="left" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Factors</h4>
+  		</td>
+    	<td align="left" width="75%" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Amount</h4>
+  		</td>
+ 	 	</tr>
+  	{foreach from=$thedata key=index2 item=thedata2}
+ 	 	<tr style="background:#fff;color:#444;font-size:12px;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field1}</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field2}</p>
+  		</td>
+ 	 	</tr>
+ 	 	{/foreach}
+ 	 	</table>
+ 	 {/if}
+ 	 {if $index eq '7'} 		
+ 	  	
+ 	 	<!-- Items Price List-->
+ 	 	
+ 	 	<table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;margin-top:15px;">
+ 	 	<tr>
+ 	 	<td colspan="4">
+ 	 	<h3 style="margin: 5px;">Items Price List</h3>
+ 	 	</td>
+ 	 	</tr>
+ 	 	<tr style="background:#e5e5e5;color:#666;font-weight:bold;font-size:12px;">
+  		<td align="left" width="35%" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Section</h4>
+  		</td>
+    	<td align="left" width="35%" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Item</h4>
+  		</td>
+  		<td align="left" width="15%" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Size</h4>
+  		</td>
+    	<td align="right" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Price</h4>
+  		</td>
+ 	 	</tr>
+ 	 	{foreach from=$thedata key=index2 item=thedata2}
+ 	 	<tr style="background:#fff;color:#444;font-size:12px;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field1}</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field2}</p>
+  		</td>
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field3}</p>
+  		</td>
+    	<td align="right" style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field4}</p>
+  		</td>
+ 	 	</tr>
+ 	 	{/foreach}
+ 	 	</table>
+ 	 {/if}
+ 	 {if $index eq '8'} 		
+ 	  	
+ 	 	<!-- Modifiers Price List-->
+ 	 	
+ 	 	<table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;margin-top:15px;">
+ 	 	<tr>
+ 	 	<td colspan="4">
+ 	 	<h3 style="margin: 5px;">Modifiers Price List</h3>
+ 	 	</td>
+ 	 	</tr>
+ 	 	<tr style="background:#e5e5e5;color:#666;font-weight:bold;font-size:12px;">
+  		<td align="left" width="35%" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Modifiers Group</h4>
+  		</td>
+    	<td align="left" width="35%" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Modifier Name</h4>
+  		</td>
+  		<td align="left" width="15%" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Size</h4>
+  		</td>
+    	<td align="right" style="font-weight:bold;">
+  		<h4 style="margin: 5px;">Price</h4>
+  		</td>
+ 	 	</tr>
+ 	 
+ 	  	{foreach from=$thedata key=index2 item=thedata2}
+ 	 	<tr style="background:#fff;color:#444;font-size:12px;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field1}</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field2}</p>
+  		</td>
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field3}</p>
+  		</td>
+    	<td align="right" style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">{$thedata2.field4}</p>
+  		</td>
+ 	 	</tr>
+ 	 	{/foreach}
+ 	 	</table>
+ 	 {/if}
+ {/foreach}			
+ 	 	
+</td>
+</tr>
+<tr>
+<td colspan="2">
+	<p>Please email questions or requests to <a href="mailto:support@dummy.com" >support@dummy.com</a></p>
+	<p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:11px;">&copy; 2015 Splick&#45;It&#44; Inc&#46; 1881 19th St&#46; Suite 303&#44; Boulder&#44; CO 80302</p>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

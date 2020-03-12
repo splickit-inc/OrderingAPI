@@ -1,0 +1,60 @@
+{
+  "order":{
+    "identifier_from_merchant":1234,
+    "location_id":83,
+    "spend_amount":440,
+    "cashier": "Bob Roberts",
+    "register": "03",
+    "applied_discount_amount":null,
+    "available_gift_card_amount":null,
+    "items":[
+      {
+        "item":{
+          "charged_price_amount":150,
+          "description": "Test Item 1",
+          "name": "Test Item 1",
+          "quantity":1,
+          "category": "Test Menu Type 1",
+          "standard_price_amount":150,
+          "sku": "sku12345",
+          "upc": "upc67890"
+        }
+      },
+      {
+        "item":{
+          "charged_price_amount":250,
+          "description": "Test Item 2",
+          "name": "Test Item 2",
+          "quantity":1,
+          "category": "Test Menu Type 1",
+          "standard_price_amount":150,
+          "sku": "sku88888",
+          "children":[{
+            "item":{
+              "charged_price_amount":0,
+              "name": "Special Instructions",
+              "description": "Sum Dum Item Note"
+              }
+            },
+             {
+             "item":{
+               "charged_price_amount":50,
+               "name": "Test Modifier Group Item 2",
+               "quantity":1,
+               "description": "Test Modifier Group Item 2"
+               }
+             },
+            {
+            "item":{
+              "charged_price_amount":50,
+              "name": "Test Modifier Group Item 1",
+              "quantity":2,
+              "description": "Test Modifier Group Item 1"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

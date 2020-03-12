@@ -1,0 +1,61 @@
+class: SmartyResource
+mimetype: text
+
+<?xml version="1.0" encoding="UTF-8"?>
+<ExternalOrder Ref="ORDER {$resource->order_id}">
+	<Invoice>{$resource->order_id}</Invoice>
+	<Workstation>1</Workstation>
+	<WaiterNumber>900</WaiterNumber>
+	
+	<DateOrdered>{$resource->order_date2}</DateOrdered>
+	<TimeOrdered>{$resource->order_time}:00</TimeOrdered>
+	<DateDelivery>{$resource->pickup_date2}</DateDelivery>
+	<TimeDelivery>{$resource->pickup_time}:00</TimeDelivery>
+	<TimePreparation>20:00:00</TimePreparation>
+	
+	<Function>Delivery</Function>
+	<Mode>2</Mode>
+	<SendToKitchen>No</SendToKitchen>
+	<RevenueCenter>2</RevenueCenter>
+	<CloseInvoice>Yes</CloseInvoice>
+	<Customer>
+		<Phone>1234567890</Phone>
+		<Name>{$resource->full_name}</Name>
+		<Address/>
+	</Customer>
+	<Orders>
+		<Order>
+			<Item>
+				<ItemId>34055</ItemId>
+				<Quantity>1</Quantity>
+				<description>SplickitItem</description>
+				<Price>-{$resource->order_amt}</Price> <!-- sub total -->	
+			</Item>
+		</Order>
+		<Charges>
+			<Service>
+				<Amount>0.00</Amount>
+			</Service>
+			<Delivery>
+			{if $resource->delivery_amt > 0}
+				<Amount>-{$resource->delivery_amt}</Amount>
+			{else}
+				<Amount/>
+			{/if}
+			</Delivery>
+		</Charges>
+		<Taxes>
+			<Tax>
+				<TaxId>1</TaxId>
+				<Amount>-{$resource->total_tax_amt}</Amount>
+			</Tax>
+		</Taxes>
+		<Medias>
+			<Media>
+				<MediaId>10</MediaId>
+				<Amount>-{$resource->grand_total_to_merchant}</Amount>
+				<tip/>
+			</Media>
+		</Medias>
+	</Orders>		
+</ExternalOrder>

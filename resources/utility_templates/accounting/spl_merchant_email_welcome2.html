@@ -1,0 +1,112 @@
+class: SmartyResource
+mimetype: text
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body style="background:#c1d82f; ">
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10">
+	  <tr>
+  		<td width="200px">
+  		<img src="http://your.amazon.s3.amazonaws.com/email/images/SPL-Logo-200px.png" width="200" height="50" alt="splickit" style=""/>
+  		</td>
+  		<td align="right">
+  		<h2 style="color:#111;font-family:Arial, Helvetica, sans-serif;margin:0px;">Welcome to Splick.it</h2>
+  		</td>
+ 	 </tr>
+</table>
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10" style="font-family:Arial, Helvetica, sans-serif;">
+
+<tr style="background:#111;">
+<td>
+<h2 style="color:#fff;margin:0px;">{$resource->name}</h2>
+</td>
+<td align="right" width="160">
+<h2 style="color:#fff;margin:0px;font-weight:normal;">{$resource->today}</h2>
+</td>
+</tr>
+
+<tr style="background:#fff;" >	 
+<td colspan="2">
+<h4 style="margin: 3px 0;">{$resource->address1}<br>{$resource->city}, {$resource->state} {$resource->zip}</h4>
+<p style="margin: 3px 0;"><a href="#">{$resource->shop_email}</a></p>	 	
+<p>Dear Moe’s Franchisee,<p/>We are delighted to inform you that we are now prepared to activate your location(s) with Splick.it mobile and online ordering services. To ensure a smooth and timely activation, please read and follow all of the instructions contained in this email carefully. If you have any questions or concerns during the process, please contact us at support@dummy.com or give us a call at 1.888.775.4254.</p>
+<h4 style="margin: 3px 0;">Getting Started</h4>
+<p>To get started with your activation, please access the Splick.it merchant portal using the URL and login credentials we’ve provided below. The merchant portal is where you will manage information about your store(s) on the Splick.it platform.</p>
+</td>
+</tr>
+<tr style="background:#fff;" >
+<td colspan="2">
+
+<!-- Portal Credentials -->
+ 	 	
+		<table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;">
+ 	 	<tr style="background:#e5e5e5;color:#666;font-weight:bold;">
+  		<td align="left" colspan="2">
+  		<h4 style="margin: 5px;color:#111;">Your Splick.it Portal Credentials</h4>
+  		</td>
+ 	 	</tr>
+ 	 
+ 	 	<tr style="background:#fff;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+  		<p style="margin: 5px;">Portal URL:</p>
+  		</td>
+    	<td align="right" width="50%"style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+  		<p style="margin: 5px;font-weight:bold;"><a href="#">http://portal.splickit.com</a></p>
+  		</td>
+ 	 	</tr>
+ 	 	<tr style="background:#fff;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+  		<p style="margin: 5px;">User Name:</p>
+  		</td>
+    	<td align="right" width="50%"style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+  		<p style="margin: 5px;font-weight:bold;">{$resource->table_data.username}</p>
+  		</td>
+ 	 	</tr>
+ 	 	<tr style="background:#fff;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+  		<p style="margin: 5px;">Password:</p>
+  		</td>
+    	<td align="right" width="50%"style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+  		<p style="margin: 5px;font-weight:bold;">{$resource->table_data.sus_login_password}</p>
+  		</td>
+ 	 	</tr>
+ 	 	</table>
+
+</td>
+</tr>
+
+<tr style="background:#fff;" >
+<td colspan="2">
+
+<h4 style="margin: 3px 0;color:#222;">Once inside the merchant portal, you will need to enter your store information</h4>
+<p><strong>Including:</strong></p>
+	<ul>
+	<li>Operating hours</li>
+	<li>Taxes</li>
+	<li>Payment Processing Info</li>
+	<li>Holiday Closures</li>
+	<li>Menu Pricing</li>
+	<li>Email Preferences</li>
+	</ul>
+	<h4 style="margin: 3px 0;color:#222;">You will also be asked to review and agree to the Merchant Agreement.</h4><p style="font-style:italic;color:#ff0000;">*You must complete this step before we can activate your location(s).</p>
+
+</td>
+</tr>
+
+<tr>
+<td colspan="2">
+	<p>Please email questions or requests to <a href="mailto:support@dummy.com" >support@dummy.com</a></p>
+	<p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:11px;">&copy; 2015 Splick&#45;It&#44; Inc&#46; 1881 19th St&#46; Suite 303&#44; Boulder&#44; CO 80302</p>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

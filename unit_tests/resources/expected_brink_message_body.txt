@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+   <s:Body>
+      <SubmitOrder xmlns="http://www.brinksoftware.com/webservices/ordering/20140219">
+         <request xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+            <Options>
+               <CalculateItemPrice>true</CalculateItemPrice>
+            </Options>
+            <Order>
+               <CustomerId>00000000-0000-0000-0000-000000000000</CustomerId>
+               <DestinationId>4067027</DestinationId>
+               <Discounts i:nil="true" />
+               <FutureOrder>
+                  <Delivery i:nil="true" />
+                  <EmailAddress>%%email%%</EmailAddress>
+                  <PhoneNumber>123-456-7890</PhoneNumber>
+                  <PickupTime xmlns:a="http://schemas.datacontract.org/2004/07/System">
+                     <a:DateTime>%%brink_pickup_time%%</a:DateTime>
+                     <a:OffsetMinutes>0</a:OffsetMinutes>
+                  </PickupTime>
+                  <SendReminderEmail>false</SendReminderEmail>
+               </FutureOrder>
+               <IsTaxExempt>false</IsTaxExempt>
+               <Items>
+                  <NewOrderItem>
+                     DUMMY
+                  </NewOrderItem>
+               </Items>
+               <Name>First Last</Name>
+               <Payments>
+                  <NewOrderPayment i:type="NewExternalPayment">
+                     <Amount>2.20</Amount>
+                     <Id>3</Id>
+                     <TenderId>4005840</TenderId>
+                     <TipAmount>3.33</TipAmount>
+                     <ReferenceDetails>
+                        <PaymentReferenceDetail>
+                           <Name>Splickit</Name>
+                           <Value>Splickit Order</Value>
+                        </PaymentReferenceDetail>
+                     </ReferenceDetails>
+                  </NewOrderPayment>
+               </Payments>
+               <Promotions i:nil="true" />
+               <SectionId>0</SectionId>
+            </Order>
+            <SuppressConfirmationEmail>true</SuppressConfirmationEmail>
+         </request>
+      </SubmitOrder>
+   </s:Body>
+</s:Envelope>

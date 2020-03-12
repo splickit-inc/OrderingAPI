@@ -1,0 +1,45 @@
+class: SmartyResource
+mimetype: text
+
+<?xml version="1.0" encoding="UTF-8"?>
+<POSREQUEST>
+    <CHECKREQUESTS>
+        <ADDCHECK READYTIME="ORDER READY: {$resource->pickup_time_ampm}" READYDATETIME="{$resource->pickup_date_time_foundry}" ORDERMODEFEE="0.00" EXTCHECKID="{$resource->first_name}{$resource->last_name}{$resource->order_id}" ORDERMODE="{$resource->brand_order_mode}" COMMANDTYPE="ORDER" CARDAUTH="Card Ending XXXX-{$resource->last_four}" ORDERID="{$resource->order_id}" >
+            <CONTACT FIRSTNAME="{$resource->first_name}" PHONE1="{$resource->user_phone_no}" EMAIL="{$resource->user_email}" LASTNAME="{$resource->last_name}" />
+            <ITEMREQUESTS>
+                {assign var=ordered_items value=$resource->order_details}
+                {foreach from=$ordered_items item=ordered_item}
+                    {assign var=external_id value=$ordered_item.external_id}
+                    {assign var=item_quantity value=$ordered_item.quantity}
+                    {assign var=item_price value=$ordered_item.item_total}
+                    <ADDITEM ITEMID="{$external_id}" QTY="{$item_quantity}" FOR="">
+                        {foreach from=$ordered_item.foundry_modifiers item=modifier_item}
+                            {assign var=modifier_item_external_id value=$modifier_item.external_id}
+                            {assign var=modifier_group_external_id value=$modifier_item.external_modifier_group_id}
+                            {assign var=modifier_item_quantity value=$modifier_item.mod_quantity}
+                            {if $modifier_item.has_child eq true}
+                                <MODITEM MODGROUPID="{$modifier_group_external_id}" ITEMID="{$modifier_item_external_id}" MODCODE="1">
+                                    <MODMOD MODGROUPID="{$modifier_item.child.external_modifier_group_id}" ITEMID="{$modifier_item.child.external_id}" MODCODE="1"/>
+                                </MODITEM>
+                            {else}
+                                <MODITEM MODGROUPID="{$modifier_group_external_id}" ITEMID="{$modifier_item_external_id}" MODCODE="1"/>
+                            {/if}
+                        {/foreach}
+                    </ADDITEM>
+                {/foreach}
+                {if $resource->promo_amt lt 0.00 && $resource->foundry_promo_id gt 0}
+                    <ADDITEM ITEMID="{$resource->foundry_promo_id}" PRICE="{$resource->promo_amt}" QTY="1"/>
+                {/if}
+            </ITEMREQUESTS>
+            {if $resource->cash neq 'Y'}
+            <PAYMENTREQUESTS>
+                {if $resource->tip_amt > 0}
+                    <ADDTENDER TENDERID="{$resource->tender_id}" TIP="{$resource->tip_amt}" />
+                {else}
+                    <ADDTENDER TENDERID="{$resource->tender_id}" />
+                {/if}
+            </PAYMENTREQUESTS>
+            {/if}
+        </ADDCHECK>
+    </CHECKREQUESTS>
+</POSREQUEST>

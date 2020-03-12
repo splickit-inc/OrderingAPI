@@ -1,0 +1,18 @@
+vendor/bin/phpunit --coverage-html ./report unit_tests/
+
+this doesn't work right
+
+vendor/bin/phpunit --coverage-html ./report unit_tests/PlaceOrderTest.php PlaceOrderController
+
+vendor/bin/phpunit -d memory_limit=512M --coverage-html ./report unit_tests/
+
+vendor/bin/phpunit -c /Users/radamnyc/code/smaw/unit_tests/phpunit.xml -d memory_limit=512M --coverage-html ./report unit_tests/
+
+vendor/bin/phpunit -c ./unit_tests/phpunit.xml -d memory_limit=512M --coverage-html ./report unit_tests/
+
+vendor/bin/phpunit -c ./unit_tests/phpunit.xml -d memory_limit=512M --coverage-html ./report unit_tests/
+
+wc -l `find . -name "*.php" -not -path "./utilities/Mandrill/*" -not -path "./utilities/dompdf/*" -not -path "./swift/*"`
+
+wc -l `find . -name "*dispatch.php"
+

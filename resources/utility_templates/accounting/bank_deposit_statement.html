@@ -1,0 +1,121 @@
+class: SmartyResource
+mimetype: text
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body style="background:#c1d82f; ">
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10">
+          <tr>
+                <td width="200px">
+                <img src="http://your.amazon.s3.amazonaws.com/email/images/SPL-Logo-200px.png" alt="splickit" style=""/>
+                </td>
+                <td align="right">
+                <h2 style="color:#111;font-family:Arial, Helvetica, sans-serif;margin:0px;">Deposit Statement</h2>
+                </td>
+         </tr>
+</table>
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10" style="font-family:Arial, Helvetica, sans-serif;">
+
+<tr style="background:#111;">
+<td>
+<h2 style="color:#fff;margin:0px;">{$resource->name}</h2>
+</td>
+<td align="right" width="200">
+<h2 style="color:#fff;margin:0px;font-weight:normal;">{$resource->statement_date}</h2>
+</td>
+</tr>
+
+<tr>
+<td style="background:#fff;" colspan="2">
+
+                <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;">
+                <tr style="background:#fff;">
+                <td  valign="top" rowspan="7" width="50%">
+                <h4 style="margin: 3px 0;">{$resource->address1}<br>{$resource->city}, {$resource->state} {$resource->zip}</h4>
+                <p style="margin: 3px 0;"><a href="#">{$resource->desination_emails}</a></p>
+                </td>
+                <td valign="top" width="20%"><p style="margin: 0 0 5px 0;font-size:12px;"><strong>Invoice:</strong></p>
+                </td>
+                <td valign="top" width="30%" align="right">
+                <p style="margin: 0 0 5px 0;font-size:12px;">{$resource->invoice}</p>
+                </td>
+                </tr>
+
+                 <tr style="font-size:12px;">
+                 <td><p style="margin: 0 0 5px 0;"><strong>Period:</strong></td>
+                 <td align="right"><p style="margin: 0 0 5px 0;">{$resource->period}</p></td>
+                 </tr>
+
+                 <tr style="font-size:12px;">
+                 <tr style="font-size:12px;">
+                 <td><p style="margin: 0 0 5px 0;"><strong>Account:</strong></p></td>
+                 <td align="right"><p style="margin: 0 0 5px 0;">{$resource->merchant_id}</p></td>
+                 </tr>
+
+                 <tr style="font-size:12px;">
+                 <td><p style="margin: 0 0 5px 0;"><strong>Brand Store ID:</strong></p></td>
+                 <td align="right"><p style="margin: 0 0 5px 0;">{$resource->merchant_external_id}</p></td>
+                 </tr>
+
+                 <tr>
+                 <td></td>
+                 <td></td>
+                 </tr>
+
+                </table>
+
+</td>
+</tr>
+
+<tr>
+<td style="background:#fff;" colspan="2">
+
+                <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif; margin-top:20px;">
+                <tr style="font-weight:bold;font-size:12px;">
+                <td align="left"style="padding:5px 0;">Date</td>
+				<td align="left"style="padding:5px 0;">Invoice</td>
+				<td align="left"style="padding:5px 0;">Period</td>
+				<td align="right"style="padding:5px 0;">Payment</td>
+				<td align="right"style="padding:5px 0;">Trans ID</td>
+                </tr>
+
+{foreach from=$resource->deposit_details key=index item=day}
+                <tr style="background:#fff;color:#444;font-size:12px;">
+                <td style="border-bottom:1px dotted #e5e5e5;">
+                <p style="margin: 5px 0px;">{$day.generation}</p>
+                </td>
+                <td align="left" style="border-bottom:1px dotted #e5e5e5;">
+                <p style="margin: 5px 0px;">{$day.invoice}</p>
+                </td>
+                <td align="left" style="border-bottom:1px dotted #e5e5e5;">
+                <p style="margin: 5px 0px;">{$day.period}</p>
+                </td>
+                <td align="right" style="border-bottom:1px dotted #e5e5e5;">
+                <p style="margin: 5px 0px;">${$day.payment}</p>
+                </td>
+                <td align="right" style="border-bottom:1px dotted #e5e5e5;">
+                <p style="margin: 5px 0px;">{$day.payment_id}</p>
+                </td>
+                </tr>
+ {/foreach}
+</table>
+
+</td>
+</tr>
+<tr>
+<td colspan="2">
+        <p>Please email questions or requests to <a href="mailto:support@dummy.com" >support@dummy.com</a></p>
+        <p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:11px;">&copy; 2015 Splick&#45;It&#44; Inc&#46; 1881 19th St&#46; Suite 303&#44; Boulder&#44; CO 80302</p>
+</td>
+</tr>
+
+</table>
+</body>
+</html>

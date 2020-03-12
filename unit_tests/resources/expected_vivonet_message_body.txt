@@ -1,0 +1,65 @@
+"{
+  "orderId": %orderId%"
+  "externalSystemOrderId": "%externalSystemOrderId%",
+  "orderPlacedBy": "%orderPlacedBy%",
+  "orderPlacerId": "%orderPlacerId%",
+  "orderLineItems": [
+    {
+      "orderLineItemId": %orderLineItemId%,
+      "productId": %productId%,
+      "productName": "%productName%",
+      "orderTypeId": %orderTypeId%,
+      "price": %price%,
+      "quantity": %quantity%,
+      "quantityUnit": "%quantityUnit%",
+      "ignorePrice": true,
+      "remark": "%remark%",
+      "modifiers": [
+        {}
+      ],
+      "discounts": [
+        {
+          "discountId": %discountId%,
+          "discountName": "%discountName%",
+          "discountType": "%discountType%",
+          "value": %value%
+        }
+      ]
+    }
+  ],
+  "charges": [
+    {
+      "chargeId": %chargeId%,
+      "name": "%name%",
+      "amount": %amount%
+    }
+  ],
+  "payments": [
+    {
+      "paymentId": %paymentId%,
+      "tenderId": %tenderId%,
+      "amount": %amount%,
+      "lineItemIds": [
+        0
+      ],
+      "paymentMethod": {
+        "paymentMethodId": 0,
+        "type": "string",
+        "nameOnCard": "string",
+        "cardNumber": "string",
+        "expirationDate": "string",
+        "securityCode": "string",
+        "base64Data": "string"
+      }
+    }
+  ],
+  "discounts": [
+    {
+      "discountId": %discountId%,
+      "discountName": "%discountName%",
+      "discountType": "%discountType%",
+      "value": %value%
+    }
+  ],
+  "pickupTime": %pickupTime%
+}"

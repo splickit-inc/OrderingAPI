@@ -1,0 +1,9 @@
+class: SmartyResource
+mimetype: text
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+    <Message>{$resource->order_id}</Message>
+    <Message>{$resource->message_delivery_addr}</Message>
+    <Play loop="2">https://s3.amazonaws.com/splickit-api-assets/audio/cycleprinter.mp3</Play>
+</Response>

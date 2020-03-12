@@ -1,0 +1,10 @@
+class: SmartyResource
+mimetype: text
+
+::name:  {$resource->merchant.name|escape}
+::addr:  {$resource->merchant.address1|escape}
+::city:  {$resource->merchant.city|escape}
+::phone: {$resource->merchant.phone_no|escape}
+::email: {$resource->merchant.shop_email|escape}
+:: 
+::

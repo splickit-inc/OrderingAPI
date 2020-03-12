@@ -1,0 +1,52 @@
+class: SmartyResource
+mimetype: text
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body style="background:#c1d82f; ">
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10">
+	  <tr>
+  		<td width="200px">
+  		<img src="http://www.splickit.com/icons/icon_store_juiceitup.png" width="200" height="200" alt="Juice It Up!" style=""/>
+  		</td>
+  		<td align="right">
+  		<h2 style="color:#111;font-family:Arial, Helvetica, sans-serif;margin:0px;">Welcome to Juice It Up!</h2>
+  		</td>
+ 	 </tr>
+</table>
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10" style="font-family:Arial, Helvetica, sans-serif;">
+
+<tr style="background:#111;">
+<td>
+<h2 style="color:#fff;margin:0px;">Juice It Up! Order ID:{$resource->table_data.order_id}</h2>
+</td>
+<td align="right" width="160">
+<h2 style="color:#fff;margin:0px;font-weight:normal;">Mar 01, 2012</h2>
+</td>
+</tr>
+
+<tr style="background:#fff;" >	 
+<td colspan="2">
+<p>Dear {$resource->table_data.first_name} {$resource->table_data.last_name},</p><p> 
+Thank you for placing your order with Juice It Up! today.  Your credit card has been charged for the amount of ${$resource->table_data.grand_total} and the charge on your credit card statement will be labelled "Atlas Purveyors".  All future orders placed on the Juice It Up! mobile app or on the web order site will be lablled "Jucie It Up!".<br> <br>
+Best regards,<br> <br>
+Splickit Support.
+</td>
+</tr>
+<tr>
+<td colspan="2">
+	<p>Please email questions or requests to <a href="mailto:support@dummy.com" >support@dummy.com</a></p>
+	<p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:11px;">© 2011 splick•it, Inc. 1405 Arapahoe Ave. Boulder, CO 80302 1.888.SPLICKIT (775.4254)</p>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

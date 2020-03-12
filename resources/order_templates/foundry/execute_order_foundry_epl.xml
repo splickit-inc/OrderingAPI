@@ -1,0 +1,65 @@
+class: SmartyResource
+mimetype: text
+
+<?xml version="1.0" encoding="UTF-8"?>
+<POSREQUEST>
+    <CHECKREQUESTS>
+        <ADDCHECK TABLENUMBER="0" EXTCHECKID="{$resource->epl_pickup_time_string}" READYTIME="{$resource->pickup_time_military_with_seconds}" READYDATETIME="{$resource->pickup_date_time4}" NOTE="{$resource->note}" ORDERMODEFEE="" ORDERID="{$resource->order_id}" PRICEONLY="" ORDERMODE="2" CHECKSTATUSBITS="2">
+            <ITEMREQUESTS>
+                {assign var=ordered_items value=$resource->order_details_foundry_epl}
+                {foreach from=$ordered_items item=ordered_item}
+                    {assign var=external_id value=$ordered_item.external_id}
+                    {assign var=item_quantity value=$ordered_item.quantity}
+                    {assign var=exception_tag value=$ordered_item.exception_tag}
+                    {if $item_quantity > 1}
+                        {assign var=item_price value=$ordered_item.price}
+                    {else}
+                        {assign var=item_price value=$ordered_item.item_total_w_mods}
+                    {/if}
+                    {if $ordered_item.group_id neq ''}
+                        <ADDITEM QTY="{$item_quantity}" ITEMID="{$external_id}" COMBOMEALGROUPID="{$ordered_item.group_id}" COMBOMEALMENUITEMID="{$ordered_item.main_item_id}" ORDERNOW="Y" PRICE="{$item_price}" FOR="{$ordered_item.note}">
+                    {else}
+                        <ADDITEM QTY="{$item_quantity}" ITEMID="{$external_id}" ORDERNOW="Y" PRICE="{$item_price}" FOR="{$ordered_item.note}">
+                    {/if}
+                    {foreach from=$ordered_item.foundry_epl_modifiers item=modifier_item}
+                        {assign var=modifier_item_external_id value=$modifier_item.external_id}
+                        {assign var=modifier_item_quantity value=$modifier_item.mod_quantity}
+                        {if $modifier_item.use_as_sub eq 'YES'}
+                            <COMBOMODMAINITEM ITEMID="{$modifier_item_external_id}" PRICE="" FOR="" />
+                        {elseif $modifier_item.role eq 'parent'}
+                            <MODITEM QTY="{$modifier_item_quantity}" ITEMID="{$modifier_item_external_id}" MODCODE="1">
+                        {elseif $modifier_item.role eq 'child'}
+                                <MODMOD QTY="{$modifier_item_quantity}" ITEMID="{$modifier_item_external_id}" MODCODE="1"/>
+                            </MODITEM>
+                        {else}
+                            {if $modifier_item.modifier_type eq 'T' && $modifier_item.comes_with eq 'N'}
+                                <{$exception_tag} ITEMID="9999929" PRICE="" FOR="" />
+                                <{$exception_tag} QTY="{$modifier_item_quantity}" ITEMID="{$modifier_item_external_id}" MODCODE="1"/>
+                            {elseif $modifier_item.modifier_type eq 'T' && $modifier_item.comes_with eq 'H'}
+                                <{$exception_tag} ITEMID="9999931" PRICE="" FOR="" />
+                                <{$exception_tag} QTY="{$modifier_item_quantity}" ITEMID="{$modifier_item_external_id}" MODCODE="1"/>
+                            {else}
+                            <MODITEM QTY="{$modifier_item_quantity}" ITEMID="{$modifier_item_external_id}" MODCODE="1"/>
+                            {/if}
+
+                        {/if}
+                    {/foreach}
+                    {if $ordered_item.discount gt 0.00}
+                        <ADDDISCOUNT ID="813" AMOUNT="{$ordered_item->discount}" REFERENCE="ITEM DISC" />
+                    {/if}
+                    </ADDITEM>
+                {/foreach}
+            </ITEMREQUESTS>
+            {if $resource->promo_amt lt 0.00}
+            <DISCOUNTREQUESTS>
+                <ADDDISCOUNT ID="{$resource->promo_external_id_for_brand}" AMOUNT="{$resource->positive_promo_amount}" REFERENCE="SUBTOTAL DISC" />
+            </DISCOUNTREQUESTS>
+            {/if}
+            <PAYMENTREQUESTS>
+                <ADDTENDER TENDERID="407" AMOUNT="{$resource->grand_total_to_merchant}" TIP="{$resource->tip_amt}"/>
+            </PAYMENTREQUESTS>
+            <CONTACT FIRSTNAME="{$resource->first_name}" LASTNAME="{$resource->last_name}" PHONE1="{$resource->phone_no}" EMAIL="{$resource->user_email}" COMPANY="" DEPT="" PHONE2=""/>
+        </ADDCHECK>
+    </CHECKREQUESTS>
+    <token>{$resource->merchant.alphanumeric_id}</token>
+</POSREQUEST>

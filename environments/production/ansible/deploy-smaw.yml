@@ -1,0 +1,95 @@
+---
+
+- hosts: tag_jenkins_slave_yes:&tag_role_smaw
+  become: true
+  become_user: root
+
+  vars:
+    deploy_key_destination: '/root/deployment.pem'
+
+  roles:
+   - docker
+
+  tasks:
+
+  - name: Get timestamp
+    set_fact: deploy_ts="{{lookup('pipe','date +%Y%m%d%H%M%S')}}"
+
+  - name: Install pip
+    apt: name=python-pip state=latest update_cache=yes
+
+  - name: Install docker python client
+    pip: name=docker-py state=latest
+
+  - name: Install AWS CLI
+    pip: name=awscli state=latest extra_args='--ignore-installed six'
+    when: replace_container_image == "true"
+
+  - name: Get access to container registry
+    shell: '$(aws ecr get-login --region us-east-1)'
+    when: replace_container_image == "true"
+
+  - name: Pull updated container image
+    docker_image:
+      name: '{{ docker_image }}'
+      state: present
+      force: yes
+    when: replace_container_image == "true"
+
+
+  - name: Make sure main directory exists
+    file: dest={{ deploys_dir }} state=directory mode=0700
+
+  - name: Copy deployment private ssh key
+    copy: src={{ deployment_key }} dest={{ deploy_key_destination }} owner=root group=root mode=0600
+
+  - name: Deploy code
+    git: repo='{{ repo_url }}' version='{{ tag }}' dest='{{ deploys_dir }}/{{ deploy_ts }}' force=yes accept_hostkey=yes key_file={{ deploy_key_destination }}
+
+  - name: Delete deployment key
+    file: path={{ deploy_key_destination }} state=absent
+
+  - name: Update link to current
+    file: src='{{ deploys_dir }}/{{ deploy_ts }}' dest='{{ deploys_dir }}/current' state=link force=yes
+
+  - name: Create cache dir
+    file:
+      path: '{{ deploys_dir }}/current/lib/utilities/cache.storage'
+      state: directory
+      mode: 0777
+
+  - name: Create logs dir
+    file:
+      path: '{{ deploys_dir }}/current/logs'
+      state: directory
+      mode: 0755
+
+  - name: Set environment
+    shell: /bin/echo -n prod > {{ deploys_dir }}/current/config/environment.conf
+
+  # this is probably not necessary
+  - name: Set appropiate ownership
+    file:
+      path: '{{ deploys_dir }}/{{ deploy_ts }}'
+      state: directory
+      owner: www-data
+      group: www-data
+      recurse: yes
+
+
+  - name: Start the main container
+    docker_container:
+      name: smaw
+      image: '{{ docker_image }}'
+      state: started
+      recreate: yes
+      stop_timeout: 10
+      restart: yes
+      volumes:
+       - '{{ deploys_dir }}/current:/var/www/smaw'
+      ports:
+       - "80:80"
+      command: 'bash -c "composer install; /usr/local/bin/apache2-foreground"'
+      env:
+          SMAW_ENV: production
+

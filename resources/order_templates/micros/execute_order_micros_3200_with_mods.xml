@@ -1,0 +1,33 @@
+class: SmartyResource
+mimetype: text
+
+<?xml version="1.0" encoding="UTF-8"?>
+<POSREQUEST>
+    <CHECKREQUESTS>
+        <ADDCHECK TABLENUMBER="" EXTCHECKID="SPLICK-IT-{$resource->order_id}" READYTIME="" READYDATETIME="" NOTE="{$resource->note}" ORDERMODEFEE="" ORDERID="" PRICEONLY="" ORDERMODE="2">
+            <ITEMREQUESTS>
+                {assign var=ordered_items value=$resource->order_details}
+                {assign var=the_index value=1}
+                {foreach from=$ordered_items item=ordered_item}
+                {assign var=item_name value=$ordered_item.item_print_name}
+                {assign var=external_id value=$ordered_item.external_id}
+                {assign var=item_size value=$ordered_item.size_print_name}
+                {assign var=item_quantity value=$ordered_item.quantity}
+                {assign var=item_price value=$ordered_item.item_total_w_mods}
+                {assign var=item_note value=$ordered_item.note}
+                <ADDITEM ITEMID="{$external_id}" QTY="{$item_quantity}" ORDERNOW="Y">
+                    {assign var=with_mods value=$ordered_item.order_detail_complete_modifier_list_no_holds}
+                    {foreach from=$with_mods item=modifier}
+                    {assign var=modifier_external_id value=$modifier.external_id}
+                    {assign var=modifier_quantity value=$modifier.mod_quantity}
+                    <MODITEM QTY="{$modifier_quantity}" ITEMID="{$modifier_external_id}" MODCODE="1" />
+                    {/foreach}
+                </ADDITEM>
+                {assign var=the_index value=$the_index+1}
+                {/foreach}
+            </ITEMREQUESTS>
+            <CONTACT FIRSTNAME="{$resource->first_name}" LASTNAME="{$resource->last_name}" PHONE1="{$resource->phone_no}" EMAIL="{$resource->user_email}" />
+        </ADDCHECK>
+    </CHECKREQUESTS>
+    <token>1234567890</token>
+</POSREQUEST>

@@ -1,0 +1,665 @@
+class: SmartyResource
+mimetype: text
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Thanks for your order!</title>
+		<!--  default splickit order confirmation template -->
+		<style>
+		{literal}
+			* html { margin:0px; padding:0px; }
+
+			html, table, tr, td, p, div {
+				text-shadow: 0 1px #ffffff;
+				font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+			}
+
+			hr {border: 0; height: 1px; background-color: #e5e5e5; color: #e5e5e5;}
+
+			.body {font-size: 14px; color: #494949;}
+
+			.title {color: #333333; font-weight: bold; font-size: 16px;}
+		{/literal}
+		</style>
+	</head>
+	<body bgcolor="#eeeeee" style='color:#333333; font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;'>
+		<table cellspacing="0" cellpadding="0" border="0" width="100%" align="center" style="color: #333333;">
+			<tr>
+				<td bgcolor="#eeeeee">
+					<!--BRAND ICON-->
+					<table style="margin: 19px auto; padding:0 5px 0 5px;" width="600px" align="center" cellpadding="0" cellspacing="0">
+						<tr>
+							<td>
+								<img src="https://d38o1hjtj2mzwt.cloudfront.net/{$resource->skin_external_identifier}/web/brand-assets/app-icon.png" style="border-radius: 14px;" width="60px;" alt="App icon">
+							</td>
+
+							<td width="325px">
+								<div style="color: #666; font-size: 24px; font-family: Helvetica-Light, Helvetica, Arial, Sans-Serif; ">&nbsp;&nbsp;{$resource->merchant_name|escape}</div>
+							</td>
+
+							<td width="200px" align="right">
+								<div style="padding: 1px 0 0 0; color: #666; font-size: 20px; font-family: Helvetica-Light, Helvetica, Arial, Sans-Serif;">Order #{$resource->order_id}</div>
+							</td>
+						</tr>
+					</table>
+					<!--END BRAND ICON-->
+
+					{if $resource->skin_external_identifier eq 'com.splickit.moes'}
+					<!--MOE'S WELCOME BANNER-->
+					<table width="598px" height="auto" align="center" cellpadding="0" cellspacing="0" margin="0">
+						<tr>
+							<td>
+								<img src="http://splickit-brand-assets.s3.amazonaws.com/{$resource->skin_external_identifier}/order_confirm_header_600.jpg">
+							</td>
+						</tr>
+					</table>
+					<!--END MOE'S WELCOME BANNER-->
+					{/if}
+
+					<!--MERCHANT LOCATION MAP-->
+					<table width="598px" height="auto" align="center" cellpadding="0" cellspacing="0" margin="0">
+						<tr>
+							<td>
+								<img src="https://api.mapbox.com/styles/v1/mapbox/streets-v10/static/geojson(%7B%22type%22%3A%22Point%22%2C%22coordinates%22%3A%5B{$resource->merchant.lng}%2C{$resource->merchant.lat}%5D%7D)/{$resource->merchant.lng},{$resource->merchant.lat},15/598x200?access_token=pk.eyJ1Ijoic3BsaWNraXQiLCJhIjoiY2oydDZqajhvMDAwcjJxbzVpZm1yY2ZuNSJ9.e9xExnKbN_0hCjB9FzFKpg#15/48.8446/2.3114" style="border-top:solid 1px #cacaca; border-left:solid 1px #cacaca; border-right:solid 1px #cacaca; border-top-left-radius: 6px; border-top-right-radius: 6px;">
+							</td>
+						</tr>
+					</table>
+					<!--END MERCHANT LOCATION MAP-->
+
+					<!--ORDER-->
+					<table style="border-left:solid 1px #cacaca; border-right:solid 1px #cacaca; border-bottom:solid 1px #cacaca; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; background:#ffffff; padding: 0px 20px 0px 20px;" width="600px" height="auto" align="center" cellpadding="0" cellspacing="0" margin="0">
+
+						<!--USER INFORMATION-->
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif"><!-- 18 / 605 -->
+							</td>
+
+							<td colspan="3">
+								<div style="line-height: 1.25; font-size:20px; padding: 40px 0 0 0;" align="center">
+									{if $resource->participant_submit_to_group_order neq 'Y'}
+									<span style="font-weight:bold;">{$resource->first_name},</span> your order will be {if $resource->order_type eq 'R'}
+									<span style="font-weight:bold;">ready for pickup at {$resource->pickup_time}{if $resource->advance_order eq 'true'} on {$resource->pickup_day}{/if}</span>. {elseif $resource->order_type eq 'D'} {assign var=delivery_location_info value=$resource->delivery_info}
+									<span style="font-weight:bold;">delivered to</span>&nbsp;{if $delivery_location_info->business_name neq ''}{$delivery_location_info->business_name},&nbsp;{/if}{$delivery_location_info->address1|escape} {if $delivery_location_info->address2 neq ''} {$delivery_location_info->address2|escape} {/if}{$delivery_location_info->city}, {$delivery_location_info->state}
+									<span style="font-weight:bold;">{$resource->requested_delivery_time}</span>{/if}
+									{else}
+										<span style="font-weight:bold;">{$resource->first_name},</span> your order has been added to <span style="font-weight:bold;">{$resource->group_order_admin_first_name}'s</span> Group order.
+									{/if}
+								</div>
+
+								<div style="line-height: 1.25; font-size:15px; padding: 10px 25px 25px 25px; color:#aaa; a:link: #aaaaaa;" align="center">
+									<span style="text-decoration:underline; font-weight: normal;">{$resource->merchant_addr} - {$resource->merchant_city_st_zip}</span> <br />
+									<span style="font-weight: normal; color: #000; margin-top: 12px; display: block;">
+										<span style="font-weight:bold;">Questions?</span>
+										Call us: {$resource->merchant_phone_no}
+									</span>
+								</div>
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+						<!--END USER INFORMATION-->
+
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td width="84.7100%"> <!-- 482 / 569 -->
+								<div style="font-size:14px; margin:15px auto;" class="body">
+									Details
+								</div>
+							</td>
+							<td align`="right">
+								<div style="font-size:14px; margin:5px;" align="center" class="body">Qty&nbsp;</div>
+							</td>
+
+							<td align="right">
+								<div style="font-size:14px; margin:5px;" align="center" class="body">x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price</div>
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+						{foreach from=$resource->order_details key=index item=menu_item}
+							{assign var=item_name value=$menu_item.item_name}
+							{assign var=item_size value=$menu_item.size_print_name}
+							{assign var=item_quant value=$menu_item.quantity}
+							{assign var=item_price value=$menu_item.item_total_w_mods}
+							{assign var=item_note value=$menu_item.note}
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td colspan="3">
+								<hr />
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td>
+								<div style="padding: 10px 0 10px 0;" class="title">
+									{if $item_size|lower neq 'one size'}{$item_size}{/if} {$item_name}
+								</div>
+							</td>
+
+							<td align="center">
+								<div style="padding: 10px 0 10px 0;" class="title">
+									{if $item_quant neq '0'}{$item_quant}{/if}
+								</div>
+							</td>
+
+							<td>
+								<div align="right" class="body" style="font-size: 16px; padding: 10px 0 10px 0;">
+									{if $item_price neq '$0' }
+										${$item_price}
+									{elseif $item_price eq '$0' && $resource->is_submit_group_order neq 'Y'}
+										${$item_price}
+									{/if}
+								</div>
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+						{if $item_note != ""}
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td colspan="3">
+								<span style="font-weight: bold;">note:</span> {$item_note}
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+						{/if}
+
+						{if $menu_item.order_detail_added_modifiers|@count > 0}
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td>
+								<div style="padding: 5px 0 5px 0;" class="body">
+									<span style="font-weight:bold;">&nbsp;+&nbsp;</span>
+									{foreach from=$menu_item.order_detail_modifiers key=index2 item=modifier_record name=adds}
+										{assign var=mod_item_name value=$modifier_record.mod_print_name}
+										{assign var=mod_item_quantity value=$modifier_record.mod_quantity}
+										{$mod_item_name} {if $mod_item_quantity != "1" }({$mod_item_quantity}){/if}
+										{if not $smarty.foreach.adds.last},{/if}
+									{/foreach}
+									<br />
+								</div>
+							</td>
+
+							<td></td>
+
+							<td></td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+						{/if}
+
+						{if $menu_item.order_detail_hold_it_modifiers|@count > 0}
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td>
+								<div style="padding: 5px 0 5px 0;" class="body">
+									<span style="font-weight:bold;">&nbsp;-&nbsp;</span>
+									{foreach from=$menu_item.order_detail_hold_it_modifiers key=index2 item=modifier_record name=mod}
+										{assign var=mod_item_name value=$modifier_record.mod_print_name}
+										{$mod_item_name}{if not $smarty.foreach.mod.last},{/if}
+									{/foreach}
+								</div>
+							</td>
+
+							<td></td>
+
+							<td></td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+						{/if}
+
+						{if $menu_item.order_detail_sides|@count > 0}
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td>
+								<div style="margin: 5px 0 5px 0;" class="body">
+									<span style="font-weight:bold;">&nbsp;side:&nbsp;</span>
+									{foreach from=$menu_item.order_detail_sides key=index2 item=modifier_record name=side}
+										{assign var=mod_item_name value=$modifier_record.mod_print_name}
+										{$mod_item_name} {if not $smarty.foreach.side.last},{/if}
+									{/foreach}
+								</div>
+							</td>
+
+							<td></td>
+
+							<td></td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+						{/if}
+
+						{if $menu_item.order_detail_mealdeal|@count > 0}
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td>
+								<div style="margin: 5px 0 5px 0;" class="body">
+									<span style="font-weight:bold;">&nbsp;combos:&nbsp;</span>
+									{foreach from=$menu_item.order_detail_mealdeal key=index5 item=modifier_record name=mealdeal}
+										{assign var=mod_item_name value=$modifier_record.mod_print_name}
+										{$mod_item_name}{if not $smarty.foreach.mealdeal.last},{/if}
+									{/foreach}
+								</div>
+							</td>
+
+							<td></td>
+
+							<td></td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+						{/if}
+
+						{if $resource->item_note neq ''}
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td>
+								<div style="font-size:14px; margin: 5px 0 5px 0;">
+									<span style="font-weight:bold;">&nbsp;note:&nbsp;</span>{$item_note|escape}
+								</div>
+							</td>
+
+							<td></td>
+
+							<td></td>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+						{/if}
+						{/foreach}
+						<!--END ORDER DETAIL-->
+
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td colspan="3">
+								<hr>
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+
+						<!--ORDER NOTES-->
+						{if $resource->note neq ''}
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td>
+								<div style="padding: 5px 0 0 0;" class="title"> Notes </div>
+							</td>
+
+							<td></td>
+
+							<td></td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td colspan="3">
+								<div style="padding: 5px 0 5px 0;" class="body">
+									{$resource->note}
+								</div>
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td colspan="3">
+								<hr>
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+						{/if}
+						<!--END ORDER NOTES-->
+
+						<!--ORDER RECEIPT ITEMS -->
+						{foreach from=$resource->receipt_items key=index item=receipt_item}
+							{assign var=label value=$receipt_item.title}
+							{assign var=amount value=$receipt_item.amount}
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td colspan="2">
+								<div style="padding: 3px 0 3px 0;" class="body">{$label}</div>
+							</td>
+
+							<td>
+								<div style="padding: 3px 0 3px 0;" align="right" class="body"> {$amount} </div>
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+						{/foreach}
+						<!--END RECEIPT ITEMS-->
+
+						{if $resource->rewards_used neq ''}
+							{assign var=reward_used_label value=$resource->rewards_used.label}
+							{assign var=reward_used_amount value=$resource->rewards_used.amount}
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td colspan="3" height="10px">
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td colspan="2">
+								<div style="padding: 3px 0 3px 0; font-weight: bold;" class="body">{$reward_used_label}</div>
+							</td>
+
+							<td>
+								<div style="padding: 3px 0 3px 0; font-weight: bold;" align="right" class="body">{$reward_used_amount}</div>
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+						{/if}
+
+						{if $resource->show_loyalty_information eq 'Y'}
+							{if $resource->bill neq ''}
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td colspan="3" height="10px">
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+
+						<tr style="background: #FFB23A;">
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td colspan="3" style="font-size:20px; padding: 10px 0 10px 0; color:#4E4E4C; text-shadow:none" align="center">
+								{$resource->bill}
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+							{/if}
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td colspan="3" height="10px">
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+
+						{foreach from=$resource->loyalty_message key=index item=loyalty_message_item}
+							{assign var=loyalty_label value=$loyalty_message_item.label}
+							{assign var=loyalty_message value=$loyalty_message_item.message}
+						<tr style="background: #B3E65A;">
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td colspan="2" style="font-size:14px; padding: 5px 0 5px 0; text-shadow:none">
+								{$loyalty_label}
+							</td>
+
+							<td style="font-size:14px; padding: 5px 0 5px 0; text-shadow:none; text-align: right;">
+								{$loyalty_message}
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+						{/foreach}
+
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td colspan="3" height="10px">
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+						{else}
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td colspan="2">
+								<div style="padding: 10px 0 2px 0;">
+									<span class="title">Total</span>&nbsp;&nbsp;&nbsp;
+									{if $resource->cash eq 'N'}
+										{if $resource->balance_before > '0.00'}
+									<span class="body" style="background:#eeeeee; color:#7f7f7f; padding: 1px; border: solid 10px #eeeeee; border-radius: 10px; font-weight: bold;">account credit</span>
+										{/if}
+									{/if}
+
+									{if $resource->gift_used eq 'true'}
+									<span class="body" style="background:#eeeeee; color:#7f7f7f; padding: 1px; border: solid 10px #eeeeee; border-radius: 10px; font-weight: bold;">GIFT USED!</span>
+									{/if}
+
+									{if $resource->amt_billed_to_cc neq '0.00'}
+									<span style="background:#eeeeee; font-size: 14px; color:#7f7f7f; border: solid 10px #eeeeee; border-radius: 10px;">${$resource->amt_billed_to_cc} billed to&nbsp;<img src="http://your.amazon.s3.amazonaws.com/email/images/generic-credit-card.png" style="vertical-align:middle; padding: 0 0 3px 0;">
+										{$resource->user.last_four}
+									</span>
+									{/if}
+								</div>
+							</td>
+
+							<td>
+								<div style="font-size:20px; padding: 2px 0 2px 0; font-weight:bold;" align="right">
+									${$resource->grand_total}
+								</div>
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td colspan="3" height="20px"></td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+						{/if}
+
+						{if $resource->cash eq 'Y'}
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td colspan="3">
+								<div style="padding: 5px 0 5px 0;" align="center" class="body">
+									Your credit card was not billed for this transaction. The above order total is an
+									estimate, and your actual total may be slightly different.
+								</div>
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+						{/if}
+
+						<tr>
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+
+							<td>
+								<div style="padding: 0 0 5px 0;">
+									{if isset($resource->additional_message)}
+										{$resource->additional_message}
+									{else}
+										Enjoy!
+									{/if}
+								</div>
+							</td>
+
+							<td width="2.9752%">
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/spacer.gif">
+							</td>
+						</tr>
+					</table>
+					<!--END ORDER -->
+
+					<!--FOOTER-->
+					<table style="margin:15px auto; border: solid 1px #cacaca; background: #e2e2e2; text-shadow: 0px 1px 1px #fff; border-radius: 10px;" width="600px" cellpadding="0" cellspacing="0">
+						<tr>
+							<td>
+								<div style="padding: 10px 20px 10px 45px;">
+									<img src="http://your.amazon.s3.amazonaws.com/email/images/spork-rev.png" width="25px">
+								</div>
+							</td>
+
+							{if $resource->skin_external_identifier eq 'com.splickit.moes'}
+							<td>
+								<span style="font-weight:bold; font-size: 18px; color:#000;">Compliments, comments, feedback? We’d love to hear from you!</span>
+								<br>
+								<a href="http://www.moes.com/contact/" style="color:#777777; font-size: 14px;">Contact us.</a>
+							</td>
+							{else}
+
+							<td>
+								<span style="font-weight:bold; font-size: 18px; color:#000;">Help us make Splick-it even more delicious!</span>
+								<br>
+								<a href="http://www.formstack.com/forms/?1367061-1ZVMYVZnFJ" style="color:#777777; font-size: 14px;">
+									Tell us about your experience in 4 quick questions.
+								</a>
+							</td>
+							{/if}
+						</tr>
+					</table>
+					<!--END FOOTER-->
+
+					<!--COPY RIGHT-->
+					<table style="margin:20px auto; border-radius: 10px; font-family: Helvetica-Neue, Helvetica, Arial, Sans-Serif; padding: 0 5px 5px 5px;" width="600px" cellpadding="0" cellspacing="0">
+						<tr>
+							<td>
+								<img src="http://your.amazon.s3.amazonaws.com/email/images/splickit_powered.png">
+							</td>
+
+							<td align="right">
+								<a href="mailto:support@dummy.com" style="color: #999999; font-size:13px;">support@dummy.com</a>
+							</td>
+						</tr>
+					</table>
+					<!--END COPY RIGHT-->
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

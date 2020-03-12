@@ -1,0 +1,127 @@
+{
+
+
+				<SaleName>Web Order</SaleName>
+				<PickupLocation></PickupLocation>
+				<PickUpDate></PickUpDate>
+				<OrderedDate>{$resource->task_retail_order_time_string}</OrderedDate>
+				<Member>
+					<CardNumber>124</CardNumber>
+					<ExternalID>1</ExternalID>
+					<FirstName>{$resource->user.first_name}</FirstName>
+					<Surname>{$resource->user.last_name}</Surname>
+					<StreetAddress></StreetAddress>
+					<State></State>
+                    <PostCode>00000</PostCode>
+					<Country></Country>
+					<Sex>1</Sex>
+					<EmailAddress>{$resource->user.email}</EmailAddress>
+				</Member>
+
+$
+
+
+  "SaleName": "Wed Order",
+  "PickupLocation": {$resource->location_id},
+  "PickUpDate": "{$resource->task_retail_pickup_time_string}",
+  "OrderedDate": "2018-10-03T19:36:30.380Z",
+  "IsDelivery": true,
+  "MemberId": 0,   ************  the customer number (will need to create customers in the task retail system for each user)
+  "Covers": 0,    *************  number of entres
+  "AddedDate": "2018-10-03T19:36:30.380Z",
+  "ExtraInstructions": "string",
+  "PartialMember": {
+    "FirstName": "string",
+    "LastName": "string",
+    "Email": "string",
+    "MobileNumber": "string"
+  },
+  "SendToKMS": true,
+  "TotalTaxes": [
+    {
+      "TaxID": 0,
+      "Value": 0,
+      "IsInclusive": true
+    }
+  ],
+  "TotalLeftToPay": 0,
+  "TotalPaid": 0,
+  "OrderTypeId": 0,
+  "Items": [
+    {
+      "DisplayName": "string",
+      "OrderId": 0,
+      "PLU": 0,
+      "Quantity": 0,
+      "Value": 0,
+      "UnitPrice": 0,
+      "RedeemedProductId": 0,
+      "IsRedeemedByPoints": true,
+      "PointsValue": 0,
+      "IngredientsChanges": {
+        "IngredientsModified": [
+          {
+            "ID": 0,
+            "OrderItemId": 0,
+            "IngredientPLU": 0,
+            "ModifierID": 0,
+            "ModifierName": "string",
+            "ExtraPrice": 0,
+            "TaxBase": 0,
+            "Taxes": [
+              {
+                "TaxID": 0,
+                "Value": 0,
+                "IsInclusive": true
+              }
+            ],
+            "GrossValue": 0,
+            "NettValue": 0,
+            "SaleValueInitial": 0,
+            "SaleValueFinal": 0
+          }
+        ],
+        "IngredientsRemoved": [
+          {
+            "ID": 0,
+            "OrderItemId": 0,
+            "IngredientPLU": 0
+          }
+        ]
+      },
+      "TaxBase": 0,
+      "Taxes": [
+        {
+          "TaxID": 0,
+          "Value": 0,
+          "IsInclusive": true
+        }
+      ],
+      "GrossValue": 0,
+      "NettValue": 0,
+      "SaleValueInitial": 0,
+      "SaleValueFinal": 0
+    }
+  ],
+  "Medias": [
+    {
+      "Id": 0,
+      "MediaDescription": "string",
+      "MediaId": 0,
+      "OrderId": 0,
+      "Value": 0,
+      "PaymentToken": "string",
+      "PaymentType": 0,
+      "PaymentTransactionId": "string",
+      "IsTax": true
+    }
+  ],
+
+  "OnlineDiscounts": [
+    {
+      "Id": 0,
+      "OnlineOrderId": 0,
+      "Value": 0    *************  only fill in the value   
+    }
+  ]
+}

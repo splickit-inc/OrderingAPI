@@ -1,0 +1,83 @@
+class: SmartyResource
+mimetype: text
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+	<soap12:Body>
+		<UploadOrder xmlns="http://tempuri.org/SwiftServices/xn_secureorders">
+			<o>
+				<SaleName>Web Order</SaleName>
+				<PickupLocation>{$resource->location_id}</PickupLocation>
+				<PickUpDate>{$resource->task_retail_pickup_time_string}</PickUpDate>
+				<OrderedDate>{$resource->task_retail_order_time_string}</OrderedDate>
+				<Member>
+					<CardNumber>124</CardNumber>
+					<ExternalID>1</ExternalID>
+					<FirstName>{$resource->user.first_name}</FirstName>
+					<Surname>{$resource->user.last_name}</Surname>
+					<StreetAddress></StreetAddress>
+					<State></State>
+                    <PostCode>00000</PostCode>
+					<Country></Country>
+					<Sex>1</Sex>
+					<EmailAddress>{$resource->user.email}</EmailAddress>
+				</Member>
+                
+                <Items>
+                    {assign var=ordered_items value=$resource->order_details}
+                    {foreach from=$ordered_items item=ordered_item}
+                        {if $ordered_item.external_id != null && $ordered_item.external_id|trim != ''}
+                        <Item>
+                            <PLU>{$ordered_item.external_id}</PLU>
+                            <QTY>{$ordered_item.quantity}</QTY>
+                            <Value>{$ordered_item.price}</Value>
+                            <Modifiers xsi:nil="true" />
+                        </Item>
+						{else}
+							{assign var=substitute_price value=$ordered_item.price}
+                        {/if}
+                        {foreach from=$ordered_item.order_detail_complete_modifier_list_no_holds item=modifier_item}
+                            {if $modifier_item.external_id != null && $modifier_item.external_id|trim != '' && $modifier_item.comes_with == 'N'}
+								{assign var=price value=$modifier_item.mod_price}
+								{if $substitute_price > 0}
+									{assign var=price value=$substitute_price}
+									{assign var=substitute_price value=0}
+								{/if}
+								{section name=iterator start=0 loop=$modifier_item.mod_quantity}
+									<Item>
+										<PLU>{$modifier_item.external_id}</PLU>
+										<QTY>1</QTY>
+										<Value>{$price}</Value>
+										<Modifiers xsi:nil="true" />
+									</Item>
+								{/section}
+                            {/if}
+                        {/foreach}
+                    {/foreach}
+                </Items>
+				<Medias>
+					<Media>
+						<MediaID>{$resource->payment_id}</MediaID>
+						<Value>{$resource->grand_total}</Value>
+					</Media>
+					{if $resource->promo_amount > 0}
+					<Media>
+						<MediaID>{$resource->promo_media_id}</MediaID>
+						<Value>{$resource->promo_amount}</Value>
+					</Media>
+					{/if}
+					<Media>
+						<MediaID>{$resource->media_id}</MediaID>
+						{if $resource->total_tax_amt > 0 }
+							<Value>{$resource->total_tax_amt}</Value>
+						{else}
+							<Value>0.00</Value>
+						{/if}
+					</Media>
+
+				</Medias>
+				<IsDelivery>0</IsDelivery>
+			</o>
+		</UploadOrder>
+	</soap12:Body>
+</soap12:Envelope>

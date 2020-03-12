@@ -1,0 +1,29 @@
+class: SmartyResource
+mimetype: text
+
+<order>
+	<order_id/>
+	<message_id/>
+	<name/>
+	<pickup_time/>
+	<merchant_id>{$resource->merchant_id|escape}</merchant_id>
+	<action>1</action>
+	<order_amt/>
+	<order_quantity/>
+	<order_details>
+---- Configuration ---
+
+If you can see this your system is set up correctly
+
+name: {$resource->name|escape}
+addr: {$resource->address1|escape}
+city: {$resource->city|escape}
+phone: {$resource->phone_no|escape}
+email: {$resource->shop_email|escape}
+
+If any of the above info is incorrect please call us at
+
+888.775.4254
+
+</order_details>
+</order>

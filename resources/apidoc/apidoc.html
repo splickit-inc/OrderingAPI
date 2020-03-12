@@ -1,0 +1,319 @@
+<div class="container">
+    <div class="col sidebar">
+        <ul>
+            <h4>CONTENTS</h4>
+            <li>
+                <a href="#info">Info</a>
+            </li>
+            <li>
+                <a href="#users">Users</a>
+            </li>
+            <li>
+                <a href="#merchants">Merchants</a>
+            </li>
+            <li>
+                <a href="#cart">Carts</a>
+            </li>
+            <li>
+                <a href="#submit-cart">Submit Cart</a>
+            </li>
+            <li>
+                <a href="#group-ordering">Group Ordering</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col content">
+        <section id="info">
+            <h1>Info</h1>
+            <article id="#">
+                <h3>REQUESTS</h3>
+
+                <h4>Headers:</h4>
+                <p>All Requests must contain the following headers:</p>
+                <ol>
+                    <li>X_SPLICKIT_CLIENT_ID  (obtained from splickit)</li>
+                    <li>X_SPLICKIT_CLIENT_DEVICE  (iphone,android,web,web-mobile)</li>
+                    <li>X_SPLICKIT_CLIENT (name of client) </li>
+                </ol>
+
+                <h4>Data</h4>
+                <p>All post data must be sent as JSON</p>
+
+
+                <h3>RESPONSE</h3>
+                <h4>Format</h4>
+                <p>All responses will contain the following fields</p>
+                <ol>
+                    <li>http_code</li>
+                    <li>stamp (session id of the request on the server)</li>
+                    <li>data (if the request has returned data)</li>
+                    <li>error (if there is an error on the request)</li>
+                    <li>message (if there is any alert that needs to be shown to the user)</li>
+                </ol>
+            </article>
+
+
+        </section>
+
+        <section id="users">
+            <h1>Users</h1>
+            <article id="#">
+                <h3>GET <code>/users</code> (basic auth needed)</h3>
+
+                <h4>Description:</h4>
+                <p>This will return a user session for the logged in user.</p>
+
+                <h4>Example:</h4>
+                <p></p><pre><code>curl -u user@email.com:password -H 'X_SPLICKIT_CLIENT_ID:1234-aa123-b123b-c123c' -H 'X_SPLICKIT_CLIENT_DEVICE:web' -H 'X_SPLICKIT_CLIENT:BobBurritos' https://sandbox.splickit-uat.com/app2/apiv2/users/6323-tp26k-ug70o-q2d0v</code></pre><p></p>
+
+                <h4>Response:</h4>
+                <p></p><pre><code>{"http_code":200,"stamp":"UUUU09-178BH2W","data":{"user_id":"2298-f2r58-2xu1h-7a3ay","last_four":"1234","first_name":"First","last_name":"Last","email":"testuser_1509476347_czf@dummy.com","contact_no":"867 853 0851","device_id":null,"balance":"0.00","flags":"1C21000001","referrer":null,"orders":"0","points_lifetime":"0","points_current":"0","custom_message":null,"birthday":"12-12","guest_user":false,"user_groups":[],"loyalty_number":"8678530851","brand_points":"0","brand_loyalty_history":[],"brand_loyalty":{"map_id":"2068","user_id":"288263","brand_id":"101","loyalty_number":"8678530851","points":"0","dollar_balance":"0.00","loyalty_transactions":[],"loyalty_points":"0","usd":"0.00"},"splickit_authentication_token":"EYZK82ISE1SZUK4X7NY7","splickit_authentication_token_expires_at":"1509518738"},"message":null}</code></pre><p></p>
+
+                <h4>Note:</h4>
+                <pre><code>For subsequent requests you can use the returned authentication token:  splickit_authentication_token:14FSNNOP5V9DPG6EG2I4</code></pre>
+                <p></p>
+
+            </article>
+
+            <article id="#">
+                <h3>POST <code>/users</code> (with admin creds)</h3>
+
+                <h4>Description</h4>
+                <p>This will create a user.</p>
+
+                <h4>Example:</h4>
+                <p></p><pre><code>curl -X POST -u admin:password -v -H 'X_SPLICKIT_CLIENT_ID:1234-aa123-b123b-c123c' -H 'X_SPLICKIT_CLIENT_DEVICE:web' -H 'X_SPLICKIT_CLIENT:BobBurritos' -H 'Content-Type: application/json' -H 'Content-Length: 171' -d  {"first_name":"first","last_name":"last","email":"testuser@dummy.com","password":"thisisapassword","contact_no":"1234567890"} https://sandbox.splickit-uat.com/app2/apiv2/users  </code></pre><p></p>
+
+                <h4>Response:</h4>
+                <p></p><pre><code>{"http_code":200,"stamp":"UUUU09-PJ353ZE","data":{"user_id":"1328-3pg15-z1734-1c530","first_name":"First","last_name":"Last","email":"testuser@dummy.com","contact_no":"123 456 7890","balance":0,"flags":"1000000001","splickit_authentication_token":"2NEP642XBK9N644Z999R","splickit_authentication_token_expires_at":"1509519121"},"message":null}</code></pre><p></p>
+
+
+                <h4>Note:</h4>
+                <pre><code>You can also create a guest user by passing in the following fields:  {"first_name":"bob","email":"testguestuser@dummy.com","contact_no":3983956724,"is_guest":true}.   Guest users can search menus and create order but no information is saved beyond the order.</code></pre>
+                <p></p>
+
+                <h4>Example:</h4>
+                <p></p><pre><code>curl -X POST -u admin:password -v -H 'X_SPLICKIT_CLIENT_ID:1234-aa123-b123b-c123c' -H 'X_SPLICKIT_CLIENT_DEVICE:web' -H 'X_SPLICKIT_CLIENT:BobBurritos' -H 'Content-Type: application/json' -H 'Content-Length: 171' -d  {"first_name":"first","email":"testuser@dummy.com","contact_no":"1234567890","is_guest":true} https://sandbox.splickit-uat.com/app2/apiv2/users  </code></pre><p></p>
+
+                <h4>Response:</h4>
+                <p></p><pre><code>{"http_code":200,"stamp":"UUUU09-WRT6D1U","data":{"first_name":"First","email":"testuser@dummy.com","contact_no":"1234567890","uuid":"7702-122pk-h1a4z-f2n6p","balance":0},"message":null}</code></pre><p></p>
+
+
+
+            </article>
+
+            <article id="#">
+                <h3>POST <code>/users/&lt;user_id&gt;</code> (basic auth needed)</h3>
+
+                <h4>Description:</h4>
+                <p>Will update the user with user_id = url value.</p>
+
+                <h4>Example:</h4>
+                <p></p><pre><code>http://sandbox.splickit-uat.com/app2/apiv2/users/7702-122pk-h1a4z-f2n6p    -d {"first_name":"john"}</code></pre><p></p>
+
+                <h4>Response:</h4>
+                <p></p><pre><code>{"http_code":200,"stamp":"UUUU09-T8X7N16","data":{"user_id":"7702-122pk-h1a4z-f2n6p","last_four":"1234","first_name":"john","last_name":"Last","email":"testuser_1405878428_a3a@dummy.com","contact_no":"1234567890","device_id":"2288-3udj0-slll4-94iuq","balance":"0.00","custom_message":null},"message":null}</code></pre><p></p>
+            </article>
+
+            <article id="#">
+                <h3>POST <code>/users/&lt;uuid&gt;/userdeliverylocation</code> (basic auth needed)</h3>
+
+                <h4>Description:</h4>
+                <p>Will create a user delivery location in the system. A user must have a user_delivery_location saved in order to place a delivery order</p>
+
+                <h4>Example:</h4>
+                <p></p><pre><code>http://sandbox.splickit-uat.com/app2/apiv2/users/2288-3udj0-slll4-94iuq/userdeliverylocation  -d {"name":"home","address1":"11 Riverside Drive","address2":"","city":"new york","state":"ny","zip":"12345","phone_no":"1234567890","note":"beware of dog"}</code></pre><p></p>
+
+                <h4>Response:</h4>
+                <p></p><pre><code>{"http_code":200,"stamp":"UUUU09-QAI8315","data":{"user_addr_id":16191,"user_id":"2288-3udj0-slll4-94iuq","name":"","address1":"11 Riverside Drive","address2":"","city":"new york","state":"ny","zip":"12345","phone_no":"1234567890","lat":40.796202,"lng":-73.936635},"message":null}</code></pre><p></p>
+            </article>
+
+            <article id="#">
+                <h3>DELETE <code>/users/&lt;uuid&gt;/userdeliverylocation/&lt;user_addr_id&gt;</code> (basic auth needed)</h3>
+
+                <h4>Description:</h4>
+                <p>Will delete the delivery address with user_addr_id = submitted.</p>
+
+                <h4>Example:</h4>
+                <p></p><pre><code>http://sandbox.splickit-uat.com/app2/apiv2/users/2288-3udj0-slll4-94iuq/userdeliverylocation/16191</code></pre><p></p>
+
+                <h4>Response:</h4>
+                <p></p><pre><code>{"http_code":200,"stamp":"UUUU09-7WWYFZZ","data":{"result":"success"},"message":null}</code></pre><p></p>
+            </article>
+        </section>
+
+        <section id="merchants">
+            <h1>Merchants</h1>
+            <article id="#">
+                <h3>GET <code>/merchants</code> (no auth needed)</h3>
+
+                <h4>Description:</h4>
+                <p>Will get a merchant list based on passed in parameters, only those merchants associated with the CLIENT_ID will be searched based on the criteria</p>
+
+                <h4>Example:</h4>
+                <p></p><pre><code>https://sandbox.splickit-uat.com/app2/apiv2/merchants?zip=12345   OR   lat=40.1234556&lng=-105.123456</code></pre><p></p>
+                <p><strong>Parameters</strong> zip OR lat,lng</p>
+
+                <h4>Response:</h4>
+                <p></p><pre><code>{"http_code":200,"stamp":"UUUU09-Q5L3QQT","data":{"merchants":[{"merchant_id":"104472","merchant_external_id":null,"brand_id":"300","lat":"40.014726","lng":"-105.274479","name":"Display Name","display_name":"Display Name","address1":"1505 Arapaho Ave","description":null,"city":"boulder","state":"CO","zip":"80302","phone_no":"1234567890","delivery":"Y","brand":"Display Name","promo_count":0,"valid_promos":[]},{"merchant_id":"104475","merchant_external_id":null,"brand_id":"300","lat":"40.014726","lng":"-105.274479","name":"Display Name","display_name":"Display Name","address1":"1505 Arapaho Ave","description":null,"city":"boulder","state":"CO","zip":"80302","phone_no":"1234567890","delivery":"Y","brand":"Display Name","promo_count":0,"valid_promos":[]},{"merchant_id":"104479","merchant_external_id":null,"brand_id":"300","lat":"40.014726","lng":"-105.274479","name":"Display Name","display_name":"Display Name","address1":"1505 Arapaho Ave","description":null,"city":"boulder","state":"CO","zip":"80302","phone_no":"1234567890","delivery":"Y","brand":"Display Name","promo_count":0,"valid_promos":[]}]}}</code></pre><p></p>
+            </article>
+
+            <article id="#">
+                <h3>GET <code>/merchants/&lt;merchant_id&gt;</code> (no auth needed)</h3>
+
+                <h4>Description:</h4>
+                <p>Will get all relevant info. for a merchant including the menu.</p>
+
+                <h4>Example:</h4>
+                <p></p><pre><code>http://sandbox.splickit-uat.com/app2/apiv2/merchants/104482</code></pre><p></p>
+            </article>
+
+            <article id="#">
+                <h3>GET <code>/merchants/&lt;merchant_id&gt;/isindeliveryarea/&lt;user_addr_id&gt;</code></h3>
+
+                <h4>Description:</h4>
+                <p>Will determine if a users delivery location is within the range of the store. Will return the price for delivering to that location.</p>
+
+                <h4>Example:</h4>
+                <p></p><pre><code>http://localhost/app2/apiv2/merchants/104481/isindeliveryarea/16195</code></pre><p></p>
+
+                <h4>Response:</h4>
+                <p></p><pre><code>{"http_code":200,"stamp":"UUUU09-9XL2T2J","data":{"map_id":"5795","name":"zone 1","price":"8.88","minimum_order_amount":10.00,"notes":"","is_in_delivery_range":true},"message":null}</code></pre><p></p>
+
+                <h4>Notes:</h4>
+                <p>Add <code>&lt;user_addr_id&gt;</code> to any cart, or checkout call to make it a delivery order.</p>
+
+                <h4>Example:</h4>
+                <p></p><pre><code>{"items":[{"mods":[{"mod_quantity":1,"modifier_item_id":"2296801"},{"mod_quantity":1,"modifier_item_id":"2296802"},{"mod_quantity":1,"modifier_item_id":"2296803"}],"quantity":1,"item_id":"285302","size_id":"92349"}],"merchant_id":104489,"user_id":"6787-2q2fd-7i1m5-qw4a1","user_addr_id":16203}</code></pre><p></p>
+            </article>
+        </section>
+
+        <section id="cart">
+            <h1>Carts</h1>
+            <article id="#">
+                <h3>POST <code>/carts</code> (basic auth needed with either a full user or guest user)</h3>
+
+                <h4>Description:</h4>
+                <p>Create a cart and add passed items into that cart.</p>
+
+                <h4>Example:</h4>
+                <p></p><pre><code>http://sandbox.splickit-uat.com/app2/apiv2/carts   -d  {"items":[{"quantity":1,"item_id":"285309","size_id":"92350","mods":[{"mod_quantity":1,"modifier_item_id":"2296821"},{"mod_quantity":1,"modifier_item_id":"2296822"},{"mod_quantity":1,"modifier_item_id":"2296823"}]}],"merchant_id":104482}</code></pre><p></p>
+
+                <h4>Response:</h4>
+                <!-- <p></p><pre><code>{"http_code":200,"stamp":"UUUU09-QK8ZOD8","data":{"ucid":"6681-w07fu-b3013-x4myv","order_summary":{"cart_items":[{"item_name":"Test Item 1","item_price":"2.00","item_quantity":"1","item_description":"Test Modifier Item 1,Test Modifier Item 2,Test Modifier Item 3","order_detail_id":"583755","item_note":""}],"receipt_items":[{"title":"Subtotal","amount":"$2.00"},{"title":"Tax","amount":"$0.20"},{"title":"Total","amount":"$2.20"}]}},"message":null}</code></pre><p></p>-->
+                <p></p><pre><code>{ "http_code":200,"stamp":"UUUU09-T7RE61Z","data":{"ucid":"8754-5a81x-4w743-tm44j","stamp":"UUUU09-T7RE61Z","merchant_id":"104328","order_dt_tm":"0000-00-00 00:00:00","pickup_dt_tm":"0000-00-00 00:00:00","order_amt":"2.00","promo_code":null,"promo_id":null,"promo_amt":"0.00","promo_tax_amt":"0.00","item_tax_amt":"0.200","total_tax_amt":"0.20","trans_fee_amt":"0.00","delivery_amt":"8.88","delivery_tax_amt":"0.000","tip_amt":"0.00","grand_total":"11.08","note":null,"status":"Y","order_qty":"1","payment_file":null,"order_type":"D","phone_no":null,"user_delivery_location_id":"16168","requested_delivery_time":null,"device_type":"unit_testing","app_version":"10.5.0","skin_id":"252","distance_from_store":"0.00","order_summary":{ "cart_items":[{ "size_name":null,"item_name":"Test Item 1","item_price":"$2.00","item_quantity":"1","item_description":"Modifier Item 3,Modifier Item 2,Modifier Item 1","order_detail_id":"583053","item_note":""} ],"receipt_items":[{ "title":"Subtotal","amount":"$2.00"},{ "title":"Tax","amount":"$0.20"},{ "title":"Delivery Fee","amount":"$8.88"},{ "title":"Total","amount":"$11.08"} ],"payment_items":[ ]},"cart_ucid":"8754-5a81x-4w743-tm44j" },"message":null}</code></pre><p></p>
+            </article>
+
+            <article id="#">
+                <h3>POST <code>/carts/&lt;ucid&gt;</code> (basic auth needed)</h3>
+
+                <h4>Description:</h4>
+                <p>Will add more items to an existing cart.</p>
+
+                <h4>Example:</h4>
+                <p></p><pre><code>http://sandbox.splickit-uat.com/app2/apiv2/carts/6681-w07fu-b3013-x4myv  -d  {"items":[{"quantity":1,"item_id":"285309","size_id":"92350","mods":[{"mod_quantity":1,"modifier_item_id":"2296821"},{"mod_quantity":1,"modifier_item_id":"2296822"},{"mod_quantity":1,"modifier_item_id":"2296823"}]}]}</code></pre><p></p>
+
+            </article>
+
+            <article id="#">
+                <h3>DELETE <code>/carts/&lt;ucid&gt;/cartitem/&lt;order_detail_id&gt;</code> (basic auth needed)</h3>
+
+                <h4>Description:</h4>
+                <p>Will delete the item from the cart associated with the order_detail_id</p>
+
+                <h4>Example:</h4>
+                <p></p><pre><code>http://sandbox.splickit-uat.com/app2/apiv2/carts/6681-w07fu-b3013-x4myv/cartitem/583755</code></pre><p></p>
+
+            </article>
+
+            <article id="#">
+                <h3>GET <code>/carts/&lt;ucid&gt;/checkout</code> (basic auth needed)</h3>
+
+                <h4>Description:</h4>
+                <p>To get the checkout data for this cart. Available times, total of tax, grand total, any fees, etc.</p>
+
+                <h4>Example:</h4>
+                <p></p><pre><code>http://sandbox.splickit-uat.com/app2/apiv2/carts/6970-c83kb-6p7jm-0p9i4/checkout</code></pre><p></p>
+
+                <h4>Response:</h4>
+                <p></p><pre><code>{http_code":200,stamp":"UUUU09-4732Y8U",data":{"ucid":"5464-16kr5-eh46o-1h757","cart_ucid":"5464-16kr5-eh46o-1h757","merchant_id":"104317","order_amt":"4.00","promo_code":null,"promo_amt":"0.00","promo_tax_amt":"0.00","total_tax_amt":"0.40","trans_fee_amt":"0.00","delivery_amt":"0.00","tip_amt":"0.00","customer_donation_amt":"0.00","grand_total":"4.40","note":null,"order_qty":"2","time_zone_string":"America\/Denver","time_zone_offset":-6,"minimum_leadtime_for_this_order":null,"show_lead_times":true,"user_message":null,"lead_times_array":[ 1509485391, 1509485451, 1509485511, 1509485571, 1509485631, 1509485691, 1509485751, 1509485811, 1509485871],"tip_array":[{"No Tip":0},{"10%":"0.40"},{"15%":"0.60"},{"20%":"0.80"},{"$1.00":1},{"$2.00":2},{"$3.00":3}],"item_tax_amt":"0.400","convenience_fee":"0.00","order_summary":{cart_items":[{size_name":null,item_name":"Test Item 1",item_price":"$2.00",item_quantity":"1",item_description":"Modifier Item 3, Modifier Item 2, Modifier Item 1",order_detail_id":"583055",item_note":""},{size_name":null,item_name":"Test Item 2",item_price":"$2.00",item_quantity":"1",item_description":"Modifier Item 6, Modifier Item 5, Modifier Item 1",order_detail_id":"583056",item_note":"no cheese please"} ],receipt_items":[{title":"Subtotal",amount":"$4.00"},{title":"Tax",amount":"$0.40"},{title":"Total",amount":"$4.40"} ],payment_items":[ ]},"accepted_payment_types":[ {"merchant_payment_type_map_id":"1051","name":"Cash","splickit_accepted_payment_type_id":"1000","billing_entity_id":null }, {"merchant_payment_type_map_id":"1049","name":"Credit Card","splickit_accepted_payment_type_id":"2000","billing_entity_id":"1036" }, {"merchant_payment_type_map_id":"1045","name":"Loyalty Points","splickit_accepted_payment_type_id":"5000","billing_entity_id":null }],"user_info":{user_has_cc":true,last_four":"1234"},"delivery_tax_amount":"0.000" },message":null}</code></pre><p></p>
+
+                <h4>Notes:</h4>
+                <p>Create Cart, Add to Cart, and Checkout can be performed in one call by posting cart data to endpoint: POST <code>/carts/checkout</code></p>
+
+            </article>
+
+            <article id="#">
+                <h3>GET  <code>/carts/&lt;ucid&gt;?promo_code=SomeCode</code> (basic auth needed)</h3>
+
+                <h4>Description:</h4>
+                <p>To Add a promo code to an order and recalculate the totals
+
+                <h4>Example:</h4>
+                <p></p><pre><code>http://sandbox.splickit-uat.com/app2/apiv2/carts/8030-5qdma-hptf0-5zoua?promo_code=SomeCode</code></pre><p></p>
+
+                <h4>Response:</h4>
+                <p></p><pre><code>{http_code":200,stamp":"UUUU09-4732Y8U",data":{ucid":"8030-5qdma-hptf0-5zoua",order_dt_tm":"0000-00-00 00:00:00",user_id":"288416",pickup_dt_tm":"0000-00-00 00:00:00",order_amt":"4.50",promo_code":"SomeCode",promo_id":"811",promo_amt":"-1.00",promo_tax_amt":"-0.10",item_tax_amt":"0.450",total_tax_amt":"0.35",trans_fee_amt":"0.00",delivery_amt":"0.00",delivery_tax_amt":"0.000",tip_amt":"0.00",customer_donation_amt":"0.00",grand_total":"3.85",grand_total_to_merchant":"3.85",cash":null,merchant_donation_amt":"0.00",note":null,status":"Y",order_qty":"3",payment_file":null,order_type":"R",phone_no":null,user_delivery_location_id":null,requested_delivery_time":null,device_type":"UnitTest",app_version":"1000",skin_id":"1",distance_from_store":"0.00",created":1509489752,modified":1509489753,order_summary":{"cart_items":[ {"size_name":null,"item_name":"Test Item 1","item_price":"$1.50","item_quantity":"1","item_description":null,"order_detail_id":"583300","item_note":"" }, {"size_name":null,"item_name":"Test Item 2","item_price":"$1.50","item_quantity":"1","item_description":null,"order_detail_id":"583301","item_note":"" }, {"size_name":null,"item_name":"Test Item 3","item_price":"$1.50","item_quantity":"1","item_description":null,"order_detail_id":"583302","item_note":"" }],"receipt_items":[ {"title":"Subtotal","amount":"$4.50" }, {"title":"Promo Discount","amount":"$-1.00" }, {"title":"Tax","amount":"$0.35" }, {"title":"Total","amount":"$3.85" }],"payment_items":[] },user_message":"Congratulations! You're getting $1.00 off of your order!",user_message_title":"promo code validated",cart_ucid":"8030-5qdma-hptf0-5zoua"},message":null}</code></pre><p></p>
+
+                <h4>Notes:</h4>
+                <p>If the promo has not been satisfied or is no longer valid, the user message will explain either how to fulfill the promo requirements or that its no longer valid.</p>
+
+            </article>
+        </section>
+
+        <section id="submit-cart">
+            <h1>Submit Cart</h1>
+            <article id="#">
+                <h3>POST <code>/orders/&lt;ucid&gt;</code> (basic auth needed)</h3>
+
+                <h4>Description:</h4>
+                <p>To place an order for an existing cart.</p>
+
+                <h4>Example:</h4>
+                <p></p><pre><code>http://sandbox.splickit-uat.com/app2/apiv2/orders/5464-16kr5-eh46o-1h757  -d    {"note":"some note","tip":0,"merchant_payment_type_map_id":"1047","requested_time":1405882516}</code></pre><p></p>
+
+                <h4>Response:</h4>
+                <p></p><pre><code>{"http_code":200,"stamp":"UUUU09-9VA32S2","data":{"order_id":"280746","stamp":"UUUU09-9VA32S2","merchant_id":"104484","order_dt_tm":1405881672,"user_id":"2288-3udj0-slll4-94iuq","pickup_dt_tm":1405882500,"order_amt":"4.00","promo_code":"","promo_id":null,"promo_amt":"0.00","total_tax_amt":"0.40","trans_fee_amt":"0.00","delivery_amt":"0.00","tip_amt":"0.00","customer_donation_amt":"0.00","grand_total":"4.40","grand_total_to_merchant":4.4,"cash":"Y","merchant_donation_amt":"0.00","note":"some note","status":"O","order_qty":"2","payment_file":null,"order_type":"R","phone_no":null,"user_delivery_location_id":null,"requested_delivery_time":null,"device_type":"unit_testing","app_version":null,"skin_id":"252","distance_from_store":0,"pickup_time_string":"12:55pm","user_message":"Your order to Unit Test Merchant will be ready for pickup at 12:55pm","user_message_title":"Order Info","payment_service_used":"CashPaymentService","points_earned":4,"points_current":null,"points_lifetime":null,"order_summary":{"cart_items":[{"item_name":"Test Item 1","item_price":"2.00","item_quantity":"1","item_description":"Test Modifier Item 1,Test Modifier Item 2,Test Modifier Item 3","order_detail_id":"583764","item_note":""},{"item_name":"Test Item 1","item_price":"2.00","item_quantity":"1","item_description":"Test Modifier Item 3,Test Modifier Item 1,Test Modifier Item 2","order_detail_id":"583765","item_note":"skip hours"}],"receipt_items":[{"title":"Subtotal","amount":"$4.00"},{"title":"Tax","amount":"$0.40"},{"title":"Total","amount":"$4.40"}]},"loyalty_message":"You earned 40 points on this order."},"message":"Your order to Unit Test Merchant will be ready for pickup at 12:55pm"}</code></pre><p></p>
+            </article>
+        </section>
+
+        <section id="group-ordering">
+            <h1>Group Ordering</h1>
+            <article id="#">
+                <h3>POST <code>/grouporders</code> (basic auth needed)</h3>
+
+                <h4>Description:</h4>
+                <p>Creates a new empty group order. Logged in user becomes the group order admin. Guest users cannot create group orders but they can participate in one</p>
+
+                <h4>Example:</h4>
+                <p></p><pre><code>http://sandbox.splickit-uat.com/app2/apiv2/grouporders  -d   '{"merchant_id":104340,"note":"Hey guys! we're doing lunch, get your order in!","merchant_menu_type":"Pickup","participant_emails":"user1@email.com,user2@email.com,user3@email.com,user4@email.com","group_order_type":1}'</code></pre><p></p>
+
+                <h4>Response:</h4>
+                <p></p><pre><code>{"http_code":200,"stamp":"UUUU09-IC854EL","data":{"merchant_id":104340,"note":"Hey guys! we're doing lunch, get your order in!","merchant_menu_type":"Pickup","participant_emails":"user1@email.com,user2@email.com,user3@email.com,user4@email.com","group_order_type":1,"group_order_token":"9604-3n5id-c396t-vn425","ucid":"9604-3n5id-c396t-vn425","user_id":"288382","order_id":"280566","admin_user_id":"288382","expires_at":1509659767,"group_order_id":4518},"message":null}</code></pre><p></p>
+
+                <h4>Notes:</h4>
+                <p>By adding the field "submit_at_ts":1405887316, the group order will auto submit to the merchant at that time.</p>
+                <p>For "group_order_type":1  the admin of the group order pays for everyones order. For "group_order_type":2  each participant pays for their own order.</p>
+                <p>Everyone in the submitted email list will be emailed a link to join the group order</p>
+                <p>Participants build and place orders though normal process (for type 1 there is no payment needed) but on cart creation, the group_order_token MUST be passed in to associate the order with the group order.</p>
+            </article>
+
+
+            <article id="#">
+                <h3>GET <code>/grouporders/</code></h3>
+
+                <h4>Description:</h4>
+                <p>For the admin to review the group order before sending. Changes can be made here for type 1 group orders.</p>
+                <h4>Example:</h4>
+                <p></p><pre><code>http://sandbox.splickit-uat.com/app2/apiv2/grouporders/U586W-8DJ7O</code></pre><p></p>
+
+                <h4>Response:</h4>
+                <p></p><pre><code>{"http_code":200,"stamp":"UUUU09-9YKE39Z","data":{"group_order_id":"4528","group_order_token":"2509-84927-253na-ernut","merchant_id":"104343","group_order_type":"1","sent_ts":"0000-00-00 00:00:00","notes":"","participant_emails":"sumdumemail1@dummy.com,sumdumemail2@dummy.com,sumdumemail3@dummy.com,sumdumemail4@dummy.com","merchant_menu_type":"Delivery","expires_at":"1509661361","status":"active","user_addr_id":null,"order_id":"280583","send_on_local_time_string":"","created":1509488561,"modified":"0000-00-00 00:00:00","group_order_admin":{"first_name":"Rob","last_name":"Zmopolis","email":"testuser_1509488550_0xu@dummy.com","admin_uuid":"3181-pome2-e0814-g5hrv"},"total_orders":3,"total_submitted_orders":3,"order_summary":{"cart_items":[{"size_name":null,"item_name":"Test Item 1","item_price":"$1.50","item_quantity":"1","item_description":null,"order_detail_id":"583265","item_note":"Rob Z. - sum dum cart note"},{"size_name":null,"item_name":"Test Item 1","item_price":"$1.50","item_quantity":"1","item_description":null,"order_detail_id":"583268","item_note":"Rob Z. - Admin cart note"},{"size_name":null,"item_name":"Test Item 1","item_price":"$1.50","item_quantity":"1","item_description":null,"order_detail_id":"583269","item_note":"Rob Z. - Admin cart note"},{"size_name":null,"item_name":"Test Item 1","item_price":"$1.50","item_quantity":"1","item_description":null,"order_detail_id":"583271","item_note":"Bob N. - sum dum cart note"}],"receipt_items":[{"title":"Subtotal","amount":"$6.00"},{"title":"Tax","amount":"$0.60"},{"title":"Delivery Fee","amount":"$5.55"},{"title":"Total","amount":"$12.15"}],"payment_items":[]}},"message":null}</code></pre><p></p>
+
+                <h4>Notes:</h4>
+                <p>To submit a group order, Call the checkout endpoint with the group_order_token in place of the cart_ucid (ie: http://sandbox.splickit-uat.com/app2/apiv2/carts/2509-84927-253na-ernut/checkout) and then submit through the normal process.</p>
+            </article>
+        </section>
+    </div>
+</div>

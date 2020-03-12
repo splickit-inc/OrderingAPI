@@ -1,0 +1,83 @@
+class: SmartyResource
+mimetype: text
+
+<?xml version="1.0" encoding="UTF-8"?>
+<PrintRequestInfo Version="2.00">
+   <ePOSPrint>
+      <Parameter>
+         <devid>local_printer</devid>
+         <timeout>10000</timeout>
+         <printjobid>{$resource->order_id}</printjobid>
+      </Parameter>
+      <PrintData>
+         <epos-print xmlns="http://www.epson-pos.com/schemas/2011/03/epos-print">
+            <text lang="en" />
+            <text smooth="true" />
+            <text align="center" />
+            <text font="font_b" />
+            <text width="2" height="2" />
+            <text reverse="false" ul="false" em="true" color="color_1" />
+            <text>{$resource->merchant_name}</text>
+            <feed unit="12" />
+            <text align="center" />
+            <text font="font_a" />
+            <text width="1" height="1" />
+            <text reverse="false" ul="false" em="false" color="color_1" />
+            <text>{$resource->merchant_addr}</text>
+            <feed unit="12" />
+            <text>{$resource->merchant_city_st_zip}</text>
+            <feed unit="12" />
+            <text>{$resource->merchant_phone_no}</text>
+            <feed unit="50" />
+            <text>------- ORDER INFO --------</text>
+            <feed unit="35" />
+            <text align="left" />
+            <text width="1" height="1" />
+            <text reverse="false" ul="false" em="false" color="color_1" />
+            <text>Customer: {$resource->customer_full_name}</text>
+            <feed unit="30" />
+            <text>Contact Number: {$resource->user.contact_no}</text>
+            <feed unit="30" />
+            <text>Ready Time: {$resource->pickup_date3}</text>
+            <feed unit="30" />
+            <text>Order Id:  {$resource->order_id}</text>
+            <feed unit="30" />
+            <text>Number Of Items:  {$resource->order_qty}</text>
+            <feed unit="40" />
+        {if $resource->order_type eq 'D'}
+            <text align="center" />
+            <text>----- DELIVERY INFO ------</text>
+            <feed unit="35" />
+            <text align="left" />
+            {assign var=delivery_location_info value=$resource->delivery_info}
+            {if $delivery_location_info->name neq ''}
+                <text>Delivery To: {$delivery_location_info->name}</text>
+                <feed unit="30" />
+            {else}
+                <text>Delivery Order</text>
+                <feed unit="30" />
+            {/if}
+
+            <text>Time: {$resource->requested_delivery_time}</text>
+            <feed unit="30" />
+
+            <text>{$delivery_location_info->address1}</text>
+            <feed unit="30" />
+            {if $delivery_location_info->address2 neq ''}
+                <text>{$delivery_location_info->address2}</text>
+                <feed unit="30" />
+            {/if}
+            <text>{$delivery_location_info->city}, {$delivery_location_info->state}</text>
+            <feed unit="30" />
+
+            <text>Phone: {$delivery_location_info->phone_no}</text>
+            <feed unit="30" />
+            {if $delivery_location_info->instructions neq ''}
+                <text>{$delivery_location_info->instructions}</text>
+                <feed unit="30" />
+            {/if}
+            <text>Dlv Charge: ${$resource->delivery_amt}</text>
+            <feed unit="40" />
+        {/if}
+
+

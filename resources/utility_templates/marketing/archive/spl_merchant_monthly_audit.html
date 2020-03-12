@@ -1,0 +1,78 @@
+class: SmartyResource
+mimetype: text
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body style="background:#c1d82f; ">
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10">
+	  <tr>
+  		<td width="200px">
+  		<img src="http://www.splickit.com/icons/SPL-Logo-200px.png" width="200" height="50" alt="Splickit" style=""/>
+  		</td>
+  		<td align="right">
+  		<h2 style="color:#111;font-family:Arial, Helvetica, sans-serif;margin:0px;">Welcome to Splick.it</h2>
+  		</td>
+ 	 </tr>
+</table>
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10" style="font-family:Arial, Helvetica, sans-serif;">
+
+<tr style="background:#111;">
+<td>
+<h2 style="color:#fff;margin:0px;">{$resource->name}</h2>
+</td>
+<td align="right" width="160">
+<h2 style="color:#fff;margin:0px;font-weight:normal;">{$resource->today}</h2>
+</td>
+</tr>
+
+<tr style="background:#fff;" >	 
+<td colspan="2">
+<p>Dear Merchant,</p><p>Splickit has been informed by your bank that
+the ACH transaction for the statement(s) below where not processed when
+originally submitted and will be reprocessed by the bank this week.
+Splickit will also be processing January Statements on February 1 so you will see
+more than one transaction on your bank statement this month. <br><br>If you have any
+questions or concerns, please contact us at support@dummy.com or
+give us a call at 1.888.775.4254.</p>
+</td>
+</tr>
+<tr style="background:#fff;" >
+<td colspan="2">
+
+<!-- Audit Entries -->
+ 	 	
+		<table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;">
+ 	 	<tr style="background:#e5e5e5;color:#666;font-weight:bold;">
+  		<td align="left">
+  		<h4 style="margin: 5px;color:#111;">Summary</h4>
+  		</td>
+ 	 	</tr>
+ 	 
+ 	 	<tr style="background:#fff;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+  		<p style="margin: 5px;">{$resource->table_data.all_stores}</p>
+  		</td>
+    	
+ 	 	</tr>
+ 	 	</table>
+ 	 	
+<br/>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+	<p>Please email questions or requests to <a href="mailto:support@dummy.com" >support@dummy.com</a></p>
+	<p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:11px;">© 2011 splick•it, Inc. 1405 Arapahoe Ave. Boulder, CO 80302</p>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

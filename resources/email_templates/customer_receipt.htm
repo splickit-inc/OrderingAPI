@@ -1,0 +1,85 @@
+class: SmartyResource
+mimetype: text
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Email Receipt</title>
+</head>
+<body>
+Dear {$resource->first_name},<p>
+ 
+Thank you for placing an order at {$resource->merchant_name} powered by splick-it!<p>
+ 
+After you have picked up your order, please answer 4 quick questions so we can continue to provide you with the most delicious service possible. Thanks!<p>
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.surveymonkey.com/s/S2WXVFW">Order Satisfaction Survey</a><p>
+ 
+Your order will be ready for pick up today at:<p>
+ 
+<big><b>{$resource->merchant_name} at {$resource->pickup_time}</b></big><br>
+{$resource->merchant_addr}<br>
+{$resource->merchant_city_st_zip}<p>
+<p>
+
+Order Number: {$resource->order_id}<p><p> 
+<big><u><b>Order Details</b></u></big><p>
+&nbsp;Note: {$resource->note}<p>
+<table width="550">
+<tr><td width="150">item</td><td width="300">&nbsp;</td><td width="50">&nbsp;</td><td width="50" align="center">price</td></tr>	
+{foreach from=$resource->order_details key=index item=menu_item}
+	{assign var=item_name value=$menu_item.item_full_name}
+	{assign var=item_size value=$menu_item.size_name}
+	{assign var=item_quant value=$menu_item.quantity}
+	{assign var=item_price value=$menu_item.item_total_w_mods}
+<tr><td colspan="4"><hr/></td></tr>
+
+<tr><td colspan="2"><b>{$item_quant} {$item_size} {$item_name}</b></td><td>&nbsp;</td><td align="right">{$item_price}</td></tr>
+	
+	{if $menu_item.order_detail_hold_it_modifiers|@count > 0}
+		<tr><td align="right" valign="top">HOLD THE:&nbsp;&nbsp;</td><td>
+		{foreach from=$menu_item.order_detail_hold_it_modifiers key=index2 item=modifier_record name=mod}
+			{assign var=mod_item_name value=$modifier_record.mod_full_name}
+			{$mod_item_name}
+			{if not $smarty.foreach.mod.last},{/if} 
+		{/foreach}
+		</td><td>&nbsp;</td></tr>
+	{/if}
+	
+	{if $menu_item.order_detail_modifiers|@count > 0}
+		<tr><td align="right" valign="top">WITH:&nbsp;&nbsp;</td><td>
+		{foreach from=$menu_item.order_detail_modifiers key=index2 item=modifier_record name=no_mod}
+			{assign var=mod_item_name value=$modifier_record.mod_full_name}
+			{$mod_item_name}
+			{if not $smarty.foreach.no_mod.last},{/if} 
+		{/foreach}
+		</td><td>&nbsp;</td></tr>
+	{/if}
+
+	{if $menu_item.order_detail_sides|@count > 0}
+		<tr><td align="right" valign="top">SIDE OF:&nbsp;&nbsp;</td><td>
+		{foreach from=$menu_item.order_detail_sides key=index2 item=modifier_record name=side}
+			{assign var=mod_item_name value=$modifier_record.mod_full_name}
+			{$mod_item_name}
+			{if not $smarty.foreach.side.last},{/if} 
+		{/foreach}
+		</td><td>&nbsp;</td></tr>
+	{/if}
+
+{/foreach}
+
+<tr><td colspan="4"><hr/></td></tr>
+<tr><td colspan="2" align="right">promo amt:</td><td>&nbsp;</td><td align="right">{$resource->promo_amt}</td></tr>
+<tr><td colspan="2" align="right">total tax:</td><td>&nbsp;</td><td align="right">{$resource->total_tax_amt}</td></tr>
+<tr><td colspan="2" align="right">transaction fee:</td><td>&nbsp;</td><td align="right">{$resource->trans_fee_amt}</td></tr>
+<tr><td colspan="2" align="right">tip:</td><td>&nbsp;</td><td align="right">{$resource->tip_amt}</td></tr>
+<tr><td colspan="4">&nbsp;</td></tr>
+<tr><td colspan="2" align="right">Grand Total</td><td>&nbsp;</td><td align="right">{$resource->grand_total}</td></tr>
+<tr><td colspan="4">&nbsp;</td></tr>
+<tr><td colspan="4">&nbsp;</td></tr>
+<tr><td colspan="2" align="right">Amt Billed To CC</td><td>&nbsp;</td><td align="right">{$resource->amt_billed_to_cc}</td></tr>
+<tr><td colspan="4">&nbsp;</td></tr>
+
+</table>
+
+</body>
+</html>

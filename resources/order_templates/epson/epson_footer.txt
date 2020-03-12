@@ -1,0 +1,56 @@
+class: SmartyResource
+mimetype: text
+
+
+<feed unit="35" />
+<text align="left" />
+<text font="font_a" />
+<text width="1" height="1" />
+<text reverse="false" ul="false" em="false" color="color_1" />
+{if $resource->cash eq 'Y'}
+    <text align="center" />
+    <text width="2" height="2" />
+    <text>$$$ CASH ORDER $$$</text>
+    <feed unit="20" />
+    <text>$$$ CASH ORDER $$$</text>
+    <feed unit="20" />
+    <text>$$$ CASH ORDER $$$</text>
+    <feed unit="20" />
+    <text width="1" height="1" />
+{else}
+    <text align="left" />
+    {foreach from=$resource->receipt_items_for_merchant_printout key=index item=receipt_item}
+        {assign var=label value=$receipt_item.title}
+        {assign var=amount value=$receipt_item.amount}
+        {assign var=amount_absolute_position value=$receipt_item.epson_absolute_position}
+        <text >{$label}</text>
+        <text x="{$amount_absolute_position}" />
+        <text>{$amount}</text>
+        <feed unit="35" />
+    {/foreach}
+{/if}
+
+{if $resource->show_group_order_info eq true}
+    <text align="center" />
+    <text font="font_a" />
+    <text width="1" height="1" />
+    <text reverse="false" ul="false" em="false" color="color_1" />
+    <text>--- Group Info ---</text>
+    <feed unit="35" />
+    {foreach from=$resource->group_order_info key=index item=order_info}
+        {foreach from=$order_info key=index2 item=display_row}
+            <text>{$display_row}</text>
+            <feed unit="35" />
+        {/foreach}
+        <text>-------</text>
+        <feed unit="35" />
+    {/foreach}
+{/if}
+
+            <feed line="3" />
+            <cut type="feed" />
+            <sound pattern="pattern_a" repeat="3" />
+         </epos-print>
+      </PrintData>
+   </ePOSPrint>
+</PrintRequestInfo>

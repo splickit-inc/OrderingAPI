@@ -1,0 +1,7 @@
+class: SmartyResource
+mimetype: text
+
+<?xml version="1.0" encoding="UTF-8"?>
+<order>
+	<results>no open orders</results>
+</order>

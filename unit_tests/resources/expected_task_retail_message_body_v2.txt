@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+	<soap12:Body>
+		<UploadOrder xmlns="http://tempuri.org/SwiftServices/xn_secureorders">
+			<o>
+				<SaleName>Web Order</SaleName>
+				<PickupLocation>97531</PickupLocation>
+				<PickUpDate>2020-01-01T12:01:00.0000</PickUpDate>
+				<OrderedDate>2020-01-01T12:01:00.0000</OrderedDate>
+				<Member>
+					<CardNumber>124</CardNumber>
+					<ExternalID>1</ExternalID>
+					<FirstName>First</FirstName>
+					<Surname>Last</Surname>
+					<StreetAddress></StreetAddress>
+					<State></State>
+                    <PostCode>00000</PostCode>
+					<Country></Country>
+					<Sex>1</Sex>
+					<EmailAddress>testy.mctesterson@dummy.com</EmailAddress>
+				</Member>
+
+                <Items>
+                                                                <Item>
+                            <PLU>1000</PLU>
+                            <QTY>1</QTY>
+                            <Value>1.50</Value>
+                            <Modifiers xsi:nil="true" />
+                        </Item>
+
+                                                    <Item>
+                                <PLU>4009</PLU>
+                                <QTY>1</QTY>
+                                <Value>0.500</Value>
+                                <Modifiers xsi:nil="true" />
+                            </Item>
+                                                    <Item>
+                                <PLU>4008</PLU>
+                                <QTY>1</QTY>
+                                <Value>0.500</Value>
+                                <Modifiers xsi:nil="true" />
+                            </Item>
+                                                    <Item>
+                                <PLU>4007</PLU>
+                                <QTY>1</QTY>
+                                <Value>0.500</Value>
+                                <Modifiers xsi:nil="true" />
+                            </Item>
+                                                    <Item>
+                                <PLU>4006</PLU>
+                                <QTY>1</QTY>
+                                <Value>0.500</Value>
+                                <Modifiers xsi:nil="true" />
+                            </Item>
+                                                    <Item>
+                                <PLU>4005</PLU>
+                                <QTY>1</QTY>
+                                <Value>0.500</Value>
+                                <Modifiers xsi:nil="true" />
+                            </Item>
+                                                    <Item>
+                                <PLU>4004</PLU>
+                                <QTY>1</QTY>
+                                <Value>0.500</Value>
+                                <Modifiers xsi:nil="true" />
+                            </Item>
+                                                    <Item>
+                                <PLU>4003</PLU>
+                                <QTY>1</QTY>
+                                <Value>0.500</Value>
+                                <Modifiers xsi:nil="true" />
+                            </Item>
+                                                    <Item>
+                                <PLU>4002</PLU>
+                                <QTY>1</QTY>
+                                <Value>0.500</Value>
+                                <Modifiers xsi:nil="true" />
+                            </Item>
+                                                                    <Item>
+                            <PLU>1001</PLU>
+                            <QTY>1</QTY>
+                            <Value>1.50</Value>
+                            <Modifiers xsi:nil="true" />
+                        </Item>
+                                                    <Item>
+                                <PLU>4008</PLU>
+                                <QTY>1</QTY>
+                                <Value>0.500</Value>
+                                <Modifiers xsi:nil="true" />
+                            </Item>
+                                                    <Item>
+                                <PLU>4008</PLU>
+                                <QTY>1</QTY>
+                                <Value>0.500</Value>
+                                <Modifiers xsi:nil="true" />
+                            </Item>
+                                                    <Item>
+                                <PLU>4007</PLU>
+                                <QTY>1</QTY>
+                                <Value>0.500</Value>
+                                <Modifiers xsi:nil="true" />
+                            </Item>
+                                                    <Item>
+                                <PLU>4006</PLU>
+                                <QTY>1</QTY>
+                                <Value>0.500</Value>
+                                <Modifiers xsi:nil="true" />
+                            </Item>
+                                                    <Item>
+                                <PLU>4005</PLU>
+                                <QTY>1</QTY>
+                                <Value>0.500</Value>
+                                <Modifiers xsi:nil="true" />
+                            </Item>
+                                                    <Item>
+                                <PLU>4004</PLU>
+                                <QTY>1</QTY>
+                                <Value>0.500</Value>
+                                <Modifiers xsi:nil="true" />
+                            </Item>
+                                                            </Items>
+				<Medias>
+					<Media>
+						<MediaID>18</MediaID>
+						<Value>%%grand_total%%</Value>
+					</Media>
+					<Media>
+						<MediaID>5</MediaID>
+						<Value>%%total_tax_amt%%</Value>
+					</Media>
+				</Medias>
+				<IsDelivery>0</IsDelivery>
+			</o>
+		</UploadOrder>
+	</soap12:Body>
+</soap12:Envelope>

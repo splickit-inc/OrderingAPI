@@ -1,0 +1,4 @@
+class: SmartyResource
+mimetype: text
+
+<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Header><UserCredentials xmlns="http://tempuri.org/"><userName>splickit</userName><password>Pcn9CCCr</password> </UserCredentials></soap12:Header><soap12:Body><AddPoints xmlns="http://tempuri.org/"><MerchantRockCommID>{$resource->merchant_rock_comm_id}</MerchantRockCommID><CustomerCardNumber>{$resource->loyalty_number}</CustomerCardNumber><NumPoints>{$resource->order_amt}</NumPoints><CardAction>CardKeyed</CardAction><ClerkID>27</ClerkID><CheckNumber>{$resource->order_id}</CheckNumber><AccountType>CardNumber</AccountType><SurveyFlag>false</SurveyFlag><ResponseFormat>Json</ResponseFormat></AddPoints></soap12:Body></soap12:Envelope>

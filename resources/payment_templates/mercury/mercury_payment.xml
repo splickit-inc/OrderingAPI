@@ -1,0 +1,31 @@
+class: SmartyResource
+mimetype: text
+
+<?xml version="1.0"?>
+<TStream>
+<Transaction>
+<MerchantID>{$resource->terminal_id}</MerchantID>
+<OperatorID>{$resource->operator_id}</OperatorID>
+<TranType>Credit</TranType>
+<TranCode>{$resource->tran_code}</TranCode>
+<InvoiceNo>{$resource->order_id}</InvoiceNo>
+<RefNo>{$resource->ref_no}</RefNo>
+<Memo>splickit2.0</Memo>
+<Account>
+	<AcctNo>{$resource->cc_number}</AcctNo>
+	<ExpDate>{$resource->cc_exp}</ExpDate>
+</Account>
+<Amount>
+	<Purchase>{$resource->charge_amt}</Purchase>
+</Amount>
+<AVS>
+	<Zip>{$resource->postal_code}</Zip>
+</AVS>
+{if $resource->auth_code neq ''}
+<TranInfo>
+	<AuthCode>{$resource->auth_code}</AuthCode>
+</TranInfo>
+{/if}
+</Transaction>
+</TStream>
+

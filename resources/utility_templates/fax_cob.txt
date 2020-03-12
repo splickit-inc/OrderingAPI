@@ -1,0 +1,33 @@
+class: SmartyResource
+mimetype: text
+
+Splickit Close Of Business Report
+
+FOR DATE: {$resource->for_date}
+
+ID: {$resource->numeric_id}
+
+Name: {$resource->name}
+Addr: {$resource->address1|escape}
+City: {$resource->city|escape}
+
+{if $resource->do_not_show_totals eq 'false'}
+Total Orders:  {$resource->order_count}
+Total Items:   {$resource->order_qty}
+
+Tax Rate:      {$resource->tax_rate}
+
+Total Amt:    ${$resource->order_amt}
+Total Taxes:  ${$resource->total_tax_amt}
+Total Tips:   ${$resource->tip_amt}
+Total Deliv:  ${$resource->delivery_amt}
+Total Promo:  ${$resource->promo_amt}
+---------------------------------------
+
+Grand Total:  ${$resource->grand_total}
+
+{else}
+There were no orders today
+{/if}
+
+If any of the above information is not correct please call us at: 1.888.775.4254

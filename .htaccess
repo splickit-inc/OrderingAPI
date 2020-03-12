@@ -1,0 +1,23 @@
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !smaw_dispatch\.php$
+RewriteCond %{REQUEST_URI} !smaw_v2_dispatch\.php$
+RewriteCond %{REQUEST_URI} !smaw_pos_dispatch\.php$
+RewriteCond %{REQUEST_URI} !smaw_message_dispatch\.php$
+RewriteCond %{REQUEST_URI} !smaw_admin_dispatch\.php$
+RewriteCond %{REQUEST_URI} !smaw_portal_dispatch\.php$
+RewriteCond %{REQUEST_URI} !cron_smaw2\.php$
+#RewriteCond %{REQUEST_URI} !smaw_order_dispatch\.php$
+RewriteRule .*admin.* smaw_admin_dispatch.php [L,QSA]
+RewriteRule .*portal.* smaw_portal_dispatch.php [L,QSA]
+RewriteRule .*messagemanager.* smaw_message_dispatch.php [L,QSA]
+RewriteRule .*/m/g/.* smaw_message_dispatch.php [L,QSA]
+RewriteRule .*ordermanager.* smaw_message_dispatch.php [L,QSA]
+RewriteRule .*phone.* smaw_dispatch.php [L,QSA]
+RewriteRule .*apiv2.* smaw_v2_dispatch.php [L,QSA]
+RewriteRule .*pos.* smaw_pos_dispatch.php [L,QSA]
+RewriteRule .*activitymanager.* cron_smaw2.php [L,QSA]
+
+</IfModule>

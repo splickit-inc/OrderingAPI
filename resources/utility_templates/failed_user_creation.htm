@@ -1,0 +1,31 @@
+class: SmartyResource
+mimetype: text
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+<body>
+we had a duplicate email fail. existing record in db was:<p></p>
+
+user_id = {$resource->user_id}<br>
+email = {$resource->email}<br>
+skin = {$resource->skin_name}<br>
+device type = {$resource->device_type}<br>
+app version = {$resource->app_version}<br>
+created = {$resource->created_date}<br>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+submitted data for user creation was
+<p></p>
+{foreach from=$resource->request_data key=name item=value}
+	{if $name neq 'password'}
+		{$name}={$value}<br>
+	{/if}
+{/foreach}
+</body>
+</html>

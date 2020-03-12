@@ -1,0 +1,11 @@
+Header unset Cache-Control
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !cron_smaw\.php$
+RewriteCond %{REQUEST_URI} !smaw_dispatch\.php$
+RewriteCond %{REQUEST_URI} !smaw_order_dispatch\.php$
+RewriteRule .*phone.* smaw_dispatch.php [L,QSA]
+RewriteRule .*admin.* smaw_admin_dispatch.php [L,QSA]
+RewriteRule .*ordermanager.* smaw_order_dispatch.php [L,QSA]
+</IfModule>

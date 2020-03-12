@@ -1,0 +1,230 @@
+class: SmartyResource
+mimetype: text
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Please add your Tax ID</title>
+	<style type="text/css"> 
+	{literal}
+	* html { 
+		margin:0px; 
+		padding:0px; 
+	} 
+	
+	table div {
+		text-align:center;
+	}
+
+	table, tr, td, p, div { 
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+	}
+
+	hr {
+		border: 0;
+		height: 1px;
+		background-color: #e5e5e5;
+		color: #e5e5e5;
+	}
+
+	.body {
+		font-size: 16px; 
+		color: #4e4e4e; 
+		background-color:#ffffff;
+		border:solid 1px #cacaca; 
+		border-bottom-right-radius: 6px; 
+		border-top-right-radius: 6px; 
+		border-bottom-left-radius: 6px; 
+		border-top-left-radius: 6px;  
+		padding: 0px 20px 0px 20px;
+	}
+	
+	h1, h2 {
+		line-height:1.5; 
+		display:inline;
+	}
+
+	.preheaderContent{
+		 color:#7f7f7f;
+		 font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+		 font-size:13px;
+		 font-weight:normal;
+		 line-height:100%;
+		 vertical-align:middle;
+	}	
+	
+	.footerContent {
+		 color:#7f7f7f;
+		 font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+		 font-size:13px;
+		 font-weight:normal;
+		 line-height:100%;
+		 padding: 0 0 15px 2px;
+		 vertical-align:middle;
+	}
+	
+	#yellowBg {
+		padding: 5px 30px 0 30px;
+		margin: 20px auto;
+		background-image: url('http://your.amazon.s3.amazonaws.com/email/images/merchant_welcome_bg-537.jpg');
+		background-repeat: no-repeat;
+	}
+	
+	#field {
+		background-color: #ffffff; 
+		border: 10px solid #ffffff; 
+		border-radius: 20px;
+		line-height:2;
+	}
+	{/literal}
+	</style>	
+</head>
+<body style="background-color:#eeeeee">
+<table cellspacing="0" cellpadding="0" border="0" width="100%" align="center">
+	<tr>
+		<td>
+			<table width="600px" align="center" cellpadding="0" cellspacing="0" style="margin: 10px auto; padding:0 5px 0 5px;">
+				<tr>
+					<td class="preheaderContent">		
+						<img src="http://your.amazon.s3.amazonaws.com/email/images/spl_logo_gray_footer.png">
+					</td>
+					<td width="auto" align="right" class="preheaderContent">
+				1405 Arapahoe Ave. Boulder, CO 80302
+					</td>
+				</tr>
+<<<<<<< HEAD
+				<tr>
+					<td align="center" colspan="2">
+                    	<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateContainer" align="center">
+                        	<tr>
+                            	<td align="center" valign="middle">
+                                    <!-- // Begin Template Body \\ -->
+                                	<table border="0" cellpadding="0" cellspacing="0" width="600" id="templateBody" topmargin="20" align="center">
+                                    	<tr>
+                                            <td valign="top" class="bodyContent">
+                                
+                                                <!-- // Begin Module: Standard Content \\ -->
+                                                <table align="center" border="0" cellpadding="10" cellspacing="0" width="100%" topmargin="0">
+                                                    <tr>
+                                                        <td valign="top">
+                                                            <div="std_content00" style="padding:0 30px 0 30px;">
+																<h1>Uncle Sam needs those taxes!</h1>
+																To ensure a timely delivery of your annual 1099-K form for Splick-it payments,<span style="font-weight:bold;"> please add your Tax ID number to your profile.</span><p style="text-align: left; padding:0 20px 0 75px;"><span style="font-weight:bold;">Your location:</span> {$resource->data.merchant_addr} {$resource->data.merchant_city_st_zip}<br><span style="font-weight:bold;">Merchant ID:</span> {$resource->data.merchant_id}</p><hr><h2>Unsure how to add your Tax ID?</h2><br><span style="font-weight: bold;">We can help!</span> Just follow the instructions below.
+															</div>
+														</td>
+													</tr>
+												</table>
+												<table height="351px" width="537px" align="center" id="yellowBg" border="0" cellpadding="0" cellspacing="0" topmargin="0" style="padding: 30px 30px 0 30px;">
+													<tr>
+																		<td><div="std_content01" style="text-align: left;">
+																			<h4>Go login!</h4>
+																			<span>Navigate to: &nbsp;<span id="field">&nbsp; &nbsp;<a href="http://portal.splickit.com">http://portal.splickit.com</a>&nbsp;&nbsp;&nbsp;</span></span><br />
+																			<br />
+																			Your login creds: <span id="field">&nbsp;&nbsp;&nbsp;username:&nbsp;<strong>{$resource->data.sus_login_name}</strong>&nbsp;&nbsp;|&nbsp;&nbsp;password: <strong>{$resource->data.sus_login_password}</strong>&nbsp;&nbsp;&nbsp;</span><br />
+																			<br />
+																			<span class="h4">Once logged in,</span>
+																		<ol>
+																			<li style="text-align: left; ">
+																				Navigate to "Menu Administration" tab</li>
+																			<li style="text-align: left; ">
+																				Go to "Franchisee" and go to location on the following page.</li>
+																			<li style="text-align: left; ">
+																				Enter your Tax ID (Employer ID or EIN) in the field provided.</li>
+																			<li style="text-align: left; ">
+																				<strong>Click "Save"&nbsp;</strong>and be on your way.</li>
+																		</ol>
+																		</div>
+																		</td>
+																	</tr>
+																</table>
+				                                                <table align="center" border="0" cellpadding="10" cellspacing="0" width="100%" topmargin="0">
+				                                                    <tr>
+				                                                        <td valign="top">
+				                                                            <div="std_content02">
+																			</div>
+																		</td>
+																	</tr>
+																</table>
+                                                <!-- // End Module: Standard Content \\ -->
+                                                
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- // End Template Body \\ -->
+                                </td>
+                            </tr>
+                        	<tr>
+                            	<td align="center" valign="top">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+			<table width="600px" align="center">
+			<tr>
+			<td align="left" class="footerContent">
+			<div> If you don't like our wise cracks, <a href="*|UNSUB|*">unsubscribe</a>&nbsp;&nbsp;<a href="http://www.splickit.com/terms-of-use/">terms</a>&nbsp;&nbsp;<a href="http://www.splickit.com/privacy-policy/">privacy policy</a>
+			</div>
+		</td>
+			<td align="right" class="footerContent">
+			<div>
+			1-888-SPLICKIT (775.4254)
+			</div>	
+			</td>
+			</tr>
+=======
+>>>>>>> Debugging merchant email templates
+			</table>
+			<table width="600px" height="auto" align="center" cellpadding="0" cellspacing="0" margin="0" class="body">
+       		 	<tr>
+          		  	<td>
+             		   	<div style="padding: 15px 15px 0 15px;">
+							<p><h1>Uncle Sam needs those taxes!</h1></p>To ensure a timely delivery of your annual 1099-K form for Splick-it payments, <span style="font-weight:bold;">please add your Tax ID number to your profile.</span><p style="text-align: left; padding:0 20px 0 75px; font-size: 13px;"><span style="font-weight:bold;">Your location:</span> {$resource->address1} {$resource->city} {$resource->state} {$resource->zip}<br><span style="font-weight:bold;">Merchant ID:</span> {$resource->merchant_id}</p><hr><h2>Unsure how to add your Tax ID?</h2><br><span style="font-weight: bold;">We can help!</span> Just follow the instructions below.						
+			 		   </div>
+				   </td>
+			   </tr>
+			   <tr>
+				   <td>
+					   <table height="351px" width="537px" align="center" border="0" cellpadding="0" cellspacing="0" topmargin="0" id="yellowBg">
+						   	<tr>
+								<td>
+									<div style="text-align: left;">
+										<p style="font-size:20px; font-weight:bold; color:#000000;">Go login!</p>
+										<span>Navigate to: &nbsp;<span id="field">&nbsp; &nbsp;<a href="http://portal.splickit.com">http://portal.splickit.com</a>&nbsp;&nbsp;&nbsp;</span></span><br />
+										<br />
+										Your login creds:<span id="field"> &nbsp;&nbsp;&nbsp;username:&nbsp;<strong>{$resource->sus_login_name}</strong>&nbsp;&nbsp;|&nbsp;&nbsp;password: <strong>{$resource->sus_login_password}</strong>&nbsp;&nbsp;&nbsp;</span><br />
+										<br />
+										<span>Once logged in,</span>
+									<ol>
+										<li style="text-align: left; ">
+											Navigate to "Menu Administration" tab</li>
+										<li style="text-align: left; ">
+											Go to "Franchisee" and go to location on the following page.</li>
+										<li style="text-align: left; ">
+											Enter your Tax ID (Employer ID or EIN) in the field provided.</li>
+										<li style="text-align: left; ">
+											<strong>Click "Save"&nbsp;</strong>and be on your way.</li>
+									</ol>
+									</div>
+								</td>
+							</tr>
+						</table>
+				</table>
+				<table width="600px" cellpadding="0" cellspacing="0" style="margin:20px auto; border-radius: 10px; padding: 0 5px 5px 5px;">
+    				<tr>
+    					<td align="left" class="footerContent"> If you don't like our wise cracks, <a href="*|UNSUB|*">unsubscribe</a>&nbsp;&nbsp;<a href="http://www.splickit.com/terms-of-use/">terms</a>&nbsp;&nbsp;<a href="http://www.splickit.com/privacy-policy/">privacy policy</a>
+						</td>		
+						<td align="right" class="footerContent">
+							<div>
+								1-888-SPLICKIT (775.4254)
+	    					</div>
+        				</td>
+       				 </tr>
+      	   	  </table>
+     		</td>
+     	</tr>
+   </table>
+ </body>
+</html>

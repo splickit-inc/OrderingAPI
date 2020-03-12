@@ -1,0 +1,102 @@
+class: SmartyResource
+mimetype: text
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body style="background:#c1d82f; ">
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10">
+	  <tr>
+  		<td width="200px">
+  		<img src="http://www.splickit.com/icons/SPL-Logo-200px.png" width="200" height="50" alt="Splickit" style=""/>
+  		</td>
+  		<td align="right">
+  		<h2 style="color:#111;font-family:Arial, Helvetica, sans-serif;margin:0px;">Welcome to Splickit</h2>
+  		</td>
+ 	 </tr>
+</table>
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10" style="font-family:Arial, Helvetica, sans-serif;">
+
+<tr style="background:#111;">
+<td>
+<h2 style="color:#fff;margin:0px;">{$resource->name}</h2>
+</td>
+<td align="right" width="160">
+<h2 style="color:#fff;margin:0px;font-weight:normal;">{$resource->today}</h2>
+</td>
+</tr>
+
+<tr style="background:#fff;" >   
+<td colspan="2">
+         
+                <!-- Location -->
+         
+                <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;">
+
+                <tr style="background:#e5e5e5;color:#666;font-weight:bold;">
+                <td align="left" colspan="2">
+                <h4 style="margin: 5px;color:#111;">Location:</h4>
+                </td>
+                </tr>
+         
+                <tr style="background:#fff;color:#444;">
+                <td style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+                <h4 style="margin: 3px 5px;">{$resource->name}</h4>
+
+                <h4 style="margin: 3px 5px;">{$resource->address1}<br/>{$resource->city}, {$resource->state} {$resource->zip}</h4>
+                <p style="margin: 3px 5px;"><a href="#">{$resource->table_data.destination_email}</a></p>
+                </td>
+                </tr>
+                </table>
+
+        </td>
+        </tr>
+
+<tr style="background:#fff;" >	 
+<td colspan="2">
+
+Dear Moe's Partners, <br>
+
+<br>
+
+Congratulations, you have successfully completed the setup process for your location in the Moe's mobile app and online ordering system. Your location is now activated! Please visit moes.splickit.com (http://moes.splickit.com) or download the app for iPhone or Android to verify that your location appears in the list and all of the menu and pricing is correct.<br><br>
+
+If you find any errors, remember that you can access the  <a href="http://portal.splickit.com">Merchant Portal</a> and make changes at any time. Keep in mind that any saved changes are effective immediately for customers.<br><br>
+
+Also, be on the look out for the in-store signage that should be arriving near the end of March. Please place the signage prominently and in clear line of sight for your customers. 45% of all initial downloads come directly from in-store signage and staff word of mouth!
+<br><br>
+<ol>
+
+<li> <a href="http://itunes.apple.com/us/app/moes-southwest-grill/id389854659?mt=8" target="_blank">iPhone</a> <br>
+<li> <a href="https://market.android.com/details?id=com.splickit.moes&hl=en" target="_blank">Android</a> 
+<li> <a href="https://moes.splickit.com" target="_blank">Moes Online Ordering site</a>
+
+</ol>
+<br><br>
+Enjoy treating your customers to the VIP ordering experience! <br><br>
+
+If you have questions or concerns please contact us at 303.481.3656 or <a href="mailto:support@dummy.com"> support@dummy.com </a>
+<br>
+<br>
+Thanks,
+<br>
+<br>
+The Splickit Team
+</td>
+</tr>
+<tr>
+<td colspan="2">
+	<p>Please email questions or requests to <a href="mailto:support@dummy.com" >support@dummy.com</a></p>
+	<p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:11px;">© 2011 splick•it, Inc. 1405 Arapahoe Ave. Boulder, CO 80302</p>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

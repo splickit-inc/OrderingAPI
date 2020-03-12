@@ -1,0 +1,172 @@
+class: SmartyResource
+mimetype: text
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Email Order Ticket</title>
+</head>
+<body>
+{if $resource->test neq ''}
+<big><big>{$resource->test_message}</big></big><p>
+{/if}
+ 
+<big>Order for {$resource->full_name}</big><p>
+Phone: {$resource->user_phone_no}<p>
+
+{assign var=merchant value=$resource->merchant}
+<big>Store Info:</big><br>
+&nbsp;&nbsp;&nbsp;&nbsp;{$merchant.display_name}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{$merchant.address1}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{$merchant.city} {$merchant.state} {$merchant.zip}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;id: {$resource->merchant.merchant_id}<p></p>
+
+{if $resource->cash eq 'Y'}
+		<table style="margin: 0 0 20px 0;" width="595" border="1" cellspacing="0" cellpadding="5">
+			<tr>
+		    <td width="47" align="center" valign="top">&nbsp;</td>
+		    <td valign="top">
+		    	<table width="100%" border="0" cellspacing="0" cellpadding="0"> 
+		  			<tr>
+		    			<td align="center" style="font-size:150%;font-weight:bold;">$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$</td>
+		  			</tr>
+		  			<tr>
+		    			<td align="center" style="font-size:150%;font-weight:bold;">$$$$$$$$$ CASH ORDER $$$$$$$$$</td>
+		  			</tr>
+		  			<tr>
+		    			<td align="center" style="font-size:150%;font-weight:bold;">$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$</td>
+		  			</tr>
+		  		</table>
+		  	</td>
+		  	</tr>
+		</table>
+{/if}
+
+{if $resource->catering eq 'Y'}
+	{assign var=catering_info value=$resource->catering_info}
+	<table style="margin: 0 0 20px 0;" width="548" border="1" cellspacing="0" cellpadding="5">
+		<tr>
+			<td valign="top">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td colspan="2" align="center">***************** CATERING *****************</td>
+					</tr>
+
+					<tr>
+						<td valign="top"><b>Event: {$catering_info.event}</b></td><td><b>for {$catering_info.number_of_people} people</b></td>
+					</tr>
+					<tr>
+						<td valign="top" colspan="2">Contact Info: {$catering_info.contact_info}</td>
+					</tr>
+					{if $catering_info.notes neq ''}
+					<tr>
+						<td valign="top" colspan="2">{$catering_info.notes}</td>
+					</tr>
+					{/if}
+				</table>
+			</td>
+		</tr>
+	</table>
+{/if}
+
+{if $resource->order_type eq 'D'}
+		{assign var=delivery_location_info value=$resource->delivery_info}  
+		<table style="margin: 0 0 20px 0;" width="548" border="1" cellspacing="0" cellpadding="5">
+			<tr>
+		    <td valign="top">
+		    	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  		<tr>
+		    	<td valign="top"><b>Delivery To: {$delivery_location_info->name}</b></td><td><b>{$resource->requested_delivery_time}</b></td>
+		  		</tr>
+		  		<tr>
+		    	<td valign="top" colspan="2">{$delivery_location_info->address1} {if $delivery_location_info->address2 neq ''}<br>{$delivery_location_info->address2}{/if}<br>{$delivery_location_info->city}, {$delivery_location_info->state}<br>{$delivery_location_info->phone_no}</td>
+		    	</tr>
+		    	{if $delivery_location_info->instructions neq ''}
+		    	<tr>
+		    	<td valign="top" colspan="2">{$delivery_location_info->instructions}</td>
+		  		</tr>
+		  		{/if}
+		  		</table>
+		    </td>
+		    <td width="47" valign="top">
+		    <b>${$resource->delivery_amt}</b>
+		    </td>
+		  	</tr>
+		</table>
+{else}
+Scheduled to be picked up {$resource->pickup_day} {$resource->pickup_date} at: {$resource->pickup_time}<p></p>
+{/if}
+
+Splickit Order Number: {$resource->order_id}&nbsp;&nbsp;&nbsp;{$resource->test_message}<p>
+{if $resource->brand_loyalty_number neq ''}Loyalty No: {$resource->brand_loyalty_number}<p>{/if}
+Splickit Support 888-775-4254<p><p>
+
+{if $resource->note neq ''}<big>Special Instructions:</big> <b>{$resource->note}</b><p>{/if}
+<table width="550">
+<tr><td width="150">item</td><td width="300">&nbsp;</td><td width="50">&nbsp;</td><td width="50" align="center">price</td></tr>	
+{foreach from=$resource->order_details key=index item=menu_item}
+	{assign var=item_name value=$menu_item.item_print_name}
+	{assign var=item_size value=$menu_item.size_print_name}
+	{assign var=item_quant value=$menu_item.quantity}
+	{assign var=item_price value=$menu_item.item_total_w_mods}
+	{assign var=item_note value=$menu_item.note}
+<tr><td colspan="4"><hr/></td></tr>
+<tr><td colspan="2"><b>{$item_quant} {if $item_size|lower neq 'one size'} {$item_size}{/if} {$item_name}</b></td><td>&nbsp;</td><td align="right">{$item_price}</td></tr>
+	{if $menu_item.order_detail_hold_it_modifiers|@count > 0}
+		<tr><td align="right" valign="top">HOLD THE:&nbsp;&nbsp;</td><td>
+		{foreach from=$menu_item.order_detail_hold_it_modifiers key=index2 item=modifier_record name=mod}
+			{assign var=mod_item_name value=$modifier_record.mod_print_name}{$mod_item_name}{if not $smarty.foreach.mod.last},{/if} 
+		{/foreach}
+		</td><td>&nbsp;</td></tr>
+	{/if}
+	{if $menu_item.order_detail_modifiers|@count > 0}
+		<tr><td align="right" valign="top">WITH:&nbsp;&nbsp;</td><td>
+		{foreach from=$menu_item.order_detail_modifiers key=index2 item=modifier_record name=no_mod}
+			{assign var=mod_item_name value=$modifier_record.mod_print_name}{$mod_item_name}{if $modifier_record.mod_quantity > 1}(x{$modifier_record.mod_quantity}){/if}{if not $smarty.foreach.no_mod.last},{/if} 
+		{/foreach}
+		</td><td>&nbsp;</td></tr>
+	{/if}
+	{if $menu_item.order_detail_mealdeal|@count > 0}
+		<tr><td align="right" valign="top">MEAL ITEMS:&nbsp;&nbsp;</td><td>
+		{foreach from=$menu_item.order_detail_mealdeal key=index2 item=modifier_record name=no_mod}
+			{assign var=mod_item_name value=$modifier_record.mod_print_name}{$mod_item_name}{if not $smarty.foreach.no_mod.last},{/if} 
+		{/foreach}
+		</td><td>&nbsp;</td></tr>
+	{/if}
+	{if $menu_item.order_detail_sides|@count > 0}
+		<tr><td align="right" valign="top">SIDE OF:&nbsp;&nbsp;</td><td>
+		{foreach from=$menu_item.order_detail_sides key=index2 item=modifier_record name=side}
+			{assign var=mod_item_name value=$modifier_record.mod_print_name}
+			{$mod_item_name}{if $modifier_record.mod_quantity > 1}(x{$modifier_record.mod_quantity}){/if}
+			{if not $smarty.foreach.side.last},{/if} 
+		{/foreach}
+		</td><td>&nbsp;</td></tr>
+	{/if}
+	{if $item_note neq ''}
+		</td><td>&nbsp;</td></tr>
+		<tr><td align="right" valign="top">NOTE:&nbsp;&nbsp;</td><td>{$item_note|escape}</td><td>&nbsp;</td></tr>
+	{/if}
+{/foreach}
+<tr><td colspan="4"><hr/></td></tr>
+	{foreach from=$resource->receipt_items_for_merchant_printout key=index item=receipt_item}
+	{assign var=label value=$receipt_item.title}
+	{assign var=amount value=$receipt_item.amount}
+	<tr><td colspan="2" align="right">{$label}</td><td>&nbsp;</td><td align="right">{$amount}</td></tr>
+	{/foreach}
+<tr><td colspan="4">&nbsp;</td></tr>
+</table>
+{if $resource->show_group_order_info eq true}
+<table width="550">
+	<tr><td width="550"><hr/></td></tr>
+	<tr><td align="center">----- Group Order Info ------</td></tr>
+	{foreach from=$resource->group_order_info key=index item=order_info}
+	{foreach from=$order_info key=index2 item=display_row}
+	<tr><td align="center">{$display_row}</td></tr>
+	{/foreach}
+	<tr><td align="center">-------</td></tr>
+	{/foreach}
+</table>
+{/if}
+</body>
+</html>

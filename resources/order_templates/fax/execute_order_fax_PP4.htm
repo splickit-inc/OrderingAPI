@@ -1,0 +1,430 @@
+class: SmartyResource
+mimetype: text
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Faxed Order - {$resource->order_id}</title>
+</head>
+
+<body style="font-family: Verdana, Geneva, sans-serif; font-size:10px;text-transform:uppercase;width:600px">
+&nbsp;<p/>
+<table style="border:2px solid #000;margin:0 0 8px 59px;text-align:center;" width="478" border="0" cellpadding="1">
+
+{assign var=page_limit value=6}
+{if $resource->test neq ''}
+	<tr>
+	  <td align="center" colspan="3" style="font-size:150%;font-weight:bold;">********* TEST ORDER DO NOT MAKE *********</td>
+	</tr>
+{/if}
+    <tr>
+      <td>ORDER NUMBER: {$resource->order_id}</td>
+      {if $resource->order_type eq 'D'}
+      	<td colspan="2">REQUESTED DELIVERY TIME: {$resource->requested_delivery_time}</td>
+      {else}
+    	<td>PLACED AT: {$resource->order_date3}</td>
+      <td>REQUESTED AT: {if $resource->future_order eq 'true'}<B>{/if}{$resource->pickup_date3}{if $resource->future_order eq 'true'}</B>{/if}</td>
+      {/if}
+    </tr>
+    <tr>
+      <td style="font-size:12px; font-weight:bold;">{$resource->full_name|upper}</td>
+      <td style="font-size:12px; font-weight:bold;">Customer Phone: {$resource->user_phone_no}</td>
+      {if $resource->order_type eq 'D'}<td style="font-size:12px; font-weight:bold;">delivery</td>{else}<td style="font-size:12px; font-weight:bold;">pick-up</td>{/if}
+    </tr>
+    <tr>
+      <td colspan=3>Splick.it Support: 1.888.775.4254</td>
+    </tr>
+{if $resource->test neq ''}
+	<tr>
+	  <td align="center" colspan="3" style="font-size:150%;font-weight:bold;">********* TEST ORDER DO NOT MAKE *********</td>
+	</tr>
+{/if}
+  </table>
+
+{if $resource->cash eq 'Y'}
+		<table style="margin: 0 0 8px 0;" width="595" border="1" cellspacing="0" cellpadding="5">
+			<tr>
+		    <td width="47" align="center" valign="top">&nbsp;</td>
+		    <td valign="top">
+		    	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  			<tr>
+		    			<td align="center" style="font-size:150%;font-weight:bold;">$$$$$$$$$ CASH ORDER $$$$$$$$$</td>
+		  			</tr>
+		  		</table>
+		  	</td>
+		  	</tr>
+		</table>
+{/if}
+{if $resource->order_type eq 'D'}
+		{assign var=delivery_location_info value=$resource->delivery_info}
+		<table style="margin: 0 0 8px 0;" width="595" border="1" cellspacing="0" cellpadding="5">
+			<tr>
+		    <td width="47" align="center" valign="top">&nbsp;</td>
+		    <td valign="top">
+		    	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  		<tr>
+		    	<td valign="top"><b>Delivery To: {$delivery_location_info->name}</b></td><td><b>{$resource->requested_delivery_time}</b></td>
+		  		</tr>
+		  		<tr>
+		    	<td valign="top" colspan="2">{$delivery_location_info->address1} {if $delivery_location_info->address2 neq ''}<br>{$delivery_location_info->address2}{/if}<br>{$delivery_location_info->city}, {$delivery_location_info->state} {$delivery_location_info->zip}<br>{$delivery_location_info->phone_no}</td>
+		    	</tr>
+		    	{if $delivery_location_info->instructions neq ''}
+		    	<tr>
+		    	<td valign="top" colspan="2">{$delivery_location_info->instructions}</td>
+		  		</tr>
+		  		{/if}
+		  		</table>
+		    </td>
+		    <td width="47" valign="top">
+		    <b>${$resource->delivery_amt}</b>
+		    </td>
+		  	</tr>
+		</table>
+{/if}
+
+{if $resource->note neq ''}
+		<table style="margin: 0 0 8px 0;" width="595" border="1" cellspacing="0" cellpadding="5">
+			<tr>
+		    <td width="47" align="center" valign="top">&nbsp;</td>
+		    <td valign="top">
+		    	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  		<tr>
+		    	<td valign="top"><b>SPECIAL INSTRUCTIONS:</b> {$resource->note}</td>
+		  		</tr>
+		  		</table>
+		    </td>
+		    <td width="47" valign="top">&nbsp</td>
+		  	</tr>
+		</table>
+{/if}
+
+{counter print=false}
+{assign var=count value=1.0}
+{foreach from=$resource->order_details key=index item=menu_item}
+	{assign var=item_name value=$menu_item.item_print_name}
+	{assign var=item_size value=$menu_item.size_print_name}
+	{assign var=item_quant value=$menu_item.quantity}
+	{assign var=item_price value=$menu_item.item_total_w_mods}
+	{assign var=item_note value=$menu_item.note}
+	{assign var=menu_type value=$menu_item.menu_type_name|lower}
+  {assign var=count value=$count+1.0}
+
+	{if ($item_size|lower eq 'pita' || $item_size|lower eq 'salad' || $item_size|lower eq 'regular pita' || $item_size|lower eq 'small pita') && !($menu_type|lower|strstr:'catering')}
+
+		{assign var=bread_type value=''}
+		{assign var=grilled_veggies value=''}
+		{assign var=toppings value=''}
+		{assign var=cheese value=''}
+		{assign var=sauce value=''}
+		{assign var=double_meat value=''}
+		{assign var=extra_cheese value=''}
+		{assign var=add_bacon value=''}
+		{assign var=sides value=''}
+		{assign var=mealdeal value=''}
+
+
+		{foreach from=$menu_item.order_detail_modifiers key=index2 item=modifier_record name=mod}
+			{assign var=mod_item_name value=$modifier_record.mod_print_name}
+			{if $modifier_record.mod_quantity > 1}
+				{assign var=multi value='<b>(x'|cat:$modifier_record.mod_quantity|cat:')</b>'}
+			{else}
+				{assign var=multi value=''}
+			{/if}
+
+			{if $modifier_record.modifier_group_name|lower eq 'pita'}
+				{assign var=bread_type value=$mod_item_name}
+			{elseif $modifier_record.modifier_group_name eq 'Cheese'}
+				{assign var=cheese value= $cheese|cat:' '|cat:$mod_item_name|cat:$multi|cat:','}
+			{elseif $modifier_record.modifier_group_name eq 'Sauces'}
+				{assign var=sauce value= $sauce|cat:' '|cat:$mod_item_name|cat:$multi|cat:','}
+			{elseif $mod_item_name|lower eq 'double cheese'}
+				{assign var=extra_cheese value='yes'}
+			{elseif $mod_item_name|lower eq 'add bacon'}
+				{if $modifier_record.comes_with eq 'Y'}
+					{assign var=toppings value= $toppings|cat:' '|cat:'BACON,'}
+				{else}
+					{assign var=add_bacon value='yes'}
+				{/if}
+			{elseif $mod_item_name|lower eq 'double meat'}
+				{assign var=double_meat value='yes'}
+		  {elseif $mod_item_name|lower eq 'bacon'}
+		    {assign var=toppings value= $toppings|cat:' <b>'|cat:$mod_item_name|cat:$multi|cat:'</b>,'}
+		  {elseif $mod_item_name|strstr:'combo'}
+        {assign var=mealdeal value= $mealdeal|cat:' '|cat:$mod_item_name|cat:$multi|cat:','}
+			{else}
+				{assign var=toppings value= $toppings|cat:' '|cat:$mod_item_name|cat:$multi|cat:','}
+			{/if}
+
+		{/foreach}
+
+		{foreach from=$menu_item.order_detail_hold_it_modifiers key=indexhold item=hold_it_modifier_record name=mod}
+			{assign var=mod_item_name value=$hold_it_modifier_record.mod_name}
+			{if $mod_item_name|lower eq 'bacon'}
+				{assign var=toppings value= $toppings|cat:' '|cat:'NO BACON,'}
+				{assign var=add_bacon value='holdit'}
+			{/if}
+		{/foreach}
+
+		{foreach from=$menu_item.order_detail_sides key=index2 item=modifier_record name=mod}
+			{assign var=mod_item_name value=$modifier_record.mod_print_name}
+			{assign var=sides value=$sides|cat:' '|cat:$mod_item_name|cat:','}
+		{/foreach}
+
+		{foreach from=$menu_item.order_detail_mealdeal key=index3 item=modifier_record2 name=no_mod}
+			{assign var=mod_item_name2 value=$modifier_record2.mod_print_name}
+			{assign var=mealdeal value=$mealdeal|cat:' '|cat:$mod_item_name2|cat:','}
+		{/foreach}
+
+		{assign var=grilled_veggies2 value=$grilled_veggies|upper|rtrim:','}
+		{assign var=toppings2 value=$toppings|upper|rtrim:','}
+		{assign var=cheese2 value=$cheese|upper|rtrim:','}
+		{assign var=sauce2 value=$sauce|upper|rtrim:','}
+		{assign var=sides2 value=$sides|upper|rtrim:','}
+		{assign var=mealdeal2 value=$mealdeal|upper|rtrim:','}
+	  {if $count is div by 4}
+	   {if $resource->cash eq 'Y'} <div style="float:left;font-size:130%;font-weight:bold;">$$$$$$$$$$ CASH ORDER $$$$$$$$$$</div> {/if}
+	  {/if}
+			<div style="page-break-before:always;margin: 0 0 8px 0;border:1px solid black;float:left;">
+
+			<div style="width:47px;float:left;font-size:130%;text-align:center;padding:5px;"><b>{$item_quant}</b></div>
+		    <div style="font-size:130%;float:left;width:468px;padding:5px;border-left:1px solid black;border-right:1px solid black;">
+		    	<table width="100%" border="0" cellspacing="3" cellpadding="0">
+		  		<tr>
+			    	<td valign="top" style="font-size:150%;font-weight:bold;white-space:nowrap;">{$item_name|upper}</td>
+			    	<td valign="top" style="float:right">ORDER NUMBER: {$resource->order_id} {$menu_type}</td>
+          </tr>
+          </table>
+          {if $double_meat eq 'yes' || $add_bacon eq 'yes' || $add_bacon eq 'holdit' || $extra_cheese eq 'yes'}
+            <table>
+  			    <tr>
+  			      {if $double_meat eq 'yes'}
+	 		       	<td valign="top" align="center" width="33%">
+			     		    <b>DOUBLE MEAT</b>
+			    	  </td>
+			    	  {/if}
+			    	  {if $add_bacon eq 'yes' || $add_bacon eq 'holdit'}
+			    	  <td valign="top" align="center" width="34%">
+			    	    {if $add_bacon eq 'yes'}
+    			    		<b>ADD BACON</b>
+		    	    	{elseif $add_bacon eq 'holdit'}
+			         		<b>HOLD THE BACON</b>
+			    	    {/if}
+			    	  </td>
+			    	  {/if}
+			    	  {if $extra_cheese eq 'yes'}
+			    	  <td valign="top" align="center" width="33%">
+			    		   <b>EXTRA CHEESE</b>
+			    	  </td>
+			    	  {/if}
+		  		  </tr>
+		  		  </table>
+		  		{/if}
+		  		<table>
+		  		<tr >
+		    	<td valign="top"><b>SIZE:</b> {$item_size|upper} </td><td valign="top" align="center" colspan="2"><b>PITA:</b> {$bread_type|upper}</td><td colspan="2">&nbsp;</td>
+		    	</tr>
+
+		    	{if $sides2 neq ''}
+          <tr >
+          <td valign="top" colspan="5"><b>EXTRAS:</b> {$sides2}</td>
+          </tr>
+          {/if}
+
+		    	{if $toppings2 neq ''}
+		  		<tr >
+		    	<td valign="top" colspan="5"><b>TOPPINGS:</b> &nbsp;{$toppings2}
+		    	</td>
+		    	</tr>
+		    	{/if}
+		    	{if $cheese2 neq ''}
+		  		<tr >
+		    	<td valign="top" colspan="5"><b>CHEESE:</b> {$cheese2}</td>
+		    	</tr>
+		    	{/if}
+		    	{if $sauce2 neq ''}
+		  		<tr >
+		    	<td valign="top" colspan="5"><b>SAUCE:</b> {$sauce2}</td>
+		    	</tr>
+		    	{/if}
+		    	{if $mealdeal2 neq ''}
+		  		<tr >
+		    	<td valign="top" colspan="5"><b>COMBO:</b> {$mealdeal2}</td>
+		    	</tr>
+		    	{/if}
+		    	{if $item_note neq ''}
+		  		<tr >
+		    	<td valign="top" colspan="5"><b>NOTES:</b> {$item_note|escape}</td>
+		    	</tr>
+			    {/if}
+		    	</table>
+		    </div>
+		    <div style="width:47px;float:left;text-align:center;padding:5px;"><b>${$item_price}</b></div>
+		    <div style="clear:both"></div>
+
+		  </div>
+		  <div style="clear:both"></div>
+		<!-- </table>  -->
+	{elseif $menu_type|lower|strstr:'catering'}
+        {if $count is div by 4}
+        {if $resource->cash eq 'Y'} <div style="float:left;font-size:130%;font-weight:bold;">$$$$$$$$$$ CASH ORDER $$$$$$$$$$</div> {/if}
+        {/if}
+        <div style="margin: 0 0 8px 0;border:1px solid black;float:left;">
+            {assign var=sum_mod_quant value=0}
+            {foreach from=$menu_item.order_detail_modifiers item=modifier_record }
+            {assign var=mod_quant value=$modifier_record.mod_quantity}
+            {assign var=sum_mod_quant value=$sum_mod_quant+$mod_quant}
+            {/foreach}
+
+            <div style="width:47px;float:left;font-size:130%;text-align:center;padding:5px;"><b>{$sum_mod_quant}</b></div>
+            <div style="font-size:130%;float:left;width:468px;padding:5px;border-left:1px solid black;border-right:1px solid black;">
+                <div valign="top">
+                    <span style="float:left;font-size:150%;font-weight:bold;white-space:nowrap;">{$item_name|upper}</span>
+                    <span style="float:right">ORDER NUMBER: {$resource->order_id} </span>
+                </div><br /><br />
+                {foreach from=$menu_item.order_detail_complete_modifier_list_no_holds item=modifier_record }
+                {assign var=mod_item_name value=$modifier_record.mod_print_name}
+                {assign var=mod_quant value=$modifier_record.mod_quantity}
+                {$mod_item_name} (X{$mod_quant}) <br />
+                {/foreach}
+								{if $item_note neq ''}
+								<br><b>NOTES:</b> {$item_note|escape}
+								{/if}
+            </div>
+            <div style="width:47px;float:left;text-align:center;padding:5px;"><b>${$item_price}</b></div>
+            <div style="clear:both"></div>
+        </div>
+        <div style="clear:both"></div>
+	{else}
+	    {if $count is div by 4}
+			   {if $resource->cash eq 'Y'} <div style="float:left;font-size:130%;font-weight:bold;">$$$$$$$$$$ CASH ORDER $$$$$$$$$$</div> {/if}
+		  {/if}
+		  <div style="margin: 0 0 8px 0;border:1px solid black;float:left;">
+
+			<div style="width:47px;float:left;font-size:130%;text-align:center;padding:5px;"><b>{$item_quant}</b></div>
+		    <div style="font-size:130%;float:left;width:468px;padding:5px;border-left:1px solid black;border-right:1px solid black;">
+		      <div valign="top">
+            <span style="float:left;font-size:150%;font-weight:bold;white-space:nowrap;">{$item_name|upper}</span>
+            <span style="float:right">ORDER NUMBER: {$resource->order_id} </span>
+		    	</div>
+		  		{if $item_size|lower neq 'one size' && $item_size neq ' ' && $item_size neq ''}
+			  		<br></br>SIZE:{$item_size|upper}
+		    	{/if}
+		    	{if $menu_item.order_detail_modifiers|@sizeof > 0}
+		    		<b>WITH: </b>
+			    	{foreach from=$menu_item.order_detail_modifiers key=index2 item=modifier_record name=mod}
+			    		{assign var=mod_item_name value=$modifier_record.mod_print_name}
+			    		{$mod_item_name}{if not $smarty.foreach.mod.last},{/if}
+			    	{/foreach}
+			    {/if}
+			    {if $menu_item.order_detail_mealdeal|@count > 0}
+					<b>COMBO ITEMS:&nbsp;&nbsp;</b>
+					{foreach from=$menu_item.order_detail_mealdeal key=index2 item=modifier_record name=no_mod}
+						{assign var=mod_item_name value=$modifier_record.mod_print_name}{$mod_item_name}{if not $smarty.foreach.no_mod.last},{/if}
+					{/foreach}
+				{/if}
+          {if $item_note neq ''}
+            <br><b>NOTES:</b> {$item_note|escape}
+          {/if}
+		    </div>
+		    <div style="width:47px;float:left;text-align:center;padding:5px;"><b>${$item_price}</b></div>
+		    <div style="clear:both"></div>
+		  </div>
+		  <div style="clear:both"></div>
+	{/if}
+{/foreach}
+
+{if $resource->loyalty_number neq ''}
+    <table style="margin: 0 0 8px 0;" width="595" border="1" cellspacing="0" cellpadding="5">
+      <tr>
+        <td width="47" align="center" valign="top">&nbsp;</td>
+        <td valign="top">
+          <table width="95%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+          <td valign="top" style="font-size:12px;"><b>Loyalty Points Added To:</b> {$resource->loyalty_number}</td>
+          </tr>
+          </table>
+        </td>
+        <td width="47" valign="top">&nbsp</td>
+        </tr>
+    </table>
+{/if}
+
+{if $resource->points_earned gt 0}
+<table style="border:2px solid #000; margin: 0 0 0 0;float:left;" width="210px" border="0" cellspacing="0" cellpadding="5">
+  <tr>
+    <td>Points Automatically Added: </td>
+    <td>{$resource->points_earned}</td>
+  </tr>
+</table>
+{/if}
+
+<table style="border:2px solid #000;margin:0 4px 0 0; float:right;" width="210px" border="0" cellspacing="0" cellpadding="5">
+  	<tr>
+    <td width="60%">Subtotal:</td>
+    <td>${$resource->order_amt}</td>
+  	</tr>
+  	<tr>
+    <td>Tax:</td>
+    <td>${$resource->total_tax_amt}</td>
+  	</tr>
+{if $resource->promo_amt neq '0.00' && $resource->promo_payor == 2}
+ 	<tr>
+	<td>promo amt:</td>
+	<td>${$resource->promo_amt}</td>
+	</tr>
+ 	<tr>
+	<td colspan="2">promo: <b>{$resource->promo_code}</b></td>
+	</tr>
+{/if}
+{if $resource->delivery_amt neq '0.00'}
+ 	<tr>
+	<td>delivery:</td>
+	<td>${$resource->delivery_amt}</td>
+	</tr>
+{/if}
+
+{if $resource->promo_payor == 2}
+  {assign var=promo_amt value=$resource->promo_amt}
+{else}
+  {assign var=promo_amt value=0.0}
+{/if}
+
+  <tr>
+    <td>
+      <b>Total:</b>
+    </td>
+    <td>
+      <b>${math equation="order + tax + delivery + promo"
+        order=$resource->order_amt
+        tax=$resource->total_tax_amt
+        delivery=$resource->delivery_amt
+        promo=$promo_amt
+      }</b>
+    </td>
+  </tr>
+
+{if $resource->tip_amt neq '0.00'}
+  <tr>
+  <td>Tip:</td>
+  <td>${$resource->tip_amt}</td>
+  </tr>
+{/if}
+
+ 	<tr>
+    <td>
+      <b>Grand Total:</b>
+    </td>
+    <td>
+      <b>${math equation="order + tax + tip + delivery + promo"
+        order=$resource->order_amt
+        tax=$resource->total_tax_amt
+        tip=$resource->tip_amt
+        delivery=$resource->delivery_amt
+        promo=$promo_amt
+      }</b>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

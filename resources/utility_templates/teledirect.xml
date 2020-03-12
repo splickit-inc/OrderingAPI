@@ -1,0 +1,19 @@
+class: SmartyResource
+mimetype: text
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Request>
+<!-- <Key>178392494419258</Key>  -->
+<Key>210673050222705</Key>
+<Lead>
+<Field Name="FirstName" Value="Anybody"/>
+<Field Name="LastName" Value="{$resource->order_id}-{$resource->task}"/>
+<Field Name="PhoneNumber" Value="{$resource->merchant_phone_no}"/>
+<!-- <Field Name="PhoneNumber" Value="7208411460"/>  -->
+<Field Name="Task" Value="{$resource->task}"/>
+<Field Name="MerchantName" Value="{$resource->merchant_name}"/>
+<Field Name="OrderText1">We tried to send a {$resource->order_qty} item order for {$resource->customer_first_name} but it appears that the printer did not receive it.{if $resource->order_type eq 'D'} This order is a delivery order, and {$resource->customer_first_name} has requested delivery at {$resource->requested_delivery_time}.{else} {$resource->customer_first_name} will be in the store at {$resource->pickup_time}.{/if}</Field>
+<Field Name="OrderId" Value="{$resource->order_id}" />
+<Field Name="MerchantId" Value="{$resource->merchant_id}" />
+</Lead>
+</Request>

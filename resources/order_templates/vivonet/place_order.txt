@@ -1,0 +1,4 @@
+class: SmartyResource
+mimetype: text
+
+{$resource->vivonet_json_order}

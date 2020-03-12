@@ -1,0 +1,4 @@
+<CreditTransaction xmlns="http://www.mercurypay.com">
+<tran>xxxxxxxxxx</tran>
+<pw>xyz</pw>
+</CreditTransaction>

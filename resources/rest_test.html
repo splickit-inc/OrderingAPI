@@ -1,0 +1,204 @@
+mimetype: text/html
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script language="javascript">
+
+	function doCreateUser() {
+		if (document.smsForm.local.value == "local")
+			document.smsForm.action = "http://localhost:8888/splickit20/users/";
+		else
+			document.smsForm.action = "http://test.splickit.com/app/users/";
+		document.smsForm.jsonVal.value = buildJSON("user_id");
+		document.smsForm.submit();
+	}
+
+	function doUpdate() {
+		if (document.smsForm.local.value == "local")
+			document.smsForm.action = "http://localhost:8888/smaw/users/"+document.smsForm.user_id.value;
+		else
+			document.smsForm.action = "http://www.splickit.com/app2/users/"+document.smsForm.user_id.value;
+		//document.smsForm.action = "http://localhost:8888/smaw/app/users/"+document.smsForm.user_id.value;
+		document.smsForm.jsonVal.value = buildJSON("user_id");
+		document.smsForm.submit();
+	}
+
+	function placeOrder() {
+		if (document.smsForm.local.value == "local")
+			document.smsForm.action = "http://localhost:8888/smaw/orders/";
+		else
+			document.smsForm.action = "http://test.splickit.com/app/orders/";
+		//document.smsForm.action = "http://localhost:8888/smaw/app/orders/";
+		document.smsForm.jsonVal.value = buildJSON("dummy");
+		document.smsForm.submit();
+	}
+/*
+	function placeOrder() {
+		document.smsForm.action = "http://test.splickit.com/app/orders/";
+		document.smsForm.jsonVal.value = buildJSON("dummy");
+		document.smsForm.submit();
+	}
+*/
+	function getFavorites() {
+		if (document.smsForm.local.value == "local")
+			document.smsForm.action = "http://localhost:8888/smaw/faves/?user_id="+document.smsForm.user_id.value;
+		else
+			document.smsForm.action = "http://test.splickit.com/app/faves/?user_id="+document.smsForm.user_id.value;
+		document.smsForm.method = "get";
+		document.smsForm.submit();
+	}
+
+	function getFavorite() {
+		if (document.smsForm.local.value == "local")
+			document.smsForm.action = "http://localhost:8888/smaw/faves/"+document.smsForm.favorite_order_id.value;
+		else
+			document.smsForm.action = "http://test.splickit.com/app/faves/"+document.smsForm.favorite_order_id.value;
+		document.smsForm.method = "get";
+		document.smsForm.submit();
+	}
+
+	function getUser() {
+		if (document.smsForm.local.value == "local")
+			document.smsForm.action = "http://localhost:8888/smaw/users/"+document.smsForm.user_id.value+"/";
+		else
+			document.smsForm.action = "http://test.splickit.com/app/users/"+document.smsForm.user_id.value+"/";
+		document.smsForm.method = "get";
+		document.smsForm.submit();
+	}
+
+	function getUserSession() {
+		if (document.smsForm.local.value == "local")
+			document.smsForm.action = "http://localhost:8888/smaw/usersession";
+		else
+			document.smsForm.action = "http://www.splickit.com/app2/usersession/?email="+document.smsForm.email.value;
+		document.smsForm.method = "get";
+		document.smsForm.submit();
+	}
+
+	function sendJSONmods() {
+		
+		if (document.smsForm.local.value == "local")
+		{
+			document.smsForm.action = "http://localhost:8888/smaw/placeorder/";
+			document.smsForm.jsonVal.value = "{\"jsonVal\":{\"user_id\":20000,\"note\":\"Here is a note\",\"lead_time\":5,\"items\":[{\"quantity\":1,\"sizeprice_id\":1,\"name\":\"bob\",\"note\":\"dont fuck it up\",\"mods\":[{\"mod_sizeprice_id\":1003,\"mod_quantity\":1},{\"mod_sizeprice_id\":1007,\"mod_quantity\":3}]},{\"quantity\":\"1\",\"sizeprice_id\":\"7\",\"mods\":[{\"mod_sizeprice_id\":1018,\"mod_quantity\":1},{\"mod_sizeprice_id\":1022,\"mod_quantity\":1}]}],\"sub_total\":\"5.55\",\"merchant_id\":\"1000\"}}";
+		} else {
+			document.smsForm.action = "http://www.splickit.com/app2/placeorder/";
+			document.smsForm.jsonVal.value = "{\"jsonVal\":{\"user_id\":20000,\"note\":\"Here is a note\",\"lead_time\":5,\"items\":[{\"quantity\":1,\"sizeprice_id\":1000,\"name\":\"bob\",\"note\":\"dont fuck it up\",\"mods\":[{\"mod_sizeprice_id\":1003,\"mod_quantity\":1},{\"mod_sizeprice_id\":1007,\"mod_quantity\":3}]},{\"quantity\":1,\"sizeprice_id\":1007,\"mods\":[{\"mod_sizeprice_id\":1018,\"mod_quantity\":1},{\"mod_sizeprice_id\":1022,\"mod_quantity\":1}]}],\"sub_total\":5.55,\"merchant_id\":1000}}";
+		}
+		document.smsForm.submit();
+	}
+
+/*	function sendJSONmods() {
+		document.smsForm.action = "http://test.splickit.com/app/orders/";
+				   //document.smsForm.jsonVal.value = "{\"user_id\":20000,\"leadTime\":5,\"merchant_id\":1006,\"sub_total\":7.40,\"note\":\"Extra hot please\",\"items\":[{\"qty\":1,\"id\":622},{\"qty\":1,\"id\":624}]}";
+	//	document.smsForm.jsonVal.value = "{\"jsonVal\":{\"user_id\":20000,\"note\":\"my note\",\"leadTime\":5,\"items\":[{\"qty\":\"1\",\"id\":\"1202\",\"mods\":[{\"5\":\"1\",\"12\":\"3\"}]}],\"sub_total\":\"5.55\",\"merchant_id\":\"1006\"}}";
+	//	document.smsForm.jsonVal.value = "{\"jsonVal\":{\"user_id\":20000,\"note\":\"my note\",\"leadTime\":5,\"items\":[{\"qty\":\"1\",\"id\":\"1202\",\"mods\":[{\"mod_id\":5,\"mod_qty\":1},{\"mod_id\":12,\"mod_qty\":3}]}],\"sub_total\":\"5.55\",\"merchant_id\":\"1006\"}}";
+		
+		// pre columns fixed value
+		//document.smsForm.jsonVal.value = "{\"jsonVal\":{\"user_id\":20000,\"note\":\"Here is a note\",\"leadTime\":5,\"items\":[{\"qty\":1,\"id\":996,\"mods\":[{\"mod_id\":5,\"mod_qty\":1},{\"mod_id\":12,\"mod_qty\":3}]},{\"qty\":1,\"id\":1008,\"mods\":[{\"mod_id\":1,\"mod_qty\":1},{\"mod_id\":11,\"mod_qty\":1}]}],\"sub_total\":5.55,\"merchant_id\":1040}}";
+		
+		//columns fixed values
+		document.smsForm.jsonVal.value = "{\"jsonVal\":{\"user_id\":20000,\"note\":\"Here is a note\",\"lead_time\":5,\"items\":[{\"quantity\":1,\"sizeprice_id\":996,\"mods\":[{\"mod_sizeprice_id\":5,\"mod_quantity\":1},{\"mod_sizeprice_id\":12,\"mod_quantity\":3}]},{\"quantity\":1,\"sizeprice_id\":1008,\"mods\":[{\"mod_sizeprice_id\":1,\"mod_quantity\":1},{\"mod_sizeprice_id\":11,\"mod_quantity\":1}]}],\"sub_total\":5.55,\"merchant_id\":1040}}";
+		//alert('jason: '+document.smsForm.jsonVal.value);
+		document.smsForm.submit();
+	}
+*/
+	function sendJSONmods2() {
+		document.smsForm.action = "http://test.splickit.com/app/orders/";
+				   //document.smsForm.jsonVal.value = "{\"user_id\":20000,\"leadTime\":5,\"merchant_id\":1006,\"sub_total\":7.40,\"note\":\"Extra hot please\",\"items\":[{\"qty\":1,\"id\":622},{\"qty\":1,\"id\":624}]}";
+	//	document.smsForm.jsonVal.value = "{\"jsonVal\":{\"user_id\":20000,\"note\":\"my note\",\"leadTime\":5,\"items\":[{\"qty\":\"1\",\"id\":\"1202\",\"mods\":[{\"5\":\"1\",\"12\":\"3\"}]}],\"sub_total\":\"5.55\",\"merchant_id\":\"1006\"}}";
+	//	document.smsForm.jsonVal.value = "{\"jsonVal\":{\"user_id\":20000,\"note\":\"my note\",\"leadTime\":5,\"items\":[{\"qty\":\"1\",\"id\":\"1202\",\"mods\":[{\"mod_id\":5,\"mod_qty\":1},{\"mod_id\":12,\"mod_qty\":3}]}],\"sub_total\":\"5.55\",\"merchant_id\":\"1006\"}}";
+		document.smsForm.jsonVal.value = "{\"jsonVal\":{\"user_id\":20000,\"note\":\"Here is a note\",\"leadTime\":5,\"items\":[{\"qty\":1,\"id\":953,\"mods\":[{\"mod_id\":26,\"mod_qty\":3},{\"mod_id\":40,\"mod_qty\":1}]},{\"qty\":1,\"id\":962,\"mods\":[{\"mod_id\":43,\"mod_qty\":1}]}],\"sub_total\":5.55,\"merchant_id\":1038}}";
+		//alert('jason: '+document.smsForm.jsonVal.value);
+		document.smsForm.submit();
+	}
+
+	function sendJSONfavelocal() {
+		document.smsForm.action = "http://localhost:8888/smaw/faves/";
+		document.smsForm.jsonVal.value = "{\"jsonVal\":{\"user_id\":20000,\"note\":\"Here is a note\",\"favorite_name\":\"onetwothree\",\"lead_time\":5,\"items\":[{\"quantity\":1,\"sizeprice_id\":1192,\"mods\":[{\"mod_sizeprice_id\":5,\"mod_quantity\":1},{\"mod_sizeprice_id\":12,\"mod_quantity\":3}]},{\"quantity\":1,\"sizeprice_id\":1202,\"mods\":[{\"mod_sizeprice_id\":1,\"mod_quantity\":1},{\"mod_sizeprice_id\":11,\"mod_quantity\":1}]}],\"sub_total\":5.55,\"merchant_id\":1006}}";
+		document.smsForm.submit();
+	}
+
+	function sendJSONfave() {
+		if (document.smsForm.local.value == "local")
+		{
+			document.smsForm.action = "http://localhost:8888/smaw/faves/";
+			document.smsForm.jsonVal.value = "{\"jsonVal\":{\"user_id\":20000,\"note\":\"Here is a note\",\"favorite_name\":\"onetwothree\",\"items\":[{\"quantity\":1,\"sizeprice_id\":1192,\"mods\":[{\"mod_sizeprice_id\":5,\"mod_quantity\":1},{\"mod_sizeprice_id\":12,\"mod_quantity\":3}]},{\"quantity\":1,\"sizeprice_id\":1202,\"mods\":[{\"mod_sizeprice_id\":1,\"mod_quantity\":1},{\"mod_sizeprice_id\":11,\"mod_quantity\":1}]}],\"merchant_id\":1006}}";
+		} else {
+			document.smsForm.action = "http://test.splickit.com/app/faves/";
+			document.smsForm.jsonVal.value = "{\"jsonVal\":{\"user_id\":20000,\"note\":\"Here is a note\",\"favorite_name\":\"asnewfave\",\"lead_time\":5,\"items\":[{\"quantity\":1,\"sizeprice_id\":996,\"mods\":[{\"mod_sizeprice_id\":5,\"mod_quantity\":1},{\"mod_sizeprice_id\":12,\"mod_quantity\":3}]},{\"quantity\":1,\"sizeprice_id\":1008,\"mods\":[{\"mod_sizeprice_id\":1,\"mod_quantity\":1},{\"mod_sizeprice_id\":11,\"mod_quantity\":1}]}],\"sub_total\":5.55,\"merchant_id\":1040}}";
+		}
+		document.smsForm.submit();
+	}
+
+	function buildJSON(id) {
+		var jsonstring = "{";
+		for(i=0; i<document.smsForm.elements.length; i++){
+			var name = document.smsForm.elements[i].name;
+			var value = document.smsForm.elements[i].value;
+			if (value != "" && name != "" && name != id && name != 'show' && name != 'local' && name != 'PHP_AUTH_USER' && name != 'PHP_AUTH_PW') {
+				if (name == "user_id" || name == "home_merch_id" || name == "lead_time" || name == "merchant_id")
+					jsonstring = jsonstring + "\""+name+"\":"+value+",";
+				else	
+					jsonstring = jsonstring + "\""+name+"\":\""+value+"\",";
+			}
+		}
+		jsonstring = jsonstring.slice(0, -1);
+		jsonstring = jsonstring + "}";
+		//alert(jsonstring);
+		return jsonstring;
+	}
+
+</script>
+
+</head>
+<body>
+<form name="smsForm" action="" method="post">
+user:<p></p>
+id: <Input type="text" name="user_id" value=""/><br>
+email: <Input type="text" name="email" value=""/><br>
+password: <Input type="text" name="password" value=""/><br>
+first: <input type="text" name="first_name" value=""/><br>
+last: <input type="text" name="last_name" value=""/><br>
+contact_no: <input type="text" name="sms_no" value=""/><br>
+cc_number: <input type="text" name="cc_number" value=""/><br>
+cc_exp_date: <input type="text" name="cc_exp_date" value=""/><br>
+billing zip: <input type="text" name="zip" value=""/><br>
+<input type="hidden" name="jsonVal"/><br>
+
+order:<p></p>
+faveID: <input type="text" name="favorite_order_id" value=""/><br>
+lead: <input type="text" name="lead_time" value=""/><br>
+merchant:<input type="text" name="merchant_id" value=""/><br>
+subtotal:<input type="text" name="sub_total" value=""/><br>
+
+local: <input type="text" name="local" value="local"/><br>
+<input type="text" name="show" value="tru"/><br>
+
+CREDENTIALS:<p></p>
+username: <input type="text" name="PHP_AUTH_USER" value="radamnyc@gmail.com"/><br>
+password: <input type="text" name="PHP_AUTH_PW" value="xxxxxxxxx"/><br>
+
+<input type="button" value="create user" onclick="javascript:doCreateUser()"/><p>
+<input type="button" value="update user" onclick="javascript:doUpdate()"/><p>
+<!--  <input type="button" value="place order local" onclick="javascript:placeOrderlocal()"/><p>  -->
+<input type="button" value="place favorite order" onclick="javascript:placeOrder()"/><p>
+<input type="button" value="get favorites" onclick="javascript:getFavorites()"/><p>
+<!-- <input type="button" value="create fave local" onclick="javascript:sendJSONfavelocal()"/><p>  -->
+<input type="button" value="create fave" onclick="javascript:sendJSONfave()"/><p>
+<input type="button" value="favorite" onclick="javascript:getFavorite()"/><p>
+<input type="button" value="getUser" onclick="javascript:getUser()"/><p>
+<input type="button" value="getUserSession" onclick="javascript:getUserSession()"/><p>
+<!-- <input type="button" value="testJSON Order" onclick="javascript:sendJSON()"/><p>
+<input type="button" value="testJSON Order local" onclick="javascript:sendJSONlocal()"/><p>
+<input type="button" value="testJSON Order with mods local" onclick="javascript:sendJSONmodslocal()"/><p>  -->
+<input type="button" value="test Order with mods" onclick="javascript:sendJSONmods()"/><p>
+<!-- <input type="button" value="testJSON Order with mods test server 2" onclick="javascript:sendJSONmods2()"/><p>
+  <input type="button" value="buildJSON" onclick="javascript:buildJSON()"/><p> -->
+
+</form>
+</body>
+</html>

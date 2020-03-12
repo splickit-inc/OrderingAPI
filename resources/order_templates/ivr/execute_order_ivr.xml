@@ -1,0 +1,144 @@
+class: SmartyResource
+mimetype: text
+
+<?xml version="1.0" encoding="UTF-8"?>
+<order>
+<order_id>{$resource->order_id|escape}</order_id>
+<destination_telephone_number>xxxxxxxxxx</destination_telephone_number>
+<vxml_script_id>10</vxml_script_id>
+<vxml version = "2.1" xmlns="http://www.w3.org/2001/vxml">
+<form id="top">
+	<property name="inputmodes" value="dtmf"/>
+	<field name="top_menu">
+		<prompt bargein="false">
+	        Hello this is Splick it with an order for {$resource->merchant_name|escape}.
+	        Please check your fax machine for the order.
+	        {if $resource->test neq ''} This is a test order.  Do not make this order.  Do not make this order.{/if}
+	      	
+	        There are {$resource->order_qty|escape} items in this order.  Press 1 to hear the order
+		</prompt>
+		<grammar mode="dtmf" version="1.0">
+	   		<rule id="digit">
+	    		<one-of>
+	      			<item> 1 </item>
+	    		</one-of>
+	   		</rule>
+		</grammar>
+		<noinput>
+			<prompt>I did not hear anything.  Please try again.</prompt>
+			<reprompt/>
+		</noinput>
+		<nomatch>
+			<prompt>You have entered a invalid option for this, Please try again</prompt>
+			<reprompt/>
+		</nomatch>
+	</field>
+	<filled>
+		<if cond="top_menu == '1'">
+			<goto next="#item0"/>
+		</if>
+	</filled>
+</form>
+{foreach from=$resource->order_details key=index item=menu_item name=menuitems}
+	{assign var=item_name value=$menu_item.item_print_name}
+	{assign var=item_size value=$menu_item.size_name}
+	{assign var=item_quant value=$menu_item.quantity}
+	{assign var=next_index value=$index+1}
+	{if $smarty.foreach.menuitems.last}
+		{assign var=next_index value=88888}
+	{/if}
+
+<form id="item{$index}">
+	<property name="inputmodes" value="dtmf"/>
+	<field name="confirm{$index}">
+	    <prompt  bargein="false">
+	{$item_quant|escape} {$item_size|escape} {$item_name|escape} 
+	
+	{if $menu_item.order_detail_hold_it_modifiers neq NULL}
+		Hold the following items. 
+		{foreach from=$menu_item.order_detail_hold_it_modifiers key=index2 item=modifier_record}
+			{assign var=mod_item_name value=$modifier_record.mod_print_name}
+			Hold the {$mod_item_name|escape}. 
+		{/foreach}
+	{/if}
+
+	{if $menu_item.order_detail_added_modifiers neq NULL}
+		Add the following items. 
+		
+		{foreach from=$menu_item.order_detail_added_modifiers key=index2 item=modifier_record}
+			{assign var=mod_item_name value=$modifier_record.mod_print_name}
+			Add {$mod_item_name|escape}. 
+		{/foreach}
+	{/if}
+
+	{if $menu_item.order_detail_sides neq NULL}
+		
+		{foreach from=$menu_item.order_detail_sides key=index2 item=modifier_record}
+			{assign var=mod_item_name value=$modifier_record.mod_print_name}
+			With a side of {$mod_item_name|escape}. 
+		{/foreach}
+	{/if}
+
+	{if $menu_item.note neq ''}
+		
+		Special Instructions are, {$menu_item.note|escape}
+	{/if}
+	
+      Press 1 to continue.
+      Press 2 to hear this item again.
+      Press 5 to start over.
+    </prompt>
+		<grammar mode="dtmf" version="1.0">
+	   		<rule id="digit">
+	    		<one-of>
+	      			<item> 1 </item>
+	      			<item> 2 </item>
+	      			<item> 5 </item>
+	    		</one-of>
+	   		</rule>
+		</grammar>
+    </field>
+    <filled>
+      <if cond="confirm{$index} == '1'">  
+      	<goto next="#item{$next_index}"/>
+      <elseif cond="confirm{$index} == '2'"/>
+      	<goto next="#item{$index}"/>
+ 	  <elseif cond="confirm{$index} == '5'"/>
+ 	    <goto next="#top"/>
+      </if> 
+    </filled> 
+  </form>
+
+{/foreach}
+  
+  <form id="item88888">
+	<property name="inputmodes" value="dtmf"/>
+    <field name="footer">
+    <prompt  bargein="false">
+		Order for {$resource->first_name|escape} 
+		Pick up time of {$resource->pickup_time|escape} 
+		{$resource->note|escape}  
+		{if $resource->test neq ''} This is a test order.  Do not make this order.  Do not make this order. {/if}  
+		Press 2 to hear order name and pickup time again.
+ 		Press 5 to start over.
+ 	</prompt>
+		<grammar mode="dtmf" version="1.0">
+	   		<rule id="digit">
+	    		<one-of>
+	      			<item>2</item>
+	      			<item>5</item>
+	    		</one-of>
+	   		</rule>
+		</grammar>
+    </field>
+    <filled>
+      <if cond="footer == '5'">  
+	      	<goto next="#top"/>        
+      <elseif cond="footer == '2'"/>
+      		<goto next="#item88888"/>
+      </if> 
+     </filled>
+  </form>
+
+</vxml>
+</order>

@@ -1,0 +1,5 @@
+class: SmartyResource
+mimetype: text
+
+#10*10*#
+ 

@@ -1,0 +1,164 @@
+class: SmartyResource
+mimetype: text
+
+{if $resource->test neq ''}
+
+{$resource->test_message}
+{/if}
+{if $resource->cash eq 'Y'}
+
+$$$ CASH ORDER $$$
+$$$ CASH ORDER $$$
+$$$ CASH ORDER $$$
+{/if}
+{if $resource->promo_id eq 185}
+
+$$$ AIRPORT EMPLOYEEE $$$
+$$$    CHECK BADGE    $$$
+$$$ AIRPORT EMPLOYEEE $$$
+{/if}
+
+Order For: {$resource->first_name} {$resource->last_name}
+{if $resource->brand_loyalty_number neq ''}
+Loyalty No: {$resource->brand_loyalty_number}
+{/if}
+Order Id:  {$resource->order_id}
+Placed On: {$resource->order_day} at {$resource->order_time}
+{if $resource->order_type eq 'D'}
+
+!----- DELIVERY ------!
+{assign var=delivery_location_info value=$resource->delivery_info}
+{if $delivery_location_info->name neq ''}
+Delivery To: {$delivery_location_info->name}
+{else}
+Delivery Order
+{/if}
+
+Time: {$resource->requested_delivery_time}
+
+{$delivery_location_info->address1}{if $delivery_location_info->address2 neq ''}
+{$delivery_location_info->address2}{/if}
+{$delivery_location_info->city}, {$delivery_location_info->state}
+
+Phone: {$delivery_location_info->phone_no}
+{if $delivery_location_info->instructions neq ''}
+{$delivery_location_info->instructions}
+{/if}
+
+Dlv Charge: ${$resource->delivery_amt}
+!----- DELIVERY ------!
+{else}
+Pickup: {$resource->pickup_date} {$resource->pickup_time}
+Phone: {$resource->user_phone_no}
+{/if}
+
+    ------
+------- SUMMARY --------
+
+Items:  {$resource->order_qty}
+
+{if $resource->test neq ''}
+{$resource->test_message}
+
+{/if}
+{foreach from=$resource->order_summary.cart_items key=index item=menu_item}
+{assign var=item_name value=$menu_item.item_name}
+{assign var=item_size value=$menu_item.size_name}
+{assign var=item_quant value=$menu_item.item_quantity}
+{assign var=item_price value=$menu_item.item_price}
+-{if $item_quant neq '1'}{$item_quant} {/if}{if $item_size|lower neq 'one size'}{$item_size} {/if}{$item_name} {$item_price}
+{/foreach}
+
+{foreach from=$resource->receipt_items_for_merchant_printout key=index item=receipt_item}{assign var=label value=$receipt_item.title}{assign var=amount value=$receipt_item.amount}
+{if $label eq 'Grand Total'}
+{assign var=amount value=$resource->grand_total}
+{/if}
+{if $label eq 'Total'}{math assign=amount equation='x+y' x=$resource->grand_total_to_merchant y=$resource->trans_fee_amt}{/if}
+{$label}: {$amount}
+{if $label eq 'Tax'}
+SF Surcharge: {$resource->trans_fee_amt}
+{/if}
+{/foreach}
+
+{if $resource->note neq ''}
+Instructions: {$resource->note}
+{/if}
+    ------
+
+
+------- DETAILS --------
+{foreach from=$resource->order_details key=index item=menu_item}
+{assign var=item_name value=$menu_item.item_print_name}
+{assign var=item_size value=$menu_item.size_print_name}
+{assign var=item_quant value=$menu_item.quantity}
+{assign var=item_price value=$menu_item.item_total_w_mods}
+ 
+{if $item_quant neq '1'}{$item_quant} {/if}{if $item_size|lower neq 'one size'} {$item_size}{/if} {$item_name}  {$resource->order_identifier}
+{if $menu_item.note neq ''} 
+Note: {$menu_item.note}
+{/if}
+{if $menu_item.order_detail_hold_it_modifiers|@count > 0}
+
+HOLD THE: 
+{foreach from=$menu_item.order_detail_hold_it_modifiers key=index2 item=modifier_record name=mod}
+{assign var=mod_item_name value=$modifier_record.mod_print_name}
+--{$mod_item_name}
+{/foreach}
+{/if}
+{if $menu_item.order_detail_added_modifiers|@count > 0}
+
+ADD: 
+{foreach from=$menu_item.order_detail_added_modifiers key=index2 item=modifier_record name=no_mod}
+{assign var=mod_item_name value=$modifier_record.mod_print_name}
+--{$mod_item_name}{if $modifier_record.mod_quantity > 1}(x{$modifier_record.mod_quantity}){/if}{if $modifier_record.mod_total_price neq '0.00'} ${$modifier_record.mod_total_price}{/if}
+
+{/foreach}
+{/if}
+{if $menu_item.order_detail_mealdeal|@count > 0}
+
+MEAL: 
+{foreach from=$menu_item.order_detail_mealdeal key=index2 item=modifier_record name=no_mod}
+{assign var=mod_item_name value=$modifier_record.mod_print_name}
+-- {$mod_item_name}{if $modifier_record.mod_total_price neq '0.00'} ${$modifier_record.mod_total_price}{/if}
+{/foreach}
+{/if}
+{if $menu_item.order_detail_sides|@count > 0}
+
+SIDE OF: 
+{foreach from=$menu_item.order_detail_sides key=index2 item=modifier_record name=side}
+{assign var=mod_item_name value=$modifier_record.mod_print_name}
+--{$mod_item_name}{if $modifier_record.mod_quantity > 1}(x{$modifier_record.mod_quantity}){/if}{if $modifier_record.mod_total_price neq '0.00'} ${$modifier_record.mod_total_price}{/if}
+{/foreach}{/if}
+
+    ------
+{/foreach}
+
+Order Id:  {$resource->order_id}
+{if $resource->cash eq 'Y'}
+
+$$$ CASH ORDER $$$
+$$$ CASH ORDER $$$
+$$$ CASH ORDER $$$
+{else}
+{foreach from=$resource->receipt_items_for_merchant_printout key=index item=receipt_item}{assign var=label value=$receipt_item.title}{assign var=amount value=$receipt_item.amount}
+{if $label eq 'Grand Total'}
+{assign var=amount value=$resource->grand_total}
+{/if}
+{if $label eq 'Total'}{math assign=amount equation='x+y' x=$resource->grand_total_to_merchant y=$resource->trans_fee_amt}{/if}
+{$label}: {$amount}
+{if $label eq 'Tax'}
+SF Surcharge: {$resource->trans_fee_amt}
+{/if}
+{/foreach}
+{/if}
+
+{if $resource->show_group_order_info eq true}--- Group Info ---
+{foreach from=$resource->group_order_info key=index item=order_info}
+{foreach from=$order_info key=index2 item=display_row}
+{$display_row}
+{/foreach}
+
+    -------
+{/foreach}
+{/if}
+

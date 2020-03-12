@@ -1,0 +1,12 @@
+class: Users
+mimetype: text/xml
+
+<?xml version="1.0"?>
+<users>
+	{foreach from=$users item=user}
+	<user href="{$request->baseUrl}/{$user->user_id|escape}">
+		<first_name>{$user->first_name|escape}</first_name>
+		<last_name>{$user->last_name|escape}</last_name>
+	</user>
+	{/foreach}
+</users>

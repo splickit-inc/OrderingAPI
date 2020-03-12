@@ -1,0 +1,58 @@
+class: SmartyResource
+mimetype: text
+
+{if $resource->test neq ''}
+:: 
+::{$resource->test_message}
+{/if}
+::
+::Order For: {$resource->first_name} {$resource->last_name}
+{if $resource->brand_loyalty_number neq ''}
+::Loyalty No: {$resource->brand_loyalty_number}
+{/if}
+::Order Id:  {$resource->order_id}
+::Placed On: {$resource->order_day} at {$resource->order_time}
+::
+::!----- DOORDASH ------!
+{assign var=delivery_location_info value=$resource->delivery_info}
+::DOORDASH Delivery Order
+::
+Doordash Pickup Time: {$resource->ready_time_at_merchant}
+::
+Expected Delivery Time: {$resource->requested_delivery_time}
+::
+::{$delivery_location_info->address1}{if $delivery_location_info->address2 neq ''}
+::{$delivery_location_info->address2}{/if}
+::{$delivery_location_info->city}, {$delivery_location_info->state}
+::
+Phone: {$delivery_location_info->phone_no}::
+{if $delivery_location_info->instructions neq ''}
+::{$delivery_location_info->instructions}
+{/if}
+
+::Dlv Charge: ${$resource->delivery_amt}
+::!----- DOORDASH ------!
+::
+::------- SUMMARY --------
+::
+::Items:  {$resource->order_qty}
+::
+{if $resource->test neq ''}
+::{$resource->test_message}
+::
+{/if}
+{foreach from=$resource->order_summary.cart_items key=index item=menu_item}
+{assign var=item_name value=$menu_item.item_name}
+{assign var=item_size value=$menu_item.size_name}
+{assign var=item_quant value=$menu_item.item_quantity}
+{assign var=item_price value=$menu_item.item_price}
+::-{if $item_quant neq '1'}{$item_quant} {/if}{if $item_size|lower neq 'one size'}{$item_size} {/if}{$item_name} {$item_price}
+{/foreach}
+::
+{foreach from=$resource->receipt_items_for_merchant_printout key=index item=receipt_item}{assign var=label value=$receipt_item.title}{assign var=amount value=$receipt_item.amount}
+::{$label}: {$amount}
+{/foreach}
+{if $resource->note neq ''}:: 
+::Instructions: {$resource->note}
+{/if}
+::    ------

@@ -1,0 +1,75 @@
+class: SmartyResource
+mimetype: text
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body style="background:#f3f3f3;font-family:Verdana, Geneva, sans-serif;">
+
+<table style="background:#fff;" width="600px" border="0" align="center" cellpadding="10" cellspacing="0">
+  <tr>
+    <td style="background:#{$resource->skin_images.primary_color_hex};"><h1 style="font-size:28px;margin:0px;">Customer Refund Information</h1></td>
+  </tr>
+  <tr>
+    <td style="background:#{$resource->skin_images.secondary_color_hex};"><h2 style="font-size:18px;margin:0px;"><img src="http://splickit-brand-assets.s3.amazonaws.com/{$resource->skin_external_identifier}/brand_icon.png" alt="splickit" width="65" height="65" align="right" /></br>
+    {$resource->merchant_name|escape} {$resource->merchant_addr} {$resource->merchant_city_st_zip}</h2></td>
+  </tr>
+  <tr>
+    <td style="background:#{$resource->skin_images.primary_color_hex};"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+      	{if $resource->order_id > 0} 
+	        <td width="50%"><h4 style="margin:0px;font-size:16px;">Refund Details</h4></td>
+        	<td align="right"><h4 style="margin:0px;font-size:16px;">Order #{$resource->order_id}</h4></td>
+        {else}
+	        <td width="50%"><h4 style="margin:0px;font-size:16px;">Credit Details</h4></td>
+        	<td align="right"><h4 style="margin:0px;font-size:16px;">&nbsp;</h4></td>
+        {/if}
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td><h3 style="font-weight:normal;margin:0px;">{$resource->user.first_name} {$resource->user.last_name}
+    </h3>
+      <p style="font-weight:normal;margin:0px;">&nbsp;</p>
+      <p style="font-weight:normal;margin:0px;">
+
+<p><HR WIDTH="600" COLOR="#{$resource->skin_images.primary_color_hex}" SIZE="4"/></p>
+<table width="600" border="0">
+{if $resource->credited_amount > '0.00'}  
+  <tr>
+    <td class="TxtRt">Account credited to your account:</td>
+    <td>${$resource->credited_amount}</td>
+  </tr>
+{elseif $resource->refunded_amount > '0.00'}
+  <tr>
+    <td class="TxtRt">Amount Refunded to your card:</td>
+    <td>${$resource->refunded_amount}</td>
+  </tr>
+{/if}
+ <tr>
+    <td class="TxtRt">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p><HR WIDTH="600" COLOR="#{$resource->skin_images.primary_color_hex}" SIZE="4"/></p>
+  <strong><big>Invite Friends, Get $1</big></strong><br>
+  When your friends enter your email address (splickit username) as a promo code upon placing their <strong>first</strong> order, they'll get $1 off that order, and you'll receive a $1 credit for your next order. There's no limit to the amount of credit you can earn, so start spreading the joy!    
+<p><HR WIDTH="600" COLOR="#{$resource->skin_images.primary_color_hex}" SIZE="4"/></p>
+      <p style="font-weight:normal;margin:0px;">&nbsp;</p>
+    <h3 style="margin:0px;">{$resource->merchant_name|escape} Mobile Ordering</h3>
+    <table border="0"><tr><td>&nbsp;</td></tr></table>
+    <img src="http://www.splickit.com/icons/splickit_order_confirmation/SPLICKIT_power.png" width="86" height="35" /></td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

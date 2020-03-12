@@ -1,0 +1,189 @@
+class: SmartyResource
+mimetype: text
+
+<?xml version="1.0" encoding="UTF-8"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+    <s:Body>
+        <SubmitOrder xmlns="http://www.brinksoftware.com/webservices/ordering/20140219">
+            <request xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+                <Options>
+                    {if $resource->brink_large_tip eq 'true'}
+                        <CalculateItemPrice>false</CalculateItemPrice>
+                    {else}
+                        <CalculateItemPrice>true</CalculateItemPrice>
+                    {/if}
+                </Options>
+                <Order>
+                    {counter start=0 print=0}
+                    <CustomerId>00000000-0000-0000-0000-000000000000</CustomerId>
+                    <DestinationId>{$resource->destination_id}</DestinationId>
+                    {if $resource->positive_promo_amount gt 0.00 || $resource->loyalty_payment_amount gt 0.00}
+                    <Discounts>
+                        {if $resource->positive_promo_amount gt 0.00}
+                        <NewOrderDiscount>
+                            <Amount>{$resource->positive_promo_amount}</Amount>
+                            <DiscountId>{$resource->discount_id}</DiscountId>
+                            <Id>{counter}</Id>
+                            <LoyaltyRewardId>0</LoyaltyRewardId>
+                            <Name i:nil="true"/>
+                            <OrderItemIds i:nil="true" xmlns:a="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+                            <Percent>0</Percent>
+                        </NewOrderDiscount>
+                        {/if}
+                        {if $resource->loyalty_payment_amount gt 0.00}
+                        <NewOrderDiscount>
+                            <Amount>{$resource->loyalty_payment_amount}</Amount>
+                            <DiscountId>{$resource->loyalty_discount_id}</DiscountId>
+                            <Id>{counter}</Id>
+                            <LoyaltyRewardId>0</LoyaltyRewardId>
+                            <Name i:nil="true"/>
+                            <OrderItemIds i:nil="true" xmlns:a="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+                            <Percent>0</Percent>
+                        </NewOrderDiscount>
+                        {/if}
+                    </Discounts>
+                    {else}
+                        <Discounts i:nil="true" />
+                    {/if}
+                    <FutureOrder>
+                        {if $resource->order_type eq 'D'}
+                        {assign var=delivery_location_info value=$resource->delivery_info}
+                        <Delivery>
+
+                            <Address1>{$delivery_location_info->address1}</Address1>
+                            <Address2>{$delivery_location_info->address2}{if $delivery_location_info->instructions neq ""}, {$delivery_location_info->instructions}{/if}</Address2>
+                            <City>{$delivery_location_info->city}</City>
+                            <Country>USA</Country>
+                            <PostalCode>{$delivery_location_info->zip}</PostalCode>
+                            <StateCode>{$delivery_location_info->state|upper}</StateCode>
+
+                        </Delivery>
+                        {else}
+                            <Delivery i:nil="true" />
+                        {/if}
+
+                        <EmailAddress>{$resource->user.email}</EmailAddress>
+                        <PhoneNumber>{$resource->user.contact_no}</PhoneNumber>
+                        <PickupTime xmlns:a="http://schemas.datacontract.org/2004/07/System">
+                            <a:DateTime>{$resource->brink_pickup_time_string}</a:DateTime>
+                            <a:OffsetMinutes>0</a:OffsetMinutes>
+                        </PickupTime>
+                        <SendReminderEmail>false</SendReminderEmail>
+                    </FutureOrder>
+                    <IsTaxExempt>false</IsTaxExempt>
+                    <Items>
+                        {if $resource->note neq ''}
+                        <NewOrderItem>
+                            <Description>Order Instructions</Description>
+                            <Id>{counter}</Id>
+                            <ItemId>{$resource->note_id_for_brand}</ItemId>
+                            <Modifiers i:nil="true" />
+                            <Price>0.00</Price>
+                            <DestinationId>{$resource->destination_id}</DestinationId>
+                            <Note>{$resource->note|escape}</Note>
+                        </NewOrderItem>
+                        {/if}
+                {assign var=ordered_items value=$resource->order_details}
+                {foreach from=$ordered_items item=ordered_item}
+                    {if $ordered_item.external_id != null && $ordered_item.external_id|trim != ''}
+                        {assign var=item_quantity value=$ordered_item.quantity}
+                        {section name=bar start=0 loop=$item_quantity step=1}
+                        <NewOrderItem>
+                            <Description i:nil="true" />
+                            <Id>{counter}</Id>
+                            <ItemId>{$ordered_item.external_id}</ItemId>
+                            <Modifiers>
+                                    {foreach from=$ordered_item.order_detail_complete_modifier_list_no_holds item=modifier_item}
+                                        {if $modifier_item.comes_with eq 'N' || $resource->type_bo eq 'true'}
+                                            {assign var=price value=$modifier_item.mod_price}
+                                            {assign var=modifier_group_external_id value=$modifier_item.external_modifier_group_id}
+                                            {assign var=modifier_item_external_id value=$modifier_item.external_id}
+                                            {assign var=modifier_quantity value=$modifier_item.mod_quantity}
+                                            {section name=foo start=0 loop=$modifier_quantity step=1}
+                                                {if $modifier_group_external_id neq 'PLU'}
+                                                    <NewOrderItemModifier>
+                                                        <Description i:nil="true" />
+                                                        <Id>{counter}</Id>
+                                                        <ItemId>{$modifier_item_external_id}</ItemId>
+                                                        <Modifiers i:nil="true" />
+                                                        <Price>{$price}</Price>
+                                                        <ModifierCodeId>0</ModifierCodeId>
+                                                        <ModifierGroupId>{$modifier_group_external_id}</ModifierGroupId>
+                                                    </NewOrderItemModifier>
+                                                {/if}
+                                            {/section}
+                                        {/if}
+                                    {/foreach}
+                                    {foreach from=$ordered_item.order_detail_hold_it_modifiers item=modifier_item}
+                                        {if $modifier_item.active eq 'Y' && $resource->type_bo eq 'false'}
+                                            {assign var=price value=$modifier_item.mod_price}
+                                            {assign var=modifier_group_external_id value=$modifier_item.external_modifier_group_id}
+                                            {assign var=modifier_item_external_id value=$modifier_item.external_id}
+                                            {assign var=modifier_quantity value=$modifier_item.mod_quantity}
+                                                <NewOrderItemModifier>
+                                                    <Description i:nil="true" />
+                                                    <Id>{counter}</Id>
+                                                    <ItemId>{$modifier_item_external_id}</ItemId>
+                                                    <Modifiers i:nil="true" />
+                                                    <Price>{$price}</Price>
+                                                    <ModifierCodeId>2</ModifierCodeId>
+                                                    <ModifierGroupId>{$modifier_group_external_id}</ModifierGroupId>
+                                                </NewOrderItemModifier>
+                                        {/if}
+                                    {/foreach}
+                                </Modifiers>
+                            <Price>{$ordered_item.price}</Price>
+                            <DestinationId>{$resource->destination_id}</DestinationId>
+                            {if $ordered_item.note neq ''}
+                                <Note>{$ordered_item.note|escape}</Note>
+                            {else}
+                                <Note i:nil="true" />
+                            {/if}
+                        </NewOrderItem>
+                        {/section}
+                    {/if}
+                {/foreach}
+                    </Items>
+                    <Name>{$resource->full_name}</Name>
+                    {if $resource->cash eq 'Y' || $resource->brink_grand_total eq '0.00'}
+                        <Payments/>
+                    {else}
+                        <Payments>
+                            <NewOrderPayment i:type="NewExternalPayment">
+                                <Amount>{$resource->brink_grand_total}</Amount>
+                                <Id>{counter}</Id>
+                                <TenderId>{$resource->tender_id}</TenderId>
+                                <TipAmount>{$resource->brink_tip_value}</TipAmount>
+                                <ReferenceDetails>
+                                    <PaymentReferenceDetail>
+                                        <Name>Splickit</Name>
+                                        <Value>Splickit Order</Value>
+                                    </PaymentReferenceDetail>
+                                </ReferenceDetails>
+                            </NewOrderPayment>
+                        </Payments>
+                    {/if}
+                    {if $resource->surcharges eq 'true'}
+                    <Surcharges>
+                        {assign var=surcharges value=$resource->checkout_info.Surcharges}
+                        {foreach from=$surcharges item=surcharge}
+                        <OrderSurcharge>
+                            {foreach from=$surcharge key=pname item=value}
+                                {if $value eq null}
+                                    <{$pname} />
+                                {else}
+                                    <{$pname}>{$value}</{$pname}>
+                                {/if}
+                            {/foreach}
+                        </OrderSurcharge>
+                        {/foreach}
+                    </Surcharges>
+                    {/if}
+                    <Promotions i:nil="true" />
+                    <SectionId>0</SectionId>
+                </Order>
+                <SuppressConfirmationEmail>true</SuppressConfirmationEmail>
+            </request>
+        </SubmitOrder>
+    </s:Body>
+</s:Envelope>

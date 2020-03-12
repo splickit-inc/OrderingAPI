@@ -1,0 +1,194 @@
+class: SmartyResource
+mimetype: text
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+{literal}
+<style type="text/css">
+body,td,th {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 10px;
+	text-align: left;
+}
+.LrgTxt {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: left;
+}
+#apDiv1 {
+	position:absolute;
+	width:163px;
+	height:150px;
+	z-index:1;
+	left: 401px;
+	top: 54px;
+}
+#apDiv2 {
+	position:absolute;
+	width:118px;
+	height:118px;
+	z-index:1;
+	left: 322px;
+	top: 21px;
+}
+#apDiv3 {
+	position:absolute;
+	width:161px;
+	height:97px;
+	z-index:2;
+	left: 449px;
+	top: 36px;
+	text-align: justify;
+}
+#apDiv4 {
+	position:absolute;
+	width:200px;
+	height:115px;
+	z-index:3;
+	left: 410px;
+	top: 391px;
+}
+.TxtRt {
+	font-family: Verdana, Geneva, sans-serif;
+	text-align: right;
+}
+</style>
+{/literal}
+</head>
+
+<body>
+<p><img src="http://test.splickit.com/icons/splickit_order_confirmation/line_300.png" width="300" height="4" /></p>
+<div id="apDiv2"><img src="http://test.splickit.com/icons/splickit_order_confirmation/SPLICKIT_icon.png" width="118" height="118" /></div>
+<table width="300" border="0">
+  <tr>
+    <td><div align="left"><strong>ORDER FOR:</strong></div></td>
+    <td><div align="right">{$resource->first_name} {$resource->last_name}</div></td>
+  </tr>
+  <tr>
+    <td><div align="left"><strong>READY AT:</strong></div></td>
+    <td><div align="right">{$resource->pickup_time}</div></td>
+  </tr>
+</table>
+<div id="apDiv3">After you have picked up your order, please answer 4 quick questions so we can continue to provide you with the most delicious service possible. Thanks!<br />
+<a href="http://www.surveymonkey.com/s/S2WXVFW">Order Satisfaction Survey</a></div>
+<p><img src="http://test.splickit.com/icons/splickit_order_confirmation/line_300.png" width="300" height="4" /></p>
+<table width="300" border="0">
+  <tr>
+    <td width="160"><strong>{$resource->merchant_name}</strong></td>
+    <td width="130"><div align="right">{$resource->pickup_date}</div></td>
+  </tr>
+  <tr>
+    <td><strong>{$resource->merchant_addr}</strong></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><strong>{$resource->merchant_city_st_zip}</strong></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><strong>Order Number: </strong></td>
+    <td><div align="right">{$resource->order_id}</div></td>
+  </tr>
+</table>
+<p><img src="http://test.splickit.com/icons/splickit_order_confirmation/line_300.png" width="300" height="4" /></p>
+<p><img src="http://test.splickit.com/icons/splickit_order_confirmation/line_600.png" width="600" height="4" /></p>
+Special Instructions: {$resource->note}<br>
+<p><img src="http://test.splickit.com/icons/splickit_order_confirmation/line_600.png" width="600" height="4" /></p>
+{foreach from=$resource->order_details key=index item=menu_item}
+	{assign var=item_name value=$menu_item.item_full_name}
+	{assign var=item_size value=$menu_item.size_name}
+	{assign var=item_quant value=$menu_item.quantity}
+	{assign var=item_price value=$menu_item.item_total_w_mods}
+
+<table width="600" border="0">
+  <tr>
+    <td width="25" bgcolor="#C1D82F" class="LrgTxt" align="center">{$item_quant}</td>
+    <td width="511" bgcolor="#C1D82F" class="LrgTxt">{$item_size} {$item_name}</td>
+    <td width="50" bgcolor="#C1D82F">${$item_price}</td>
+  </tr>
+</table>
+<table width="550" border="0">
+<tr><td width="80"></td><td width="410"></td></tr>
+{if $menu_item.order_detail_hold_it_modifiers|@count > 0}
+  <tr>
+    <td align="right"><strong>HOLD THE:</strong></td>
+    <td align="left">{foreach from=$menu_item.order_detail_hold_it_modifiers key=index2 item=modifier_record name=mod}
+			{assign var=mod_item_name value=$modifier_record.mod_full_name}
+			{$mod_item_name}
+			{if not $smarty.foreach.mod.last},{/if} 
+		{/foreach}</td>
+  </tr>
+{/if}
+
+{if $menu_item.order_detail_added_modifiers|@count > 0}  
+<tr>
+    <td align="right"><strong>ADD:</strong></td>
+    <td align="left">{foreach from=$menu_item.order_detail_added_modifiers key=index2 item=modifier_record name=adds}
+			{assign var=mod_item_name value=$modifier_record.mod_full_name}
+			{$mod_item_name}
+			{if not $smarty.foreach.adds.last},{/if}     	
+    {/foreach}</td>
+</tr>
+{/if} 
+
+{if $menu_item.order_detail_sides|@count > 0}
+		<tr align="right"><td><strong>SIDE OF:</strong></td>
+		<td align="left">
+		{foreach from=$menu_item.order_detail_sides key=index2 item=modifier_record name=side}
+			{assign var=mod_item_name value=$modifier_record.mod_full_name}
+			{$mod_item_name}
+			{if not $smarty.foreach.side.last},{/if} 
+		{/foreach}
+		</td>
+	{/if}
+
+	{if $item_note neq ''}
+		<tr><td align="right" valign="top">NOTE:&nbsp;&nbsp;</td><td align="left">{$item_note|escape}</td><td>&nbsp;</td></tr>
+	{/if}
+  
+ <tr><td width="80"></td><td width="410"></td></tr>
+   
+</table>
+
+{/foreach}
+
+<p><img src="http://test.splickit.com/icons/splickit_order_confirmation/line_600.png" width="600" height="4" /></p>
+<table width="600" border="0">
+  <tr>
+    <td width="540" class="TxtRt">promo amt:</td>
+    <td width="50">{$resource->promo_amt}</td>
+  </tr>
+  <tr>
+    <td class="TxtRt">total tax:</td>
+    <td>{$resource->total_tax_amt}</td>
+  </tr>
+  <tr>
+    <td class="TxtRt">trans. fee:</td>
+    <td>{$resource->trans_fee_amt}</td>
+  </tr>
+  <tr>
+    <td class="TxtRt">tip:</td>
+    <td>${$resource->tip_amt}</td>
+  </tr>
+  <tr>
+    <td class="TxtRt"><strong>TOTAL:</strong></td>
+    <td><strong>${$resource->grand_total}</strong></td>
+  </tr>
+  <tr>
+    <td class="TxtRt">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="TxtRt"><strong>Amt Billed to CC:</strong></td>
+    <td><strong>${$resource->amt_billed_to_cc}</strong></td>
+  </tr>
+</table>
+<p><img src="http://test.splickit.com/icons/splickit_order_confirmation/line_600.png" width="600" height="4" /></p>
+<p class="LrgTxt">Charges will appear on your statement as SPLICKIT INC.</p>
+<p><img src="http://test.splickit.com/icons/splickit_order_confirmation/SPLICKIT_power.png" width="86" height="35" /></p>
+</body>
+</html>

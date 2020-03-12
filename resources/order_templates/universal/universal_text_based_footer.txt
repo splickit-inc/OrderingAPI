@@ -1,0 +1,26 @@
+class: SmartyResource
+mimetype: text
+
+:: 
+::Order Id:  {$resource->order_id}
+{if $resource->cash eq 'Y'}
+::
+::$$$ CASH ORDER $$$
+::$$$ CASH ORDER $$$
+::$$$ CASH ORDER $$$
+::{else}
+{foreach from=$resource->receipt_items_for_merchant_printout key=index item=receipt_item}{assign var=label value=$receipt_item.title}{assign var=amount value=$receipt_item.amount}
+::{$label}: {$amount}
+{/foreach}
+::{/if}
+::
+{if $resource->show_group_order_info eq true}--- Group Info ---
+{foreach from=$resource->group_order_info key=index item=order_info}::
+{foreach from=$order_info key=index2 item=display_row}
+::{$display_row}
+{/foreach}
+::::
+    -------
+{/foreach}
+{/if}
+

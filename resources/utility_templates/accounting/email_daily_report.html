@@ -1,0 +1,187 @@
+class: SmartyResource
+mimetype: text
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body style="background:#c1d82f; ">
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10">
+	  <tr>
+  		<td width="200px">
+  		<img src="http://your.amazon.s3.amazonaws.com/email/images/SPL-Logo-200px.png" alt="splickit" style=""/>
+  		</td>
+  		<td align="right">
+  		<h2 style="color:#111;font-family:Arial, Helvetica, sans-serif;margin:0px;">Merchant Daily Activity Report</h2>
+  		</td>
+ 	 </tr>
+</table>
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10" style="font-family:Arial, Helvetica, sans-serif;">
+
+<tr style="background:#111;">
+<td>
+<h2 style="color:#fff;margin:0px;">{$resource->name}</h2>
+</td>
+<td align="right" width="160">
+<h2 style="color:#fff;margin:0px;font-weight:normal;">{$resource->statement_date}</h2>
+</td>
+</tr>
+<tr>	 
+<td style="background:#fff;" colspan="2">
+		
+		<!-- Welcome Message-->
+ 	 	
+ 	 	<table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;margin-top:15px;">
+ 	 	<tr>
+ 	 	<td colspan="4">
+ 	 	<p style="margin: 5px;">
+ 	 	Hello,<br/>
+ 	 	{if $resource->info_data.count > 0}
+			You had {$resource->info_data.count} orders for today {$resource->info_data.for_date}, please find attached the Daily Activity report.  This report only includes Splickit prepaid orders.
+ 	 	{else}
+ 	 		You had no prepaid orders on this date {$resource->info_data.for_date}.
+		{/if}
+		</p>
+		</td>
+ 	 	</tr>
+ 	 	</table>
+ 	 	
+ 	 {if $resource->info_data.count > 0}
+ 	 	<!--  Order Information -->
+
+ 	 	<table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;margin-top:15px;">
+ 	 	<tr>
+ 	 	<td colspan="4">
+ 	 	<h3 style="margin: 5px;">Order Information</h3>
+ 	 	</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Grand Total:</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">${$resource->info_data.grand_total}</p>
+  		</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Tax Total:</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">${$resource->info_data.tax_total}</p>
+  		</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Promo Total:</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">${$resource->info_data.promo_total}</p>
+  		</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Tip Total:</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">${$resource->info_data.tip_total}</p>
+  		</td>
+ 	 	</tr>
+	
+		</table>
+	{/if}
+		<!-- Merchant Information-->
+ 	 	
+ 	 	<table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;margin-top:15px;">
+ 	 	<tr>
+ 	 	<td colspan="4">
+ 	 	<h3 style="margin: 5px;">Merchant Information</h3>
+ 	 	</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Merchant:</p>
+  		</td>
+    	<td width="75%" style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">{$resource->merchant.name}</p>
+  		</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Splickit ID:</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">{$resource->merchant_id}</p>
+  		</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Store ID:</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">{$resource->merchant.merchant_external_id}</p>
+  		</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Shop Email:</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">{$resource->merchant.shop_email}</p>
+  		</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td valign="top" style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Address:</p>
+  		</td>
+    	<td valign="top" style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">{$resource->merchant.address1}<br/>{$resource->merchant.city}, {$resource->merchant.state} {$resource->merchant.zip}</p>
+  		</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Phone No:</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">{$resource->merchant.phone_no}</p>
+  		</td>
+ 	 	</tr>
+ 	 	
+ 	 	<tr style="background:#e5e5e5;color:#444;">
+  		<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;">Fax No:</p>
+  		</td>
+    	<td style="border-bottom:1px dotted #e5e5e5;">
+  		<p style="margin: 5px;font-weight:bold;">{$resource->merchant.fax_no}</p>
+  		</td>
+ 	 	</tr>
+ 	 	
+ 	 	</table>
+
+</td>
+</tr>
+<tr>
+<td colspan="2">
+	<p>Please email questions or requests to <a href="mailto:support@dummy.com" >support@dummy.com</a></p>
+	<p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:11px;">&copy; 2015 Splick&#45;It&#44; Inc&#46; 1881 19th St&#46; Suite 303&#44; Boulder&#44; CO 80302</p>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

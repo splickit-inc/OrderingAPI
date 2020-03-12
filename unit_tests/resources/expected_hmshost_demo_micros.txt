@@ -1,0 +1,64 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <PostNewTransactionRequest xmlns="http://htng.org/PWS/2008B/FoodBevOrdering">
+      <Request>
+        <LocationRef>1</LocationRef>
+        <RevenueCenterRef>1</RevenueCenterRef>
+        <RequestHeader>
+          <ApplicationName>1</ApplicationName>
+          <InterfaceVersion>1.0</InterfaceVersion>
+        </RequestHeader>
+        <Transaction>
+          <Header>
+            <NumGuests>1</NumGuests>
+            <OrderTypeIDRef>1</OrderTypeIDRef>
+            <TableRef>1</TableRef>
+            <GuestCheckRef />
+          </Header>
+          <DetailLines>
+            <DetailLine>
+              <MenuItem>
+                <LineItem>
+                  <IDRef>7-1</IDRef>
+                  <Quantity>1</Quantity>
+                  <Total>5.00</Total>
+                  <LineNumber>1</LineNumber>
+                  <ServiceRoundNumber>0</ServiceRoundNumber>
+                </LineItem>
+                <PriceLevelIDRef>0-0</PriceLevelIDRef>
+              </MenuItem>
+            </DetailLine>
+            <DetailLine>
+              <Tender>
+                <LineItem>
+                  <IDRef>2</IDRef>
+                  <Quantity>1</Quantity>
+                  <Total>0.00</Total>
+                  <LineNumber>2</LineNumber>
+                  <ServiceRoundNumber>0</ServiceRoundNumber>
+                </LineItem>
+                <TipAmount>0.00</TipAmount>
+                <EPaymentField>
+                  <PaymentCommand>AUTHORIZE_AND_PAY</PaymentCommand>
+                  <AccountDataSource>SOURCE_UNDEFINED</AccountDataSource>
+                  <AcctNumber />
+                  <ExpirationDate />
+                  <AuthorizationCode />
+                  <StartDate>2014-02-14T12:20:00</StartDate>
+                  <IssueNumber />
+                  <Track1Data />
+                  <Track2Data />
+                  <Track3Data />
+                  <BaseAmount>0</BaseAmount>
+                  <TipAmount>0</TipAmount>
+                  <CVVNumber />
+                  <AddressVerification />
+                </EPaymentField>
+              </Tender>
+            </DetailLine>
+          </DetailLines>
+        </Transaction>
+      </Request>
+    </PostNewTransactionRequest>
+  </soap:Body>
+</soap:Envelope>

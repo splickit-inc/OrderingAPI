@@ -1,0 +1,4 @@
+class: SmartyResource
+mimetype: text
+
+{$resource->message_text}

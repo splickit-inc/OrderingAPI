@@ -1,0 +1,159 @@
+class: SmartyResource
+mimetype: text
+
+<XoikosOrder>
+    <Header>
+        <RestaurantName>Mr. Goodcents - {$resource->merchant.merchant_address1|escape}</RestaurantName>
+        <RestaurantNumber>{$resource->merchant.merchant_external_id}</RestaurantNumber>
+        <OrderID>{$resource->ucid}</OrderID>
+        <LoyaltyAwarded>{$resource->loyalty_earned}</LoyaltyAwarded>
+        <DatePlaced>{$resource->xoikos_order_time_string}</DatePlaced>
+        <FulfillmentDate>{$resource->xoikos_pickup_time_string}</FulfillmentDate>
+        {if $resource->order_type eq 'R'}
+            <FulfillmentMethod>Pickup</FulfillmentMethod>
+        {else}
+            <FulfillmentMethod>Delivery</FulfillmentMethod>
+            {if $resource->ASAP eq 'true'}
+                <FulfillmentASAP>true</FulfillmentASAP>
+            {/if}
+        {/if}
+        <CustomerInfo>
+            <FirstName>{$resource->user.first_name|escape}</FirstName>
+            <LastName>{$resource->user.last_name|escape}</LastName>
+            <Email>{$resource->user.email}</Email>
+            <PhoneNumber>{$resource->user.contact_no|escape}</PhoneNumber>
+            <CellPhoneNumber>{$resource->user.contact_no|escape}</CellPhoneNumber>
+        </CustomerInfo>
+        <CheckAmount>
+            <TotalPrice>{$resource->xoikos_grand_total}</TotalPrice>
+            <Tax>
+                <Tax>{$resource->total_tax_amt}</Tax>
+                <GST>0</GST>
+                <PST>0</PST>
+            </Tax>
+            <Tip>{$resource->tip_amt}</Tip>
+            {if $resource->order_type eq 'D'}
+                <DeliveryFee>{$resource->delivery_amt}</DeliveryFee>
+            {/if}
+            <DiscountAmount>0</DiscountAmount>
+        </CheckAmount>
+        {if $resource->order_type eq 'R'}
+            <OrderComments>{if !empty($resource->note)}Note: {$resource->note|strip|escape}{/if}</OrderComments>
+        {else}
+            {assign var=delivery_location_info value=$resource->delivery_info}
+            <OrderComments>{if !empty($resource->note) || !empty($delivery_location_info->instructions)}Note: {if !empty($delivery_location_info->instructions)}{$delivery_location_info->instructions|strip|escape}. {/if}{$resource->note|strip|escape}{/if}</OrderComments>
+            <DeliveryInfo>
+                <FirstName>{$resource->user.first_name|escape}</FirstName>
+                <LastName>{$resource->user.last_name|escape}</LastName>
+                <StreetNumber>{$delivery_location_info->address1|escape}</StreetNumber>
+                <StreetName></StreetName>
+                <AptNumber>{$delivery_location_info->address2|escape}</AptNumber>
+                <City>{$delivery_location_info->city|escape}</City>
+                <State>{$delivery_location_info->state|escape}</State>
+                <ZipCode>{$delivery_location_info->zip|escape}</ZipCode>
+                <Country>US</Country>
+                <PhoneNumber>{$delivery_location_info->phone_no|escape}</PhoneNumber>
+                <Company>{$delivery_location_info->business_name|escape}</Company>
+            </DeliveryInfo>
+        {/if}
+    </Header>
+    <Payments>
+
+            {if $resource->cash eq 'Y'}
+                <Payment>
+                    <PaymentType>POD</PaymentType>
+                    <Amount>{$resource->xoikos_grand_total}</Amount>
+                </Payment>
+            {else}
+                {if $resource->status eq 'G'}
+                    {foreach from=$resource->group_order_payments key=index item=payment_record}
+                        <Payment>
+                            <PaymentType>CreditCard</PaymentType>
+                            <Amount>{$payment_record.charge_amt}</Amount>
+                            <AccountNumber>XXXXXXXXXXXX{$payment_record.last_four}</AccountNumber>
+                            <TransactionId>{$payment_record.ucid}</TransactionId>
+                        </Payment>
+                    {/foreach}
+                {else}
+                    <Payment>
+                        <PaymentType>CreditCard</PaymentType>
+                        <Amount>{$resource->grand_total}</Amount>
+                        <AccountNumber>XXXXXXXXXXXX{$resource->user.last_four}</AccountNumber>
+                    </Payment>
+                {/if}
+            {/if}
+
+    </Payments>
+    <OrderItems>
+    {foreach from=$resource->xoikos_item_nodes key=index item=menu_item}
+        {assign var=item_name value=$menu_item.item_name}
+        {assign var=item_size value=$menu_item.size_name}
+        {assign var=item_quant value=$menu_item.quantity}
+        {assign var=item_price value=$menu_item.item_total_w_mods}
+        <OrderItem>
+            <Qty>{$item_quant}</Qty>
+            <ItemName>{$item_name|escape}{if $item_size|lower neq 'one size'} {$item_size|escape}{/if}</ItemName>
+            <Recipient></Recipient>
+            <ItemComments>{if !empty($menu_item.note)}Note: {$menu_item.note|strip|escape}{/if}</ItemComments>
+            <POS>
+                <ROPE />
+                <FlexPOS />
+                <InfoKING>
+                    <PLU>{$menu_item.external_id}</PLU>
+                </InfoKING>
+            </POS>
+            <Price>
+                <ItemPrice>{$menu_item.price}</ItemPrice>
+                <PriceBeforeDiscount>{$menu_item.price}</PriceBeforeDiscount>
+                <BasePrice>{$menu_item.price}</BasePrice>
+                <Tax>{$menu_item.xoikos_single_item_tax_value}</Tax>
+            </Price>
+            {if $menu_item.item_tax == 0.00 }
+                <Taxable>false</Taxable>
+            {else}
+                <Taxable>true</Taxable>
+            {/if}
+            <TaxExempt>false</TaxExempt>
+            <Options>
+                {foreach from=$menu_item.order_detail_complete_modifier_list_no_holds item=modifier_item}
+                    {assign var=price value=$modifier_item.mod_price}
+                    {assign var=mod_group_name value=$modifier_item.modifier_group_name}
+                    {assign var=mod_name value=$modifier_item.mod_name}
+                    {assign var=modifier_group_external_id value=$modifier_item.external_modifier_group_id}
+                    {assign var=modifier_item_external_id value=$modifier_item.external_id}
+                    {if $mod_name neq 'SKIP THIS MODIFIER'}
+                        <Option>
+                            <OptionText>{$mod_group_name|escape}</OptionText>
+                            <SelectionText>{$mod_name|escape}</SelectionText>
+                            <Price>{$modifier_item.mod_price}</Price>
+                            <PriceEach>${$price}</PriceEach>
+                            <Quantity>Regular</Quantity>
+                            <Side>Full</Side>
+                            <Status>Added</Status>
+                            <POS>
+                                <ROPE/>
+                                <FlexPOS/>
+                                <InfoKING>
+                                    <PLU>{$modifier_item_external_id}</PLU>
+                                </InfoKING>
+                            </POS>
+                        </Option>
+                    {/if}
+                {/foreach}
+            </Options>
+        </OrderItem>
+    {/foreach}
+    </OrderItems>
+    {if $resource->discounts|@count gt 0}
+        {foreach from=$resource->discounts key=index item=discount}
+        <Discounts>
+            <Discount>
+                <DiscountCode>{$discount.discount_code}</DiscountCode>
+                <Amount>{$discount.amount}</Amount>
+            </Discount>
+        </Discounts>
+        {/foreach}
+    {else}
+        <Discounts/>
+    {/if}
+</XoikosOrder>

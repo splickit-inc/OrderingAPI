@@ -1,0 +1,10 @@
+{
+    "require": {
+        "robmorgan/phinx": "*",
+        "phpunit/phpunit": "4.5.1",
+        "guzzlehttp/guzzle": "*",
+        "aws/aws-sdk-php": "2.*",
+        "mustache/mustache": "*",
+        "phpfastcache/phpfastcache": "^5.0"
+    }
+}

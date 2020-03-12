@@ -1,0 +1,154 @@
+class: SmartyResource
+mimetype: text
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body style="background:#c1d82f; ">
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10">
+         <tr>
+               <td width="200px">
+               <img src="http://www.splickit.com/icons/SPL-Logo-200px.png" width="200" height="50" alt="splickit"/>
+
+               </td>
+               <td align="right">
+               <h2 style="color:#111;font-family:Arial, Helvetica, sans-serif;margin:0px;">Welcome to Splick-it</h2>
+               </td>
+        </tr>
+</table>
+
+<table align="center" width="600" border="0" cellspacing="0" cellpadding="10" style="font-family:Arial, Helvetica, sans-serif;">
+
+<tr style="background:#111;">
+
+<td>
+<h2 style="color:#fff;margin:0px;">Pita Pit Mobile & Online Ordering is Now Available</h2>
+</td>
+<td align="right" width="160">
+<h2 style="color:#fff;margin:0px;font-weight:normal;">{$resource->today}</h2>
+</td>
+</tr>
+
+<tr style="background:#fff;" >
+<td colspan="2">
+
+               <!-- Location -->
+
+               <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;">
+
+               <tr style="background:#e5e5e5;color:#666;font-weight:bold;">
+               <td align="left" colspan="2">
+               <h4 style="margin: 5px;color:#111;">Location:</h4>
+               </td>
+               </tr>
+
+               <tr style="background:#fff;color:#444;">
+               <td style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+               <h4 style="margin: 3px 5px;">{$resource->name}</h4>
+
+               <h4 style="margin: 3px 5px;">{$resource->address1}<br/>{$resource->city}, {$resource->state} {$resource->zip}</h4>
+               <p style="margin: 3px 5px;"><a href="#">{$resource->table_data.destination_email}</a></p>
+               </td>
+               </tr>
+               </table>
+
+       </td>
+       </tr>
+
+<tr style="background:#fff;" >
+       <td colspan="2">
+<p>Dear Pita Pit {$resource->table_data.merchant_external_id} Franchisee,</p>
+<img align="right" width="118" height="118" alt="Pita Pit" style="margin:10px;" src="{$resource->table_data.image}"><p>Thanks for joining us yesterday for our mobile and online ordering webinar! We hope that you found it to be informative and intriguing. Now that you've had the opportunity to learn more about how we bring value to your franchise and guests alike, we'd like to invite you to sign-up for Splick-it for your location(s).</p>
+
+<p>Getting started with Splick-it is quick and easy. Use your personalized link and account credentials below to access the Splick-it Merchant Portal.</p>
+
+</td>
+</tr>
+<tr style="background:#fff;" >
+<td colspan="2">
+
+<!-- Portal Credentials -->
+
+               <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif;">
+               <tr style="background:#e5e5e5;color:#666;font-weight:bold;">
+               <td align="left" colspan="2">
+               <h4 style="margin: 5px;color:#111;">Your Splick-it Portal Credentials</h4>
+
+               </td>
+               </tr>
+
+               <tr style="background:#fff;color:#444;">
+               <td style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+               <p style="margin: 5px;">Portal URL:</p>
+               </td>
+       <td align="right" width="50%"style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+               <p style="margin: 5px;font-weight:bold;"><a href="http://merchant.splickit.com" target="_blank">http://merchant.splickit.com</a></p>
+
+               </td>
+               </tr>
+               <tr style="background:#fff;color:#444;">
+               <td style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+               <p style="margin: 5px;">User Name:</p>
+               </td>
+       <td align="right" width="50%"style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+               <p style="margin: 5px;font-weight:bold;">{$resource->table_data.sus_login_name}</p>
+
+               </td>
+               </tr>
+               <tr style="background:#fff;color:#444;">
+               <td style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+               <p style="margin: 5px;">Password:</p>
+               </td>
+       <td align="right" width="50%"style="border-bottom:1px dotted #e5e5e5;background:#ffffdb;">
+               <p style="margin: 5px;font-weight:bold;">{$resource->table_data.sus_login_password}</p>
+
+               </td>
+               </tr>
+               <tr>
+               <td colspan="2">
+               <p style="margin: 5px;color:#111;">Want some help getting setup?</p>
+               <a href="http://www.splickit.com/icons/msg/SPL-MSG-Pita-Pit-FAX-01.pdf" target="_blank"><img width="16" height="16" align="left" src="http://www.splickit.com/icons/pdf_icon.gif" style="margin: 10px 10px 0 5px;"></a><p style="margin: 10px 0 0 5px;font-weight:bold;"><a href="http://www.splickit.com/icons/msg/SPL-MSG-Pita-Pit-FAX-01.pdf" target="_blank">Download the Pita Pit Merchant Setup Guide PDF - Click Here</a></p>
+               </td>
+               </tr>
+               </table>
+
+<br/>
+</td>
+</tr>
+<tr style="background:#fff;" >
+       <td colspan="2">
+	   <p style="margin: 5px;color:#111;">Other really important stuff you need to know.</p>
+               <p style="margin: 0px;">To ensure a smooth activation for your location(s), please click through each of the tabs on the Merchant Portal and fill out the missing fields to the best of your ability. Doing so will make the setup process speedy and reduce the amount of questions we have to ask you later! After you have completed setup in the Merchant Portal, please change the status to "Yes - I am complete" on the Info tab of the Merchant Portal. That's the equivalent to us of you saying, "OK, let's do this!"</p>
+	   <h4 style="margin: 5px;color:#111;">Hey, wait! I have a few more questions before signing up. Who may I speak to?</h4>
+               <p>First, take a look at the FAQ below, and if you have further questions, please feel free to reach out to our support team.</p>
+	   <p style="margin: 5px;color:#111;">Frequenty Asked Questions</p>
+		<p><strong>How do I receive orders?</strong></p>
+		<p>All Splick-it mobile and online orders will be sent to your store via fax.</p>
+		<p><strong>How much does it cost?</strong></p>
+		<p>We offer two pricing options. Both prices include mobile and online ordering. You will select your desired option in the Splick-it Merchant Portal.</p>
+		<p><strong>Pay as you go: 5% of orders processed through Splick-it mobile and online ordering (plus credit card transaction processing fees)</strong></p>
+		<p>Pay once: $599/yr. (plus credit card transaction processing fees)</p>
+		<p><strong>Do you already use Mercury Payments?</strong></p>
+		<p>If you currently have a Mercury Payments account, we can provide you with the same credit card processing rates that you already pay when you choose the $599/yr. annual plan.</p>
+
+<p>Splick-it Support
+<br/>1.888.SPLICKIT (775.4254)</p>
+<p style="color:#fff;">{$resource->merchant_id}</p>
+       </td>
+</tr>
+<tr>
+<td colspan="2">
+       <p>Please email questions or requests to <a href="mailto:support@splickit.com" >support@splickit.com</a></p>
+       <p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:11px;">© 2012 Splick-it, Inc. 1405 Arapahoe Ave. Boulder, CO 80302</p>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>
