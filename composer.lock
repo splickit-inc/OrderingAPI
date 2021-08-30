@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0eddc65fa17611c6bfb490a036f50b5b",
+    "content-hash": "ab07812ec8d3f50f923066d2be0c061d",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -937,34 +937,43 @@
         },
         {
             "name": "phpfastcache/phpfastcache",
-            "version": "5.0.21",
+            "version": "6.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPSocialNetwork/phpfastcache.git",
-                "reference": "e546671f4374e2a421c074b5c24c732c6ec58aae"
+                "reference": "cab4e79f1ad353302c82d7b73de0aa4b6b00144c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPSocialNetwork/phpfastcache/zipball/e546671f4374e2a421c074b5c24c732c6ec58aae",
-                "reference": "e546671f4374e2a421c074b5c24c732c6ec58aae",
+                "url": "https://api.github.com/repos/PHPSocialNetwork/phpfastcache/zipball/cab4e79f1ad353302c82d7b73de0aa4b6b00144c",
+                "reference": "cab4e79f1ad353302c82d7b73de0aa4b6b00144c",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": ">=5.5.0",
-                "phpfastcache/phpssdb": "~1.0.0",
-                "predis/predis": "~1.1.0",
-                "psr/cache": "~1.0.0"
+                "ext-mbstring": "*",
+                "php": "^5.6 || ^7.0 || ^7.1 || ^7.2",
+                "psr/cache": "~1.0.0",
+                "psr/simple-cache": "~1.0.0"
+            },
+            "conflict": {
+                "doctrine/couchdb": "*"
             },
             "suggest": {
                 "ext-apc": "*",
+                "ext-couchbase": "*",
                 "ext-intl": "*",
-                "ext-mbstring": "*",
+                "ext-leveldb": "*",
                 "ext-memcache": "*",
                 "ext-memcached": "*",
-                "ext-predis": "*",
                 "ext-redis": "*",
-                "ext-sqlite": "*"
+                "ext-sqlite": "*",
+                "ext-wincache": "*",
+                "ext-xcache": "*",
+                "mongodb/mongodb": "^1.1",
+                "phpfastcache/couchdb": "~1.0.0",
+                "phpfastcache/phpssdb": "~1.0.0",
+                "predis/predis": "~1.1.0"
             },
             "type": "library",
             "autoload": {
@@ -990,7 +999,7 @@
                     "role": "Developer"
                 }
             ],
-            "description": "PHP Cache Class - Reduce your database call using cache system. PhpFastCache handles a lot of drivers such as Apc(u), CouchBase, Mongodb, Files, (P)redis, Leveldb, Memcache(d), Ssdb, Sqlite, Wincache, Xcache, Zend Data Cache.",
+            "description": "PHP Cache Class - Reduce your database call using cache system. PhpFastCache handles a lot of drivers such as Apc(u), Cassandra, CouchBase, Couchdb, Mongodb, Files, (P)redis, Leveldb, Memcache(d), Ssdb, Sqlite, Wincache, Xcache, Zend Data Cache.",
             "homepage": "http://www.phpfastcache.com",
             "keywords": [
                 "LevelDb",
@@ -999,8 +1008,10 @@
                 "cache",
                 "cache class",
                 "caching",
+                "cassandra",
                 "cookie",
                 "couchbase",
+                "couchdb",
                 "files cache",
                 "memcache",
                 "memcached",
@@ -1019,57 +1030,21 @@
                 "zend memory cache",
                 "zend server"
             ],
-            "time": "2018-03-01T22:13:40+00:00"
-        },
-        {
-            "name": "phpfastcache/phpssdb",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PHPSocialNetwork/phpssdb.git",
-                "reference": "60cc285bf622664d9899da699503754259e8c970"
+            "support": {
+                "issues": "https://github.com/PHPSocialNetwork/phpfastcache/issues",
+                "source": "https://github.com/PHPSocialNetwork/phpfastcache/tree/6.1.5"
             },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PHPSocialNetwork/phpssdb/zipball/60cc285bf622664d9899da699503754259e8c970",
-                "reference": "60cc285bf622664d9899da699503754259e8c970",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "phpssdb\\": "src/phpssdb/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
+            "funding": [
                 {
-                    "name": "Khoa Bui",
-                    "email": "khoaofgod@gmail.com",
-                    "homepage": "http://www.phpfastcache.com",
-                    "role": "Developer"
+                    "url": "https://github.com/geolim4",
+                    "type": "github"
                 },
                 {
-                    "name": "Georges.L",
-                    "email": "contact@geolim4.com",
-                    "homepage": "https://github.com/Geolim4",
-                    "role": "Developer"
+                    "url": "https://www.patreon.com/geolim4",
+                    "type": "patreon"
                 }
             ],
-            "description": "PHP SSDB Driver for phpFastCache",
-            "homepage": "http://www.phpfastcache.com",
-            "keywords": [
-                "cache",
-                "driver",
-                "ssdb"
-            ],
-            "time": "2017-04-21T22:22:57+00:00"
+            "time": "2021-08-12T11:55:27+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -1510,56 +1485,6 @@
             "time": "2015-10-02T06:51:40+00:00"
         },
         {
-            "name": "predis/predis",
-            "version": "v1.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nrk/predis.git",
-                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nrk/predis/zipball/f0210e38881631afeafb56ab43405a92cafd9fd1",
-                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.9"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.8"
-            },
-            "suggest": {
-                "ext-curl": "Allows access to Webdis when paired with phpiredis",
-                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Predis\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniele Alessandri",
-                    "email": "suppakilla@gmail.com",
-                    "homepage": "http://clorophilla.net"
-                }
-            ],
-            "description": "Flexible and feature-complete Redis client for PHP and HHVM",
-            "homepage": "http://github.com/nrk/predis",
-            "keywords": [
-                "nosql",
-                "predis",
-                "redis"
-            ],
-            "time": "2016-06-16T16:22:20+00:00"
-        },
-        {
             "name": "psr/cache",
             "version": "1.0.1",
             "source": {
@@ -1603,6 +1528,9 @@
                 "psr",
                 "psr-6"
             ],
+            "support": {
+                "source": "https://github.com/php-fig/cache/tree/master"
+            },
             "time": "2016-08-06T20:24:11+00:00"
         },
         {
@@ -1701,6 +1629,57 @@
                 "psr-3"
             ],
             "time": "2018-11-20T15:27:04+00:00"
+        },
+        {
+            "name": "psr/simple-cache",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/simple-cache.git",
+                "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
+                "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\SimpleCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interfaces for simple caching",
+            "keywords": [
+                "cache",
+                "caching",
+                "psr",
+                "psr-16",
+                "simple-cache"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/simple-cache/tree/master"
+            },
+            "time": "2017-10-23T01:57:42+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -2716,5 +2695,6 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.1.0"
 }
